@@ -8,11 +8,13 @@ interface CarriersApi {
 
 export default async function getCarriersName(shippingsArray:string[]) {
   
+  const SELANUSAAPIURL= process.env.SELANUSAAPIURL || ''
+
   const shippingsNumberArray= shippingsArray.map((element)=> parseInt(element, 10))
 
   const shippingsNumberArrayInString= JSON.stringify(shippingsNumberArray)
   
-  const data= await fetch(`https://beta.selanusa.com.mx/carriers?ids=${shippingsNumberArrayInString}`).then((response)=> response.json())
+  const data= await fetch(`${SELANUSAAPIURL}/carriers?ids=${shippingsNumberArrayInString}`).then((response)=> response.json())
     
   const filteredNames= data.map((shipping:CarriersApi)=> shipping.name)
   

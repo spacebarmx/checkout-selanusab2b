@@ -85,12 +85,7 @@ export function mapToShippingOptions(
     const checkout = getCheckout();
     const customerId: number | undefined = customer?.id
     const storeHash= config?.storeProfile.storeHash
-    // const BcToken= BCData.csrf_token
 
-    // eslint-disable-next-line no-console
-    console.log("config",config)
-      // eslint-disable-next-line no-console
-      console.log("windowss",window)
     
     if (!config || !checkout || !customer || !cart) {
         return null;

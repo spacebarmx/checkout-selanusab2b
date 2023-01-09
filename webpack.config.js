@@ -1,4 +1,5 @@
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const dotenv = require('dotenv')
 const EventEmitter = require('events');
 const { copyFileSync } = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -7,17 +8,25 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 
-const { AsyncHookPlugin,
+const { 
+    AsyncHookPlugin,
     BuildHookPlugin,
     getLoaderPackages: { aliasMap: alias, tsLoaderIncludes },
     getNextVersion,
-    transformManifest } = require('./scripts/webpack');
+    transformManifest 
+} = require('./scripts/webpack');
 
+const env = dotenv.config().parsed;
 const ENTRY_NAME = 'checkout';
 const LIBRARY_NAME = 'checkout';
 const AUTO_LOADER_ENTRY_NAME = 'auto-loader';
 const LOADER_ENTRY_NAME = 'loader';
 const LOADER_LIBRARY_NAME = 'checkoutLoader';
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next])
+    return prev
+  }, {})
+
 const BABEL_PRESET_ENV_CONFIG = {
     corejs: '3',
     targets: {
@@ -108,6 +117,7 @@ function appConfig(options, argv) {
                     library: LIBRARY_NAME,
                 },
                 plugins: [
+                    new DefinePlugin(envKeys),
                     new StyleLintPlugin({
                         fix: !isProduction,
                         cache: true,
