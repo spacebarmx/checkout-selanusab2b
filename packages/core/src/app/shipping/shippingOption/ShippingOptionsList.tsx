@@ -92,17 +92,23 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
 
         if(filteredShipping) filteredShippingOptions.push(filteredShipping)
         
-        // CLS postal code
-        if(postalCode==="07040" || postalCode==="06080"){
-            
-            const store= postalCode==="07040"? "CLS": "Isabel la Católica"
-            
-            const postalCodeFilteringShipping= shippingOptions.find(element=> element.description === store)
-            
-            if(postalCodeFilteringShipping)
-                filteredShippingOptions.push(postalCodeFilteringShipping)
+    }
+    
+    // CLS and Isabel postal code
 
-        }
+    if(postalCode==="07040" || postalCode==="06080"){
+        
+        const store= postalCode==="07040"
+            ? "CLS"
+            : postalCode==="06080"
+                ? "Isabel la Católica"
+                :""
+        
+        const postalCodeFilteringShipping= shippingOptions.find(element=> element.description === store)
+        
+        if(postalCodeFilteringShipping)
+            filteredShippingOptions.push(postalCodeFilteringShipping)
+
     }
 
     
