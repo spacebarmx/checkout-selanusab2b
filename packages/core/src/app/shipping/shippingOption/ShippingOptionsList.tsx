@@ -39,6 +39,7 @@ const ShippingOptionListItem: FunctionComponent<ShippingOptionListItemProps> = (
 export interface ShippingOptionListProps {
     consignmentId: string;
     customerId?: number ;
+    postalCode: string;
     storeHash?: string
     inputName: string;
     isLoading: boolean;
@@ -50,6 +51,7 @@ export interface ShippingOptionListProps {
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     consignmentId,
     customerId,
+    postalCode,
     inputName,
     isLoading,
     shippingOptions = EMPTY_ARRAY,
@@ -75,8 +77,7 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
         if(carriersNames.length===0) { 
             settingCarriers()
         }
-    
-        
+      
     }, [carriersNames])
 
     if (!shippingOptions.length) {
@@ -90,8 +91,20 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
         const filteredShipping= shippingOptions.find(element=> element.description === carrierName)
 
         if(filteredShipping) filteredShippingOptions.push(filteredShipping)
+        
+        // CLS postal code
+        if(postalCode==="07040" || postalCode==="06080"){
+            
+            const store= postalCode==="07040"? "CLS": "Isabel la Católica"
+            
+            const postalCodeFilteringShipping= shippingOptions.find(element=> element.description === store)
+            
+            if(postalCodeFilteringShipping)
+                filteredShippingOptions.push(postalCodeFilteringShipping)
 
+        }
     }
+
     
       return (
         <LoadingOverlay isLoading={isLoading}>
