@@ -99,9 +99,9 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     if(postalCode==="07040" || postalCode==="06080"){
         
         const store= postalCode==="07040"
-            ? "CLS"
+            ? "Recoger CLS"
             : postalCode==="06080"
-                ? "Isabel la Católica"
+                ? "Boutique Selanusa"
                 :""
         
         const postalCodeFilteringShipping= shippingOptions.find(element=> element.description === store)
@@ -111,7 +111,6 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
 
     }
 
-    
       return (
         <LoadingOverlay isLoading={isLoading}>
             <Checklist
