@@ -171,6 +171,7 @@ class Payment extends Component<
             applyStoreCredit,
             ...rest
         } = this.props;
+        
 
         const {
             didExceedSpamLimit,
@@ -550,6 +551,7 @@ export function mapToPaymentProps({
     const customer = getCustomer();
     const consignments = getConsignments();
     const { isComplete = false } = getOrder() || {};
+
     let methods = getPaymentMethods() || EMPTY_ARRAY;
 
     // TODO: In accordance with the checkout team, this functionality is temporary and will be implemented in the backend instead.
@@ -588,6 +590,12 @@ export function mapToPaymentProps({
         if (method.id === PaymentMethodId.Bolt && method.initializationData) {
             return !!method.initializationData.showInCheckout;
         }
+        
+        if(method.id === "instore"){
+            if(customer.customerGroup?.id === 20) return true
+            
+            return false
+        }
 
         return true;
     });
@@ -618,6 +626,7 @@ export function mapToPaymentProps({
         // eslint-disable-next-line no-self-assign
         filteredMethods = filteredMethods;
     }
+        
 
     return {
         applyStoreCredit: checkoutService.applyStoreCredit,
