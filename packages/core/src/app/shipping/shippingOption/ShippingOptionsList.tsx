@@ -39,6 +39,7 @@ const ShippingOptionListItem: FunctionComponent<ShippingOptionListItemProps> = (
 export interface ShippingOptionListProps {
     consignmentId: string;
     customerId?: number ;
+    customerGroupId?: number;
     postalCode: string;
     storeHash?: string
     inputName: string;
@@ -51,6 +52,7 @@ export interface ShippingOptionListProps {
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     consignmentId,
     customerId,
+    customerGroupId,
     postalCode,
     inputName,
     isLoading,
@@ -96,8 +98,8 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     
     // CLS and Isabel postal code
 
-    if(postalCode==="07040" || postalCode==="06080"){
-        
+    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===20 ){
+
         const store= postalCode==="07040"
             ? "Recoger CLS"
             : postalCode==="06080"

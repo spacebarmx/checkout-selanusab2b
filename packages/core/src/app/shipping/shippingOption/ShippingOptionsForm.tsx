@@ -52,6 +52,7 @@ class ShippingOptionsForm extends PureComponent<
         const {
             consignments,
             customerId,
+            customerGroupId,
             storeHash,
             isMultiShippingMode,
             selectShippingOption,
@@ -90,6 +91,7 @@ class ShippingOptionsForm extends PureComponent<
                         <ShippingOptionsList
                             consignmentId={consignment.id}
                             customerId= {customerId}
+                            customerGroupId={customerGroupId}
                             postalCode= {consignment.shippingAddress.postalCode}
                             inputName={getRadioInputName(consignment.id)}
                             isLoading={isLoading(consignment.id)}

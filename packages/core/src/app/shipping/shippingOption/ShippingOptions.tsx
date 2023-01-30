@@ -17,6 +17,7 @@ export interface ShippingOptionsProps {
 export interface WithCheckoutShippingOptionsProps {
     invalidShippingMessage: string;
     customerId?: number;
+    customerGroupId?: number;
     methodId?: string;
     consignments?: Consignment[];
     cart: Cart;
@@ -84,8 +85,12 @@ export function mapToShippingOptions(
     const config = getConfig();
     const checkout = getCheckout();
     const customerId: number | undefined = customer?.id
-    const storeHash= config?.storeProfile.storeHash
+    const customerGroupId: number | undefined = customer?.customerGroup?.id
 
+    const storeHash= config?.storeProfile.storeHash
+    
+    // eslint-disable-next-line no-console
+    console.log(customer)
     
     if (!config || !checkout || !customer || !cart) {
         return null;
@@ -99,6 +104,7 @@ export function mapToShippingOptions(
         cart,
         consignments,
         customerId,
+        customerGroupId,
         storeHash,
         invalidShippingMessage: shippingQuoteFailedMessage,
         isLoading: isLoadingSelector(checkoutState, props),
