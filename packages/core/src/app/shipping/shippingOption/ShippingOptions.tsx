@@ -89,9 +89,6 @@ export function mapToShippingOptions(
 
     const storeHash= config?.storeProfile.storeHash
     
-    // eslint-disable-next-line no-console
-    console.log(customer)
-    
     if (!config || !checkout || !customer || !cart) {
         return null;
     }

@@ -33,6 +33,8 @@ export interface PaymentFormProps {
     isUsingMultiShipping?: boolean;
     isStoreCreditApplied: boolean;
     methods: PaymentMethod[];
+    setRequireBill: any;
+    requireBill: boolean;
     selectedMethod?: PaymentMethod;
     shouldShowStoreCredit?: boolean;
     shouldDisableSubmit?: boolean;
@@ -62,6 +64,8 @@ const PaymentForm: FunctionComponent<
     isUsingMultiShipping,
     language,
     methods,
+    requireBill,
+    setRequireBill,
     onMethodSelect,
     onStoreCreditChange,
     onUnhandledError,
@@ -138,15 +142,31 @@ const PaymentForm: FunctionComponent<
             />
 
             <PaymentRedeemables />
+            <fieldset>
+                <legend>¿Deseas facturar?</legend>
 
+                <div>
+                    Si
+                    <input           
+                    checked={requireBill}
+                    id="requireBill"
+                    name="requireBill"
+                    onChange={()=>{
+                        setRequireBill(!requireBill)
+                    }}
+                    type="checkbox"
+                    />
+                </div>
+
+            </fieldset>
             {isTermsConditionsRequired && (
                 <TermsConditions
                     termsConditionsText={termsConditionsText}
                     termsConditionsUrl={termsConditionsUrl}
                 />
             )}
-
             <div className="form-actions">
+
                 {shouldHidePaymentSubmitButton ? (
                     <PaymentMethodSubmitButtonContainer />
                 ) : (
