@@ -142,11 +142,11 @@ const PaymentForm: FunctionComponent<
             />
 
             <PaymentRedeemables />
-            <fieldset>
-                <legend>¿Deseas facturar?</legend>
+            <fieldset className='fieldSetFacturar'>
+                <legend className='legendFacturar'>¿Deseas facturar?</legend>
 
-                <div>
-                    Si
+                <div className='FacturarDiv'>
+                    <p className='facturarText'>Si</p>
                     <input           
                     checked={requireBill}
                     id="requireBill"

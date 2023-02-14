@@ -98,7 +98,7 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     
     // CLS and Isabel postal code
 
-    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===20 ){
+    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===570 ){
 
         const store= postalCode==="07040"
             ? "Recoger CLS"
