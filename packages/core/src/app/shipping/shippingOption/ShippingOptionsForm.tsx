@@ -81,7 +81,10 @@ class ShippingOptionsForm extends PureComponent<
                 </ChecklistSkeleton>
             );
         }
-
+        
+        // eslint-disable-next-line no-console
+        console.log(consignments)
+        
         return (
             <>
                 {consignments.map((consignment) => (
@@ -93,6 +96,7 @@ class ShippingOptionsForm extends PureComponent<
                             customerId= {customerId}
                             customerGroupId={customerGroupId}
                             postalCode= {consignment.shippingAddress.postalCode}
+                            stateOrProvince= {consignment.shippingAddress.stateOrProvince}
                             inputName={getRadioInputName(consignment.id)}
                             isLoading={isLoading(consignment.id)}
                             onSelectedOption={selectShippingOption}

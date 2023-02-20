@@ -41,6 +41,7 @@ export interface ShippingOptionListProps {
     customerId?: number ;
     customerGroupId?: number;
     postalCode: string;
+    stateOrProvince: string;
     storeHash?: string
     inputName: string;
     isLoading: boolean;
@@ -54,6 +55,7 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     customerId,
     customerGroupId,
     postalCode,
+    stateOrProvince,
     inputName,
     isLoading,
     shippingOptions = EMPTY_ARRAY,
@@ -98,7 +100,7 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     
     // CLS and Isabel postal code
 
-    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===570 ){
+    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===570 && stateOrProvince === 'Ciudad de México'){
 
         const store= postalCode==="07040"
             ? "Recoger CLS"
