@@ -44,6 +44,6 @@ export async function getCarriers(userBcId: number | undefined) {
         // eslint-disable-next-line no-console
         console.error("Error getting carriers",e)
 
-        return undefined;
+        return [];
     }
 }

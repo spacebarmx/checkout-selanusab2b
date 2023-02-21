@@ -5,6 +5,7 @@ import { EMPTY_ARRAY } from '../../common/utility';
 import { Checklist, ChecklistItem } from '../../ui/form';
 import { LoadingOverlay } from '../../ui/loading';
 import { getCarriers } from '../carriers/getCarriers';
+import GetDefaultCarriers from '../carriers/getDefaultCarriers';
 
 import StaticShippingOption from './StaticShippingOption';
 
@@ -53,85 +54,95 @@ export interface ShippingOptionListProps {
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     consignmentId,
     customerId,
-    customerGroupId,
-    postalCode,
-    stateOrProvince,
+    // customerGroupId,
+    // postalCode,
+    // stateOrProvince,
     inputName,
     isLoading,
     shippingOptions = EMPTY_ARRAY,
     selectedShippingOptionId,
     onSelectedOption,
 }) => {
+    const [filteredShippingOptions, setFilteredShippingOptions] = useState<ShippingOption[]>([])
+
     const handleSelect = useCallback(
         (value: string) => {
             onSelectedOption(consignmentId, value);
         },
         [consignmentId, onSelectedOption],
     );
-    const [carriersNames, setCarriersNames] = useState<string[]>([])
-    
-    const settingCarriers =async () =>{ 
-        const newCarriers= await getCarriers(customerId) || []
-        
-        setCarriersNames(newCarriers)
-    }
-    
+
     useEffect( () => {
         
-        if(carriersNames.length===0) { 
-            settingCarriers()
+        if(filteredShippingOptions.length===0) { 
+            setFilterCarriers()
         }
       
-    }, [carriersNames])
+    }, [ filteredShippingOptions, shippingOptions])
+        
+    const pushAndFilterCarriers = (Carriers:string[]) =>{
+        const newFilteredShipping = []
 
-    if (!shippingOptions.length) {
-        return null;
-    }
+        for ( const carrierName of Carriers){
+
+            const filteredShipping= shippingOptions.find(element=> element.description === carrierName)
     
-    const filteredShippingOptions: ShippingOption []= []
-    
-    for  ( const carrierName of carriersNames){
-        
-        const filteredShipping= shippingOptions.find(element=> element.description === carrierName)
+            if(filteredShipping) newFilteredShipping.push(filteredShipping)
+            
+        }
 
-        if(filteredShipping) filteredShippingOptions.push(filteredShipping)
-        
-    }
-    
-    // CLS and Isabel postal code
-
-    if((postalCode==="07040" || postalCode==="06080") && customerGroupId===570 && stateOrProvince === 'Ciudad de México'){
-
-        const store= postalCode==="07040"
-            ? "Recoger CLS"
-            : postalCode==="06080"
-                ? "Boutique Selanusa"
-                :""
-        
-        const postalCodeFilteringShipping= shippingOptions.find(element=> element.description === store)
-        
-        if(postalCodeFilteringShipping)
-            filteredShippingOptions.push(postalCodeFilteringShipping)
-
+        return newFilteredShipping
     }
 
+    const setFilterCarriers =  async () => {
+        if(!shippingOptions.length) return;
+
+        // Carriers from Bundle
+        const newCarriers= await getCarriers(customerId) || []
+        const bundleCarriers= pushAndFilterCarriers(newCarriers)
+        
+        // eslint-disable-next-line no-console
+        console.log('bundleCarriers',bundleCarriers)
+
+        // Default Carriers
+        const newDefaultCarriers = await GetDefaultCarriers()
+        const defaultCarriersFromDb = pushAndFilterCarriers(newDefaultCarriers)
+
+        // eslint-disable-next-line no-console
+        console.log('defaultCarriersFromDb',defaultCarriersFromDb)
+
+        const allCarriers= defaultCarriersFromDb.concat(bundleCarriers)
+
+        // eslint-disable-next-line no-console
+        console.log('allCarriers',allCarriers)
+
+        setFilteredShippingOptions(allCarriers)
+    }
+    
       return (
         <LoadingOverlay isLoading={isLoading}>
-            <Checklist
-                aria-live="polite"
-                defaultSelectedItemId={selectedShippingOptionId}
-                name={inputName}
-                onSelect={handleSelect}
-            >
-                {filteredShippingOptions.map((shippingOption) => (
-                    
-                    <ShippingOptionListItem
-                        consignmentId={consignmentId}
-                        key={shippingOption.id}
-                        shippingOption={shippingOption}
-                    />
-                ))}
-            </Checklist>
+            {
+                filteredShippingOptions
+                    ?<Checklist
+                        aria-live="polite"
+                        defaultSelectedItemId={selectedShippingOptionId}
+                        name={inputName}
+                        onSelect={handleSelect}
+                    >
+                        {
+                            filteredShippingOptions.map((shippingOption) => (
+                                
+                                <ShippingOptionListItem
+                                    consignmentId={consignmentId}
+                                    key={shippingOption.id}
+                                    shippingOption={shippingOption}
+                                />
+                            ))
+                            
+                        }
+                    </Checklist>
+                    :<h4>No hay transportistas disponibles</h4>
+            }
         </LoadingOverlay>
     );
 };
