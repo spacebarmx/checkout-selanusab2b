@@ -54,9 +54,9 @@ export interface ShippingOptionListProps {
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     consignmentId,
     customerId,
-    // customerGroupId,
-    // postalCode,
-    // stateOrProvince,
+    customerGroupId,
+    postalCode,
+    stateOrProvince,
     inputName,
     isLoading,
     shippingOptions = EMPTY_ARRAY,
@@ -71,53 +71,56 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
         },
         [consignmentId, onSelectedOption],
     );
-
-    useEffect( () => {
-        
-        if(filteredShippingOptions.length===0) { 
-            setFilterCarriers()
-        }
-      
-    }, [ filteredShippingOptions, shippingOptions])
-        
-    const pushAndFilterCarriers = (Carriers:string[]) =>{
-        const newFilteredShipping = []
-
-        for ( const carrierName of Carriers){
-
-            const filteredShipping= shippingOptions.find(element=> element.description === carrierName)
     
-            if(filteredShipping) newFilteredShipping.push(filteredShipping)
-            
-        }
-
-        return newFilteredShipping
-    }
-
     const setFilterCarriers =  async () => {
         if(!shippingOptions.length) return;
 
         // Carriers from Bundle
         const newCarriers= await getCarriers(customerId) || []
         const bundleCarriers= pushAndFilterCarriers(newCarriers)
-        
-        // eslint-disable-next-line no-console
-        console.log('bundleCarriers',bundleCarriers)
 
         // Default Carriers
         const newDefaultCarriers = await GetDefaultCarriers()
         const defaultCarriersFromDb = pushAndFilterCarriers(newDefaultCarriers)
 
-        // eslint-disable-next-line no-console
-        console.log('defaultCarriersFromDb',defaultCarriersFromDb)
-
         const allCarriers= defaultCarriersFromDb.concat(bundleCarriers)
-
-        // eslint-disable-next-line no-console
-        console.log('allCarriers',allCarriers)
 
         setFilteredShippingOptions(allCarriers)
     }
+    
+    useEffect( () => {
+        setFilterCarriers()
+    }, [postalCode, stateOrProvince])
+        
+    const pushAndFilterCarriers = (Carriers:string[]) =>{
+        const newFilteredShipping = []
+
+        for ( const carrierName of Carriers){
+
+            const filteredShipping = shippingOptions.find(element=> element.description === carrierName)
+            
+            if(!filteredShipping) continue;
+            
+            const isAPickUpInStore = filteredShipping.description === 'Boutique Selanusa' || filteredShipping.description === 'Recoger CLS' 
+            
+            const isOneOfTheCP = postalCode==="07040" || postalCode==="06080"
+
+            const isTheStateAndSelanusasGroup = customerGroupId===570 && stateOrProvince === 'Ciudad de México'
+            
+            // has to be one of the selected pickup in store, has the correcto postalCode and be in the state México
+            if(
+                isAPickUpInStore
+                    && 
+                !( isOneOfTheCP && isTheStateAndSelanusasGroup )
+            ) continue;
+                
+            newFilteredShipping.push(filteredShipping)
+            
+        }
+
+        return newFilteredShipping
+    }
+
     
       return (
         <LoadingOverlay isLoading={isLoading}>
