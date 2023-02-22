@@ -82,9 +82,6 @@ class ShippingOptionsForm extends PureComponent<
             );
         }
         
-        // eslint-disable-next-line no-console
-        console.log(consignments)
-        
         return (
             <>
                 {consignments.map((consignment) => (
