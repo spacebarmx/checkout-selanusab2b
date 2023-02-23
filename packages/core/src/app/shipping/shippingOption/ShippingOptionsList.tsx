@@ -101,18 +101,18 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
             
             if(!filteredShipping) continue;
             
-            const isAPickUpInStore = filteredShipping.description === 'Boutique Selanusa' || filteredShipping.description === 'Recoger CLS' 
-            
-            const isOneOfTheCP = postalCode==="07040" || postalCode==="06080"
-
             const isTheStateAndSelanusasGroup = customerGroupId===570 && stateOrProvince === 'Ciudad de México'
             
             // has to be one of the selected pickup in store, has the correcto postalCode and be in the state México
             if(
-                isAPickUpInStore
-                    && 
-                !( isOneOfTheCP && isTheStateAndSelanusasGroup )
-            ) continue;
+                filteredShipping.description === 'Boutique Selanusa' || filteredShipping.description === 'Recoger CLS'
+            ) {
+                if(
+                    !(postalCode==="06080" && filteredShipping.description === 'Boutique Selanusa' || postalCode==="07040" && filteredShipping.description === 'Recoger CLS')
+                        || 
+                    !isTheStateAndSelanusasGroup
+                ) continue;
+            }
                 
             newFilteredShipping.push(filteredShipping)
             
