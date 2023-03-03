@@ -26,7 +26,7 @@ export async function getCarriers(userBcId: number | undefined) {
                 ).then(response => response.json())
                 .then(response => response.data)
                 
-                const shippings= companyDetails.extraFields.find((field:any)=> field.fieldName=== 'Transporte')
+                const shippings= companyDetails.extraFields.find((field:any)=> field.fieldName=== 'Transporte:')
 
                 const shippingsArray= shippings.fieldValue.split(",")
                 
