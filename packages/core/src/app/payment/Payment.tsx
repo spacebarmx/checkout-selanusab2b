@@ -617,7 +617,7 @@ export function mapToPaymentProps({
         }
         
         if(method.id === "instore"){
-            if(customer.customerGroup?.id === 20) return true
+            if(customer.customerGroup?.id === 570) return true
             
             return false
         }
