@@ -94,13 +94,15 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
         
     const pushAndFilterCarriers = (Carriers:string[]) =>{
         const newFilteredShipping = []
-
+        
         for ( const carrierName of Carriers){
 
             const filteredShipping = shippingOptions.find(element=> element.description === carrierName)
             
             if(!filteredShipping) continue;
-            
+
+            if(filteredShipping.description === "NOSOTROS MISMOS") continue;
+
             const isTheStateAndSelanusasGroup = customerGroupId===570 && stateOrProvince === 'Ciudad de México'
             
             // has to be one of the selected pickup in store, has the correcto postalCode and be in the state México
