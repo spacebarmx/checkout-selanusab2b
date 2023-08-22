@@ -17,7 +17,6 @@ import {
     PaymentMethodId,
     PaymentMethodList,
 } from './paymentMethod';
-import PaymentRedeemables from './PaymentRedeemables';
 import PaymentSubmitButton from './PaymentSubmitButton';
 import SpamProtectionField from './SpamProtectionField';
 import { StoreCreditField, StoreCreditOverlay } from './storeCredit';
@@ -141,7 +140,6 @@ const PaymentForm: FunctionComponent<
                 values={values}
             />
 
-            <PaymentRedeemables />
             <fieldset className='fieldSetFacturar'>
                 <legend className='legendFacturar'>¿Deseas facturar?</legend>
 
