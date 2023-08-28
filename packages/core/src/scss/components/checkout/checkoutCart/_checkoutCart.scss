@@ -62,9 +62,11 @@
     border-top: container("border");
     padding: $checkoutCart-padding;
 
-    ul {
-        height: calc(100vh - 435px);
-        overflow-y: auto;
+    @media all and (max-width: 968px) {
+        ul.productList {
+            height: calc(100vh - 472px);
+            overflow-y: auto;
+        }
     }
 }
 
