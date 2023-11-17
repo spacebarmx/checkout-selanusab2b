@@ -12,3 +12,4 @@ coverage
 /packages/test-framework/screenshots
 /packages/test-framework/videos
 dist
+.env
