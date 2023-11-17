@@ -61,13 +61,6 @@
 .cart-section {
     border-top: container("border");
     padding: $checkoutCart-padding;
-
-    @media all and (max-width: 968px) {
-        ul.productList {
-            height: calc(100vh - 472px);
-            overflow-y: auto;
-        }
-    }
 }
 
 .cart-section-heading {
@@ -146,4 +139,21 @@
 .cart-priceItem--totalNote {
     margin-bottom: 0;
     margin-top: spacing("half");
+}
+
+// Cart Tax Item
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styling of the tax section if tax is exclusive
+//
+// -----------------------------------------------------------------------------
+
+.cart-taxItem {
+    display: table;
+    margin-bottom: spacing("half");
+    width: 100%;
+}
+
+.cart-taxItem--subtotal {
+    font-weight: fontWeight("semibold");
 }

@@ -11,6 +11,7 @@ import StaticShippingOption from './StaticShippingOption';
 
 interface ShippingOptionListItemProps {
     consignmentId: string;
+    
     shippingOption: ShippingOption;
 }
 
@@ -18,7 +19,6 @@ const ShippingOptionListItem: FunctionComponent<ShippingOptionListItemProps> = (
     consignmentId,
     shippingOption,
 }) => {
-    
     const renderLabel = useCallback(
         () => (
             <div className="shippingOptionLabel">
@@ -64,14 +64,12 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     onSelectedOption,
 }) => {
     const [filteredShippingOptions, setFilteredShippingOptions] = useState<ShippingOption[]>([])
-
     const handleSelect = useCallback(
         (value: string) => {
             onSelectedOption(consignmentId, value);
         },
         [consignmentId, onSelectedOption],
     );
-    
     const setFilterCarriers =  async () => {
         if(!shippingOptions.length) return;
 
@@ -87,24 +85,24 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
 
         setFilteredShippingOptions(allCarriers)
     }
-    
+
     useEffect( () => {
         setFilterCarriers()
     }, [postalCode, stateOrProvince])
-        
+
     const pushAndFilterCarriers = (Carriers:string[]) =>{
         const newFilteredShipping = []
-        
+
         for ( const carrierName of Carriers){
 
             const filteredShipping = shippingOptions.find(element=> element.description === carrierName)
-            
+
             if(!filteredShipping) continue;
 
             if(filteredShipping.description === "NOSOTROS MISMOS") continue;
 
             const isTheStateAndSelanusasGroup = customerGroupId===570 && stateOrProvince === 'Ciudad de México'
-            
+
             // has to be one of the selected pickup in store, has the correcto postalCode and be in the state México
             if(
                 filteredShipping.description === 'Boutique Selanusa' || filteredShipping.description === 'Recoger CLS'
@@ -115,38 +113,37 @@ const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
                     !isTheStateAndSelanusasGroup
                 ) continue;
             }
-                
+
             newFilteredShipping.push(filteredShipping)
-            
+
         }
 
         return newFilteredShipping
     }
 
-    
-      return (
+    if (!shippingOptions.length) {
+        return null;
+    }
+
+    return (
         <LoadingOverlay isLoading={isLoading}>
             {
-                filteredShippingOptions
-                    ?<Checklist
-                        aria-live="polite"
-                        defaultSelectedItemId={selectedShippingOptionId}
-                        name={inputName}
-                        onSelect={handleSelect}
-                    >
-                        {
-                            filteredShippingOptions.map((shippingOption) => (
-                                
-                                <ShippingOptionListItem
-                                    consignmentId={consignmentId}
-                                    key={shippingOption.id}
-                                    shippingOption={shippingOption}
-                                />
-                            ))
-                            
-                        }
-                    </Checklist>
-                    :<h4>No hay transportistas disponibles</h4>
+                filteredShippingOptions?
+            <Checklist
+                aria-live="polite"
+                defaultSelectedItemId={selectedShippingOptionId}
+                name={inputName}
+                onSelect={handleSelect}
+            >
+                {filteredShippingOptions.map((shippingOption) => (
+                    <ShippingOptionListItem
+                        consignmentId={consignmentId}
+                        key={shippingOption.id}
+                        shippingOption={shippingOption}
+                    />
+                ))}
+            </Checklist>
+            : <h4>No hay transportistas disponibles</h4>
             }
         </LoadingOverlay>
     );
