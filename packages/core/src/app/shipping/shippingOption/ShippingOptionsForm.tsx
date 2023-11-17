@@ -51,6 +51,9 @@ class ShippingOptionsForm extends PureComponent<
     render(): ReactNode {
         const {
             consignments,
+            customerId,
+            customerGroupId,
+            storeHash,
             isMultiShippingMode,
             selectShippingOption,
             isLoading,
@@ -87,14 +90,19 @@ class ShippingOptionsForm extends PureComponent<
 
                         <ShippingOptionsList
                             consignmentId={consignment.id}
+                            customerGroupId={customerGroupId}
+                            customerId= {customerId}
                             inputName={getRadioInputName(consignment.id)}
                             isLoading={isLoading(consignment.id)}
                             onSelectedOption={selectShippingOption}
+                            postalCode= {consignment.shippingAddress.postalCode}
                             selectedShippingOptionId={
                                 consignment.selectedShippingOption &&
                                 consignment.selectedShippingOption.id
                             }
                             shippingOptions={consignment.availableShippingOptions}
+                            stateOrProvince= {consignment.shippingAddress.stateOrProvince}
+                            storeHash={storeHash}
                         />
 
                         {(!consignment.availableShippingOptions ||
