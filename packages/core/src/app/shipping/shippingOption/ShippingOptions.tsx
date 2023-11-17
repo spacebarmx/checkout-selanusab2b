@@ -2,7 +2,9 @@ import { Cart, CheckoutSelectors, Consignment } from '@bigcommerce/checkout-sdk'
 import { map, sortBy, uniq } from 'lodash';
 import { createSelector } from 'reselect';
 
-import { CheckoutContextProps, withCheckout } from '../../checkout';
+import { CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
+
+import { withCheckout } from '../../checkout';
 import getShippableLineItems from '../getShippableLineItems';
 import getShippingMethodId from '../getShippingMethodId';
 
@@ -16,12 +18,9 @@ export interface ShippingOptionsProps {
 
 export interface WithCheckoutShippingOptionsProps {
     invalidShippingMessage: string;
-    customerId?: number;
-    customerGroupId?: number;
     methodId?: string;
     consignments?: Consignment[];
     cart: Cart;
-    storeHash?: string;
     isSelectingShippingOption(consignmentId?: string): boolean;
     subscribeToConsignments(subscriber: (state: CheckoutSelectors) => void): () => void;
     selectShippingOption(consignmentId: string, optionId: string): Promise<CheckoutSelectors>;
@@ -84,25 +83,18 @@ export function mapToShippingOptions(
     const cart = getCart();
     const config = getConfig();
     const checkout = getCheckout();
-    const customerId: number | undefined = customer?.id
-    const customerGroupId: number | undefined = customer?.customerGroup?.id
 
-    const storeHash= config?.storeProfile.storeHash
-    
     if (!config || !checkout || !customer || !cart) {
         return null;
     }
 
     const consignments = sortConsignments(cart, getConsignments() || []);
-    const methodId = getShippingMethodId(checkout);
+    const methodId = getShippingMethodId(checkout, config);
     const { shippingQuoteFailedMessage } = config.checkoutSettings;
 
     return {
         cart,
         consignments,
-        customerId,
-        customerGroupId,
-        storeHash,
         invalidShippingMessage: shippingQuoteFailedMessage,
         isLoading: isLoadingSelector(checkoutState, props),
         isSelectingShippingOption,

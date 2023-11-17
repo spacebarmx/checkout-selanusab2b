@@ -1,11 +1,13 @@
-import { GatewayOrderPayment, GiftCertificateOrderPayment, Order } from '@bigcommerce/checkout-sdk';
+import { GatewayOrderPayment, GiftCertificateOrderPayment, Order, StoreConfig } from '@bigcommerce/checkout-sdk';
 import React, { FunctionComponent, memo } from 'react';
 
-import { TranslatedHtml, TranslatedString } from '../locale';
+import { TranslatedHtml } from '@bigcommerce/checkout/locale';
 
 import OrderConfirmationSection from './OrderConfirmationSection';
+import { PaymentsWithMandates } from './PaymentsWithMandates';
 
 export interface OrderStatusProps {
+    config: StoreConfig;
     supportEmail: string;
     supportPhoneNumber?: string;
     order: Order;
@@ -19,6 +21,7 @@ const isPaymentWithMandate = (
 ): payment is PaymentWithMandate => !!payment.methodId && 'mandate' in payment && !!payment.mandate;
 
 const OrderStatus: FunctionComponent<OrderStatusProps> = ({
+    config,
     order,
     supportEmail,
     supportPhoneNumber,
@@ -26,78 +29,45 @@ const OrderStatus: FunctionComponent<OrderStatusProps> = ({
     const paymentsWithMandates = order.payments?.filter(isPaymentWithMandate) || [];
 
     return (
-      <OrderConfirmationSection>
-        {order.orderId && (
-          <p data-test="order-confirmation-order-number-text">
-            <TranslatedHtml
-              data={{ orderNumber: order.orderId }}
-              id="order_confirmation.order_number_text"
-            />
-          </p>
-        )}
+        <OrderConfirmationSection>
+            {order.orderId && (
+                <p data-test="order-confirmation-order-number-text">
+                    <TranslatedHtml
+                        data={{ orderNumber: order.orderId }}
+                        id="order_confirmation.order_number_text"
+                    />
+                </p>
+            )}
 
-        <p data-test="order-confirmation-order-status-text">
-          <OrderStatusMessage
-            orderNumber={order.orderId}
-            orderStatus={order.status}
-            supportEmail={supportEmail}
-            supportPhoneNumber={supportPhoneNumber}
-          />
-        </p>
-
-        {paymentsWithMandates.map((payment) => {
-          if (payment.mandate.url) {
-            return (
-              <a
-                data-test="order-confirmation-mandate-link-text"
-                href={payment.mandate.url}
-                key={`${payment.providerId}-${payment.methodId}-mandate`}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <TranslatedString
-                  id={`order_confirmation.mandate.${payment.providerId}.${payment.methodId}`}
+            <p data-test="order-confirmation-order-status-text">
+                <OrderStatusMessage
+                    config={config}
+                    orderNumber={order.orderId}
+                    orderStatus={order.status}
+                    supportEmail={supportEmail}
+                    supportPhoneNumber={supportPhoneNumber}
                 />
-              </a>
-            );
-          } else if (payment.mandate.id) {
-            return (
-              <p
-                data-test="order-confirmation-mandate-id-text"
-                key={`${payment.providerId}-${payment.methodId}-mandate`}
-              >
-                <TranslatedString
-                  data={{ mandate: payment.mandate.id }}
-                  id={`order_confirmation.mandate.${payment.providerId}.${payment.methodId}`}
-                />
-              </p>
-            );
-          }
-        })}
-
-        {order.hasDigitalItems && (
-          <p data-test="order-confirmation-digital-items-text">
-            <TranslatedHtml
-              id={
-                order.isDownloadable
-                  ? 'order_confirmation.order_with_downloadable_digital_items_text'
-                  : 'order_confirmation.order_without_downloadable_digital_items_text'
-              }
+            </p>
+            <PaymentsWithMandates
+                paymentsWithMandates={paymentsWithMandates}
             />
-          </p>
-        )}
-
-        <p>
-          Para solicitar factura dar clic{' '}
-          <a href="https://blog.selanusa.com.mx/factura" rel="noreferrer" target="_blank">
-            <b>aquí</b>
-          </a>
-        </p>
-      </OrderConfirmationSection>
+            {order.hasDigitalItems && (
+                <p data-test="order-confirmation-digital-items-text">
+                    <TranslatedHtml
+                        id={
+                            order.isDownloadable
+                                ? 'order_confirmation.order_with_downloadable_digital_items_text'
+                                : 'order_confirmation.order_without_downloadable_digital_items_text'
+                        }
+                    />
+                </p>
+            )}
+        </OrderConfirmationSection>
     );
 };
 
 interface OrderStatusMessageProps {
+    config: StoreConfig;
     orderNumber: number;
     orderStatus: string;
     supportEmail?: string;
@@ -105,6 +75,7 @@ interface OrderStatusMessageProps {
 }
 
 const OrderStatusMessage: FunctionComponent<OrderStatusMessageProps> = ({
+    config,
     orderNumber,
     orderStatus,
     supportEmail,
@@ -124,6 +95,15 @@ const OrderStatusMessage: FunctionComponent<OrderStatusMessageProps> = ({
             );
 
         case 'INCOMPLETE':
+            if (config.checkoutSettings.features['CHECKOUT-6891.update_incomplete_order_wording_on_order_confirmation_page']) {
+                return (
+                    <TranslatedHtml
+                        data={{ orderNumber, supportEmail }}
+                        id="order_confirmation.order_pending_status_text"
+                    />
+                );
+            }
+
             return (
                 <TranslatedHtml
                     data={{ orderNumber, supportEmail }}

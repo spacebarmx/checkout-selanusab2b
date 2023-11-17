@@ -4,11 +4,12 @@ import { isNil, noop, omitBy } from 'lodash';
 import React, { FunctionComponent, memo, useCallback, useContext, useMemo } from 'react';
 import { ObjectSchema } from 'yup';
 
+import { withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
 import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { FormContext } from '@bigcommerce/checkout/ui';
 
-import { withLanguage, WithLanguageProps } from '../locale';
 import { TermsConditions } from '../termsConditions';
-import { Fieldset, Form, FormContext } from '../ui/form';
+import { Fieldset, Form } from '../ui/form';
 
 import getPaymentValidationSchema from './getPaymentValidationSchema';
 import {
@@ -17,6 +18,7 @@ import {
     PaymentMethodId,
     PaymentMethodList,
 } from './paymentMethod';
+import PaymentRedeemables from './PaymentRedeemables';
 import PaymentSubmitButton from './PaymentSubmitButton';
 import SpamProtectionField from './SpamProtectionField';
 import { StoreCreditField, StoreCreditOverlay } from './storeCredit';
@@ -32,8 +34,6 @@ export interface PaymentFormProps {
     isUsingMultiShipping?: boolean;
     isStoreCreditApplied: boolean;
     methods: PaymentMethod[];
-    setRequireBill: any;
-    requireBill: boolean;
     selectedMethod?: PaymentMethod;
     shouldShowStoreCredit?: boolean;
     shouldDisableSubmit?: boolean;
@@ -63,8 +63,6 @@ const PaymentForm: FunctionComponent<
     isUsingMultiShipping,
     language,
     methods,
-    requireBill,
-    setRequireBill,
     onMethodSelect,
     onStoreCreditChange,
     onUnhandledError,
@@ -140,31 +138,16 @@ const PaymentForm: FunctionComponent<
                 values={values}
             />
 
-            <fieldset className='fieldSetFacturar'>
-                <legend className='legendFacturar'>¿Deseas facturar?</legend>
+            <PaymentRedeemables />
 
-                <div className='FacturarDiv'>
-                    <p className='facturarText'>Si</p>
-                    <input           
-                    checked={requireBill}
-                    id="requireBill"
-                    name="requireBill"
-                    onChange={()=>{
-                        setRequireBill(!requireBill)
-                    }}
-                    type="checkbox"
-                    />
-                </div>
-
-            </fieldset>
             {isTermsConditionsRequired && (
                 <TermsConditions
                     termsConditionsText={termsConditionsText}
                     termsConditionsUrl={termsConditionsUrl}
                 />
             )}
-            <div className="form-actions">
 
+            <div className="form-actions">
                 {shouldHidePaymentSubmitButton ? (
                     <PaymentMethodSubmitButtonContainer />
                 ) : (
@@ -173,6 +156,7 @@ const PaymentForm: FunctionComponent<
                         initialisationStrategyType={
                             selectedMethod && selectedMethod.initializationStrategy?.type
                         }
+                        isComplete={!!selectedMethod?.initializationData?.isComplete}
                         isDisabled={shouldDisableSubmit}
                         methodGateway={selectedMethod && selectedMethod.gateway}
                         methodId={selectedMethodId}
@@ -234,6 +218,8 @@ const PaymentMethodListFieldset: FunctionComponent<PaymentMethodListFieldsetProp
                 paymentProviderRadio: getUniquePaymentMethodId(method.id, method.gateway),
                 shouldCreateAccount: true,
                 shouldSaveInstrument: false,
+                accountNumber: '',
+                routingNumber: '',
             });
 
             setSubmitted(false);
@@ -285,6 +271,8 @@ const paymentFormConfig: WithFormikConfig<PaymentFormProps & WithLanguageProps, 
                     cardNumberVerification: '',
                 },
             },
+            accountNumber: '',
+            routingNumber: '',
         }),
 
         handleSubmit: (values, { props: { onSubmit = noop } }) => {

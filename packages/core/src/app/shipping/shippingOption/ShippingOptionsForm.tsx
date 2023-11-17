@@ -4,11 +4,11 @@ import { noop } from 'lodash';
 import React, { PureComponent, ReactNode } from 'react';
 
 import { AnalyticsContextProps } from '@bigcommerce/checkout/analytics';
+import { TranslatedString } from '@bigcommerce/checkout/locale';
 import { ChecklistSkeleton } from '@bigcommerce/checkout/ui';
 
-import { StaticAddress } from '../../address';
+import { AddressType, StaticAddress } from '../../address';
 import { withAnalytics } from '../../analytics';
-import { TranslatedString } from '../../locale';
 import getRecommendedShippingOption from '../getRecommendedShippingOption';
 import StaticConsignmentItemList from '../StaticConsignmentItemList';
 
@@ -35,7 +35,7 @@ class ShippingOptionsForm extends PureComponent<
             consignments,
             shouldShowShippingOptions
         } = this.props;
-        
+
         if (consignments?.length && shouldShowShippingOptions) {
             analyticsTracker.showShippingMethods();
         }
@@ -51,9 +51,6 @@ class ShippingOptionsForm extends PureComponent<
     render(): ReactNode {
         const {
             consignments,
-            customerId,
-            customerGroupId,
-            storeHash,
             isMultiShippingMode,
             selectShippingOption,
             isLoading,
@@ -81,7 +78,7 @@ class ShippingOptionsForm extends PureComponent<
                 </ChecklistSkeleton>
             );
         }
-        
+
         return (
             <>
                 {consignments.map((consignment) => (
@@ -90,10 +87,6 @@ class ShippingOptionsForm extends PureComponent<
 
                         <ShippingOptionsList
                             consignmentId={consignment.id}
-                            customerId= {customerId}
-                            customerGroupId={customerGroupId}
-                            postalCode= {consignment.shippingAddress.postalCode}
-                            stateOrProvince= {consignment.shippingAddress.stateOrProvince}
                             inputName={getRadioInputName(consignment.id)}
                             isLoading={isLoading(consignment.id)}
                             onSelectedOption={selectShippingOption}
@@ -102,7 +95,6 @@ class ShippingOptionsForm extends PureComponent<
                                 consignment.selectedShippingOption.id
                             }
                             shippingOptions={consignment.availableShippingOptions}
-                            storeHash={storeHash}
                         />
 
                         {(!consignment.availableShippingOptions ||
@@ -170,7 +162,7 @@ class ShippingOptionsForm extends PureComponent<
                     <TranslatedString id="shipping.shipping_address_heading" />
                 </strong>
 
-                <StaticAddress address={consignment.shippingAddress} />
+                <StaticAddress address={consignment.shippingAddress} type={AddressType.Shipping} />
 
                 <StaticConsignmentItemList cart={cart} consignment={consignment} />
             </div>
