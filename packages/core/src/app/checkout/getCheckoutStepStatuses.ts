@@ -30,9 +30,24 @@ const getCustomerStepStatus = createSelector(
                       (payment) => SUPPORTED_METHODS.indexOf(payment.providerId) >= 0,
                   )
                 : false;
+        const cartAmount = !!checkout && checkout.cart.cartAmount;
         const isGuest = !!(customer && customer.isGuest);
         const isComplete = hasEmail || isUsingWallet;
         const isEditable = isComplete && !isUsingWallet && isGuest;
+        const minmaxLimit = +(process.env.MINMAX_LIMIT || 3500);
+        const customerGroup = customer?.customerGroup?.id;
+
+        if (
+          customerGroup &&
+          cartAmount &&
+          minmaxLimit > cartAmount &&
+          customerGroup !== 540 &&
+          customerGroup !== 2048
+        ) {
+          location.href = '/cart.php';
+
+          return;
+        }
 
         // StripeLink is a UX that is only available with StripeUpe and will only be displayed for BC guest users,
         // it uses its own components in the customer and shipping steps, unfortunately in order to preserve the UX
