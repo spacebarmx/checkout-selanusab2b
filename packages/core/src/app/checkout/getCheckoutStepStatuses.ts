@@ -42,7 +42,10 @@ const getCustomerStepStatus = createSelector(
           cartAmount &&
           minmaxLimit > cartAmount &&
           customerGroup !== 570 &&
-          customerGroup !== 2048
+          customerGroup !== 2048 &&
+          customerGroup !== 1623 &&
+          customerGroup !== 1481 &&
+          customerGroup !== 1853
         ) {
           location.href = '/cart.php';
 
