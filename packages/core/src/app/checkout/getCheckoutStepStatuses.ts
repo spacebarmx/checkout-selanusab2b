@@ -46,7 +46,8 @@ const getCustomerStepStatus = createSelector(
           customerGroup !== 1623 &&
           customerGroup !== 1481 &&
           customerGroup !== 1853 &&
-          customerGroup !== 3031 
+          customerGroup !== 3031 &&
+          customerGroup !== 3079   
         ) {
           location.href = '/cart.php';
 
