@@ -27,8 +27,8 @@
     "loader-1.680.0.js"
   ],
   "integrity": {
-    "auto-loader-1.680.0.js": "sha256-uf+QiECn8kSEr/Uj9gtqYzfwlmIAWK3DkdAhkymfw7s= sha384-Oi1H/xlNr4cW6VPduB3thLCiXN8Phd6o+qYXDOkMhLubSzA1moFHatVeHUpjTXkK sha512-L9JC0XXG9TtxZ/W1TENHZPwO9228uCmdhdW5++b+YSqCnmu8TlEQSzcw9fVgseedG5rVKbhrQ3HNsQoEiZh5Lw==",
-    "loader-1.680.0.js": "sha256-OYupVqt7Zur69xXkpHbUEK/dEK63RmyH/svBMDbr3iY= sha384-sILuQR4VE8Vmz7xfgaVuXjpUdPPSjXz2ICyv4CQZzpeLDrthPKfOQ/LZHXNXaGo2 sha512-oh/BLjU9L4Wr1DT+f9CLw/M/7v3w/BPeYXBUhV/Rg6eY8tAubgWrA+YR/SlWAuHmHSFkX9EjASb7xzNTW8U0OA==",
+    "auto-loader-1.680.0.js": "sha256-7mAw9ZajpZZcZ3PBmnohaIB6NXHFrTYljiIxo4a281k= sha384-7K7X0FOd/LucZcwvXohnvnetcLgKe2ACiXkifLO8F7cUVjqRczFoxF7nkTHGLA9c sha512-5ejtKooQWMfCdGsjXE0OpYVx0DGzYaEaXy4WMCA/8bYPs5IKgxbj4J4RNKu1Beyu31G/q1WU4SzyXpUG/fmr4A==",
+    "loader-1.680.0.js": "sha256-kcu9Ut7tqxf+jql2G/1tplGlZY0ZwdVsp1/b0I+ei3c= sha384-GwdIAmX/leXqJKvyxFqsQjTkqekfJ19PyfsgWPhfZmItGvWihwzwf8Phd4hjRbbd sha512-NjNXO7ULZpfvtQ1JiSDMMy4HRkVHhQlcv/dNT9WXU/sRByaSRPKPp0jFMZFEldVwkN53aVaNPr3374IkzL+Nhw==",
     "translations-da-1.680.0.js": "sha256-85VLErlfNm/pq52CfSL6fcJ9WGi5AmWl+V87KpkEM9Q= sha384-CKZJWUOHzPSMlIPjHjsmoEZS2zYf5NFrrfjnnjox+sQRvmYZcpTOlEY2UCF/0JCo sha512-eVmbLiIJUEHWaa/9h9KEDfL9dCthgd8bSyx56CGF9JhboJAfQzyqehuHLUAS/agKEeZYMP8DJFcMfMU9abEduw==",
     "translations-de-1.680.0.js": "sha256-9BzRISbXVcI3ITOVR8s57IAFayyALpUwllhuhFQyNJE= sha384-x50jR/tX0fOW95OthIy0Fn9ylAdAXmdkfZyYXV4lrjlSdtP6oAy0C04YT1MpajK7 sha512-1dzWhwO2WodO+NHgZDtkRTTbQ3JiTxjb0ZsWtP5g3G19diFiTft/klqVZsyYufdbcolr/OozLy0Kf2TCEgrehA==",
     "translations-es-419-1.680.0.js": "sha256-MIkRBovr4MIuD0Lpt18F+4t2SS92Op6Joc2ZBt+gYOc= sha384-JnmFDUOXXfVGMsVp7j9osaOFENzv1W5o16/cBts6eKRuWenuTdyUDhvFenlMkdXQ sha512-t+bUQzj6bLXS76t/xwj+3uovpznMAP2zEcNFTNxePBfYZUKwp08xwqqPpcZuV89mqtd7k0XdqFF5S6/VptDblA==",
