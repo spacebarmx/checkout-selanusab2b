@@ -30,6 +30,14 @@ const getStripeLinkAndCheckoutPageIsReloaded = (
     return !isUsingWallet && providerWithCustomCheckout === PaymentMethodId.StripeUPE && hasEmail && isGuest && shouldUseStripeLinkByMinimumAmount;
 }
 
+interface CustomCheckoutWindow extends Window {
+    MINMAX_LIMIT?: string;
+}
+
+const customCheckoutWindow: CustomCheckoutWindow = window as CustomCheckoutWindow;
+
+const { MINMAX_LIMIT = 3500, } = customCheckoutWindow;
+
 const getCustomerStepStatus = createSelector(
     ({ data }: CheckoutSelectors) => data.getCheckout(),
     ({ data }: CheckoutSelectors) => data.getCustomer(),
@@ -48,9 +56,10 @@ const getCustomerStepStatus = createSelector(
                     (payment: CheckoutPayment) => SUPPORTED_METHODS.includes(payment.providerId),
                   )
                 : false;
+
         const isGuest = !!(customer && customer.isGuest);
         const cartAmount = !!checkout && checkout.cart.cartAmount;
-        const minmaxLimit = +(process.env.MINMAX_LIMIT || 3500);
+        const minmaxLimit = +(MINMAX_LIMIT || 3500);
         const customerGroup = customer?.customerGroup?.id;
         const isComplete = hasEmail || isUsingWallet;
         const isEditable = isComplete && !isUsingWallet && isGuest;

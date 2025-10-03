@@ -1,9 +1,15 @@
 import getCarriersName from "./getCarriersName";
 
-export async function getCarriers(userBcId: number | undefined) {
+interface CustomCheckoutWindow extends Window {
+    BUNDLEURL?: string;
+    BUNDLEAUTHTOKEN?: string;
+}
 
-    const BUNDLEURL = process.env.BUNDLEURL || ''
-    const BUNDLEAUTHTOKEN = process.env.BUNDLEAUTHTOKEN || ''
+const customCheckoutWindow: CustomCheckoutWindow = window as CustomCheckoutWindow;
+
+const { BUNDLEAUTHTOKEN = '', BUNDLEURL = '' } = customCheckoutWindow;
+
+export async function getCarriers(userBcId: number | undefined) {
     
     if(userBcId===undefined)return;
     
@@ -11,7 +17,7 @@ export async function getCarriers(userBcId: number | undefined) {
          
         const companiesIds = await fetch(`${BUNDLEURL}/v3/io/companies?customerId=${userBcId}`, 
             {
-                headers: {'Content-Type': 'application/json', authToken: BUNDLEAUTHTOKEN}
+                headers: { 'Content-Type': 'application/json', authToken: BUNDLEAUTHTOKEN }
             }
         ) .then(response => response.json())
           .then(response => response.data.map((res:any)=>res.companyId))
@@ -21,7 +27,7 @@ export async function getCarriers(userBcId: number | undefined) {
             
                 const companyDetails= await fetch(`${BUNDLEURL}/v3/io/companies/${companyId}`, 
                 {
-                    headers: {'Content-Type': 'application/json', authToken: BUNDLEAUTHTOKEN}
+                    headers: { 'Content-Type': 'application/json', authToken: BUNDLEAUTHTOKEN }
                 }
                 ).then(response => response.json())
                 .then(response => response.data)

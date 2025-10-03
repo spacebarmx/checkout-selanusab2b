@@ -11,6 +11,10 @@ import { type RenderOrderConfirmationOptions } from './order';
 declare const LIBRARY_NAME: string;
 declare const MANIFEST_JSON: AssetManifest;
 declare const PRELOAD_ASSETS: string[];
+declare const BUNDLEURL: string;
+declare const BUNDLEAUTHTOKEN: string;
+declare const SELANUSAAPIURL: string;
+declare const MINMAX_LIMIT: string;
 
 export interface AssetManifest {
     appVersion: string;
@@ -82,6 +86,12 @@ export function loadFiles(options?: LoadFilesOptions): Promise<LoadFilesResult> 
         ? window.language
         : { locale: 'en', locales: {}, translations: {} };
 
+    // B2B use env
+    (window as any).BUNDLEURL = BUNDLEURL;
+    (window as any).BUNDLEAUTHTOKEN = BUNDLEAUTHTOKEN;
+    (window as any).SELANUSAAPIURL = SELANUSAAPIURL;
+    (window as any).MINMAX_LIMIT = MINMAX_LIMIT;
+    
     return Promise.all([getDefaultTranslations(languageConfig.locale), scripts, stylesheets]).then(
         ([defaultTranslations]) => {
             if (!isRecordContainingKey(window, LIBRARY_NAME)) {

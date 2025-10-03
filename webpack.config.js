@@ -304,6 +304,16 @@ function loaderConfig(options, argv) {
                         eventEmitter.on('app:done', () => {
                             if (!wasTriggeredBefore) {
                                 const definePlugin = new DefinePlugin({
+                                    BUNDLEURL: JSON.stringify(process.env?.BUNDLEURL || ''),
+                                    BUNDLEAUTHTOKEN: JSON.stringify(
+                                        process.env?.BUNDLEAUTHTOKEN || '',
+                                    ),
+                                    SELANUSAAPIURL: JSON.stringify(
+                                        process.env?.SELANUSAAPIURL || '',
+                                    ),
+                                    MINMAX_LIMIT: JSON.stringify(
+                                        process.env.MINMAX_LIMIT || '3500',
+                                    ),
                                     LIBRARY_NAME: JSON.stringify(LIBRARY_NAME),
                                     PRELOAD_ASSETS: JSON.stringify(PRELOAD_ASSETS),
                                     MANIFEST_JSON: JSON.stringify(
