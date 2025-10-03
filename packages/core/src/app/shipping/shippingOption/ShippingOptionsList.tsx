@@ -49,14 +49,13 @@ const ShippingOptionListItem: FunctionComponent<ShippingOptionListItemProps> = (
 
 export interface ShippingOptionListProps {
     consignmentId: string;
-    inputName: string;
-    isLoading: boolean;
-    isMultiShippingMode: boolean;
     customerId?: number ;
     customerGroupId?: number;
     postalCode: string;
     stateOrProvince: string;
-    storeHash?: string;
+    inputName: string;
+    isLoading: boolean;
+    isMultiShippingMode: boolean;
     selectedShippingOptionId?: string;
     shippingOptions?: ShippingOption[];
     onSelectedOption(consignmentId: string, shippingOptionId: string): void;
@@ -64,18 +63,18 @@ export interface ShippingOptionListProps {
 
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
     consignmentId,
-    inputName,
-    isLoading,
-    isMultiShippingMode,
     customerId,
     customerGroupId,
     postalCode,
     stateOrProvince,
+    inputName,
+    isLoading,
+    isMultiShippingMode,
     shippingOptions = EMPTY_ARRAY,
     selectedShippingOptionId,
     onSelectedOption,
 }) => {
-    const [filteredShippingOptions, setFilteredShippingOptions] = useState<ShippingOption[]>([])
+    const [filteredShippingOptions, setFilteredShippingOptions] = useState<ShippingOption[]>([]);
     const handleSelect = useCallback(
         (value: string) => {
             onSelectedOption(consignmentId, value);

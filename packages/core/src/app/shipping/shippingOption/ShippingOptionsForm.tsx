@@ -28,6 +28,8 @@ export interface ShippingOptionsFormValues {
 const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<ShippingOptionsFormValues>): ReactElement => {
     const {
         consignments,
+        customerId,
+        customerGroupId,
         cart,
         isMultiShippingMode,
         selectShippingOption,
@@ -39,9 +41,6 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
         setFieldValue,
         shippingFormRenderTimestamp,
         setValues,
-        customerGroupId,
-        customerId,
-        storeHash,
     } = props;
     const { analyticsTracker } = useAnalytics();
 
@@ -129,7 +128,7 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
                             consignment.selectedShippingOption.id}
                         shippingOptions={consignment.availableShippingOptions}
                         stateOrProvince={consignment.shippingAddress.stateOrProvince}
-                        storeHash={storeHash}                   />
+                    />
 
                     {(!consignment.availableShippingOptions ||
                         !consignment.availableShippingOptions.length) && (

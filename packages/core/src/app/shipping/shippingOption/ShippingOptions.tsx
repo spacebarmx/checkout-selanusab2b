@@ -91,8 +91,6 @@ export function mapToShippingOptions(
     const customerId: number | undefined = customer?.id
     const customerGroupId: number | undefined = customer?.customerGroup?.id
 
-    const storeHash= config?.storeProfile.storeHash
-
     if (!config || !checkout || !customer || !cart) {
         return null;
     }
@@ -105,7 +103,6 @@ export function mapToShippingOptions(
         cart,
         customerId,
         customerGroupId,
-        storeHash,
         consignments,
         invalidShippingMessage: shippingQuoteFailedMessage,
         isLoading: isLoadingSelector(checkoutState, props.isUpdatingAddress),

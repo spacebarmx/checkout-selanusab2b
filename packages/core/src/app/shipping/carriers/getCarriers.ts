@@ -1,15 +1,9 @@
 import getCarriersName from "./getCarriersName";
 
-interface CustomCheckoutWindow extends Window {
-    BUNDLEURL?: string;
-    BUNDLEAUTHTOKEN?: string;
-}
-
-const customCheckoutWindow: CustomCheckoutWindow = window as CustomCheckoutWindow;
-
-const { BUNDLEAUTHTOKEN = '', BUNDLEURL = '' } = customCheckoutWindow;
-
 export async function getCarriers(userBcId: number | undefined) {
+
+    const BUNDLEURL = process.env.BUNDLEURL || ''
+    const BUNDLEAUTHTOKEN = process.env.BUNDLEAUTHTOKEN || ''
     
     if(userBcId===undefined)return;
     

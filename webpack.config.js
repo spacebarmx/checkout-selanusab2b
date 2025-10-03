@@ -1,4 +1,5 @@
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const dotenv = require('dotenv');
 const EventEmitter = require('events');
 const { copyFileSync } = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -26,11 +27,17 @@ const {
     transformManifest,
 } = require('./scripts/webpack');
 
+const env = dotenv.config().parsed;
 const ENTRY_NAME = 'checkout';
 const LIBRARY_NAME = 'checkout';
 const AUTO_LOADER_ENTRY_NAME = 'auto-loader';
 const LOADER_ENTRY_NAME = 'loader';
 const LOADER_LIBRARY_NAME = 'checkoutLoader';
+const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+
+    return prev;
+}, {});
 const PRELOAD_ASSETS = ['billing', 'shipping', 'payment'];
 
 const eventEmitter = new EventEmitter();
@@ -117,6 +124,7 @@ function appConfig(options, argv) {
                 crossOriginLoading: 'anonymous',
             },
             plugins: [
+                new DefinePlugin(envKeys),
                 new SubresourceIntegrityPlugin({
                     hashFuncNames: ['sha256'],
                     enabled: isProduction,
@@ -304,16 +312,6 @@ function loaderConfig(options, argv) {
                         eventEmitter.on('app:done', () => {
                             if (!wasTriggeredBefore) {
                                 const definePlugin = new DefinePlugin({
-                                    BUNDLEURL: JSON.stringify(process.env?.BUNDLEURL || ''),
-                                    BUNDLEAUTHTOKEN: JSON.stringify(
-                                        process.env?.BUNDLEAUTHTOKEN || '',
-                                    ),
-                                    SELANUSAAPIURL: JSON.stringify(
-                                        process.env?.SELANUSAAPIURL || '',
-                                    ),
-                                    MINMAX_LIMIT: JSON.stringify(
-                                        process.env.MINMAX_LIMIT || '3500',
-                                    ),
                                     LIBRARY_NAME: JSON.stringify(LIBRARY_NAME),
                                     PRELOAD_ASSETS: JSON.stringify(PRELOAD_ASSETS),
                                     MANIFEST_JSON: JSON.stringify(
