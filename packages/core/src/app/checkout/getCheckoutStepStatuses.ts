@@ -37,6 +37,7 @@ interface CustomCheckoutWindow extends Window {
 const customCheckoutWindow: CustomCheckoutWindow = window as CustomCheckoutWindow;
 
 const { MINMAX_LIMIT = 3500, } = customCheckoutWindow;
+const ids = [570,2048,1623,1481,1853,3031,3079]
 
 const getCustomerStepStatus = createSelector(
     ({ data }: CheckoutSelectors) => data.getCheckout(),
@@ -70,16 +71,16 @@ const getCustomerStepStatus = createSelector(
             cart ? shouldUseStripeLinkByMinimumAmount(cart) : false,
             config?.checkoutSettings.providerWithCustomCheckout,
         );
-        const ids = [570,2048,1623,1481,1853,3031,3079]
 
         if (
-          customerGroup &&
-          cartAmount &&
-          minmaxLimit > cartAmount &&
-          ids.includes(customerGroup)) {
-          location.href = '/cart.php';
+            customerGroup &&
+            cartAmount &&
+            minmaxLimit > cartAmount &&
+            !ids.includes(customerGroup)
+        ) {
+            location.href = '/cart.php';
 
-          return;
+            return;
         }
 
         if (isUsingStripeLinkAndCheckoutPageIsReloaded) {
