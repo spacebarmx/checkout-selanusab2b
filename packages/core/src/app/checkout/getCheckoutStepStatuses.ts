@@ -49,6 +49,9 @@ const getCustomerStepStatus = createSelector(
                   )
                 : false;
         const isGuest = !!(customer && customer.isGuest);
+        const cartAmount = !!checkout && checkout.cart.cartAmount;
+        const minmaxLimit = +(process.env.MINMAX_LIMIT || 3500);
+        const customerGroup = customer?.customerGroup?.id;
         const isComplete = hasEmail || isUsingWallet;
         const isEditable = isComplete && !isUsingWallet && isGuest;
         const isUsingStripeLinkAndCheckoutPageIsReloaded = getStripeLinkAndCheckoutPageIsReloaded(
@@ -58,6 +61,17 @@ const getCustomerStepStatus = createSelector(
             cart ? shouldUseStripeLinkByMinimumAmount(cart) : false,
             config?.checkoutSettings.providerWithCustomCheckout,
         );
+        const ids = [570,2048,1623,1481,1853,3031,3079]
+
+        if (
+          customerGroup &&
+          cartAmount &&
+          minmaxLimit > cartAmount &&
+          ids.includes(customerGroup)) {
+          location.href = '/cart.php';
+
+          return;
+        }
 
         if (isUsingStripeLinkAndCheckoutPageIsReloaded) {
             return {

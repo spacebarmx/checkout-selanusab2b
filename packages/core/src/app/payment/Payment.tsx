@@ -1,5 +1,7 @@
 import {
     type CartChangedError,
+    type Checkout,
+    type CheckoutRequestBody,
     type CheckoutSelectors,
     type CheckoutService,
     type CheckoutSettings,
@@ -76,11 +78,14 @@ interface WithCheckoutPaymentProps {
     loadPaymentMethods(): Promise<CheckoutSelectors>;
     submitOrder(values: OrderRequestBody): Promise<CheckoutSelectors>;
     checkoutServiceSubscribe: CheckoutService['subscribe'];
+    updateCheckout(payload: CheckoutRequestBody): Promise<CheckoutSelectors>;
+    getCheckout():Checkout | undefined;
 }
 
 interface PaymentState {
     didExceedSpamLimit: boolean;
     isReady: boolean;
+    requireBill: boolean;
     selectedMethod?: PaymentMethod;
     shouldDisableSubmit: { [key: string]: boolean };
     shouldHidePaymentSubmitButton: { [key: string]: boolean };
@@ -95,6 +100,7 @@ class Payment extends Component<
     state: PaymentState = {
         didExceedSpamLimit: false,
         isReady: false,
+        requireBill: false, 
         shouldDisableSubmit: {},
         shouldHidePaymentSubmitButton: {},
         validationSchemas: {},
@@ -204,7 +210,9 @@ class Payment extends Component<
                             onStoreCreditChange={this.handleStoreCreditChange}
                             onSubmit={this.handleSubmit}
                             onUnhandledError={this.handleError}
+                            requireBill= {this.state.requireBill}
                             selectedMethod={selectedMethod}
+                            setRequireBill= {this.setRequireBill}
                             shouldDisableSubmit={
                                 (uniqueSelectedMethodId &&
                                     shouldDisableSubmit[uniqueSelectedMethodId]) ||
@@ -414,15 +422,17 @@ class Payment extends Component<
         const {
             defaultMethod,
             loadPaymentMethods,
+            updateCheckout,
+            getCheckout,
             isPaymentDataRequired,
             onCartChangedError = noop,
             onSubmit = noop,
             onSubmitError = noop,
             submitOrder,
-            analyticsTracker
+            analyticsTracker,
         } = this.props;
 
-        const { selectedMethod = defaultMethod, submitFunctions } = this.state;
+        const { selectedMethod = defaultMethod, submitFunctions, requireBill } = this.state;
 
         analyticsTracker.clickPayButton({ shouldCreateAccount: values.shouldCreateAccount });
 
@@ -434,7 +444,19 @@ class Payment extends Component<
             return customSubmit(values);
         }
 
+        const orderComment = requireBill ? "Se requiere factura" : "No se requiere factura"
+
         try {
+
+            const promises: Array<Promise<CheckoutSelectors>> = [];
+
+            const checkoutInfo = getCheckout();
+
+            const oldCustomerMessage:string = checkoutInfo !== undefined ? checkoutInfo.customerMessage.replaceAll("Se requiere factura","").replaceAll("No se requiere factura","") : "";
+
+            promises.push(updateCheckout({ customerMessage: `${orderComment}, ${oldCustomerMessage}` }));
+
+
             const state = await submitOrder(mapToOrderRequestBody(values, isPaymentDataRequired()));
             const order = state.data.getOrder();
 
@@ -486,6 +508,13 @@ class Payment extends Component<
                 ...submitFunctions,
                 [uniqueId]: fn,
             },
+        });
+    };
+
+    private setRequireBill: () => void = () => {
+
+        this.setState({
+            requireBill:!this.state.requireBill
         });
     };
 
@@ -669,6 +698,8 @@ export function mapToPaymentProps({
         shouldLocaliseErrorMessages:
             features['PAYMENTS-6799.localise_checkout_payment_error_messages'],
         submitOrder: checkoutService.submitOrder,
+        updateCheckout: checkoutService.updateCheckout,
+        getCheckout:checkoutState.data.getCheckout,
         submitOrderError: getSubmitOrderError(),
         checkoutServiceSubscribe: checkoutService.subscribe,
         termsConditionsText:
