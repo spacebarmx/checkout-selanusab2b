@@ -38,7 +38,10 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
         subscribeToConsignments,
         setFieldValue,
         shippingFormRenderTimestamp,
-        setValues
+        setValues,
+        customerGroupId,
+        customerId,
+        storeHash,
     } = props;
     const { analyticsTracker } = useAnalytics();
 
@@ -115,16 +118,18 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
 
                     <ShippingOptionsList
                         consignmentId={consignment.id}
+                        customerGroupId={customerGroupId}
+                        customerId={customerId}
                         inputName={`shippingOptionIds.${consignment.id}`}
                         isLoading={isLoading(consignment.id)}
                         isMultiShippingMode={isMultiShippingMode}
                         onSelectedOption={selectShippingOption}
-                        selectedShippingOptionId={
-                            consignment.selectedShippingOption &&
-                            consignment.selectedShippingOption.id
-                        }
+                        postalCode= {consignment.shippingAddress.postalCode}
+                        selectedShippingOptionId={consignment.selectedShippingOption &&
+                            consignment.selectedShippingOption.id}
                         shippingOptions={consignment.availableShippingOptions}
-                    />
+                        stateOrProvince={consignment.shippingAddress.stateOrProvince}
+                        storeHash={storeHash}                   />
 
                     {(!consignment.availableShippingOptions ||
                         !consignment.availableShippingOptions.length) && (
