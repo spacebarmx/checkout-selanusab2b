@@ -1,100 +1,168 @@
-import { ExtensionRegion, type ShippingOption } from '@bigcommerce/checkout-sdk';
-import React, { type FunctionComponent, memo, useCallback } from 'react';
+import { ExtensionRegion, type ShippingOption } from '@bigcommerce/checkout-sdk/essential';
+import React, { type FunctionComponent, memo, useCallback, useEffect, useState } from 'react';
 
 import { Extension } from '@bigcommerce/checkout/checkout-extension';
 import { LoadingOverlay } from '@bigcommerce/checkout/ui';
 
 import { EMPTY_ARRAY } from '../../common/utility';
 import { Checklist, ChecklistItem } from '../../ui/form';
+import { getCarriers } from '../carriers/getCarriers';
+import GetDefaultCarriers from '../carriers/getDefaultCarriers';
 
 import StaticShippingOption from './StaticShippingOption';
 
 interface ShippingOptionListItemProps {
-    consignmentId: string;
-    isMultiShippingMode: boolean;
-    selectedShippingOptionId?: string;
-    shippingOption: ShippingOption;
+  consignmentId: string;
+  isMultiShippingMode: boolean;
+  selectedShippingOptionId?: string;
+  shippingOption: ShippingOption;
 }
 
 const ShippingOptionListItem: FunctionComponent<ShippingOptionListItemProps> = ({
-    consignmentId,
-    isMultiShippingMode,
-    selectedShippingOptionId,
-    shippingOption,
+  consignmentId,
+  isMultiShippingMode,
+  selectedShippingOptionId,
+  shippingOption,
 }) => {
-    const isSelected = selectedShippingOptionId === shippingOption.id;
+  const isSelected = selectedShippingOptionId === shippingOption.id;
 
-    const renderLabel = useCallback(
-        () => (
-            <div className="shippingOptionLabel">
-                <StaticShippingOption displayAdditionalInformation={true} method={shippingOption} />
-                {(isSelected && !isMultiShippingMode) && (
-                    <Extension region={ExtensionRegion.ShippingSelectedShippingMethod} />
-                )}
-            </div>
-        ),
-        [isSelected, isMultiShippingMode, shippingOption],
-    );
+  const renderLabel = useCallback(
+    () => (
+      <div className="shippingOptionLabel">
+        <StaticShippingOption displayAdditionalInformation={true} method={shippingOption} />
+        {isSelected && !isMultiShippingMode && (
+          <Extension region={ExtensionRegion.ShippingSelectedShippingMethod} />
+        )}
+      </div>
+    ),
+    [isSelected, isMultiShippingMode, shippingOption],
+  );
 
-    return (
-        <ChecklistItem
-            htmlId={`shippingOptionRadio-${consignmentId}-${shippingOption.id}`}
-            label={renderLabel}
-            value={shippingOption.id}
-        />
-    );
+  return (
+    <ChecklistItem
+      htmlId={`shippingOptionRadio-${consignmentId}-${shippingOption.id}`}
+      label={renderLabel}
+      value={shippingOption.id}
+    />
+  );
 };
 
 export interface ShippingOptionListProps {
-    consignmentId: string;
-    inputName: string;
-    isLoading: boolean;
-    isMultiShippingMode: boolean;
-    selectedShippingOptionId?: string;
-    shippingOptions?: ShippingOption[];
-    onSelectedOption(consignmentId: string, shippingOptionId: string): void;
+  consignmentId: string;
+  customerId?: number;
+  customerGroupId?: number;
+  postalCode: string;
+  stateOrProvince: string;
+  inputName: string;
+  isLoading: boolean;
+  isMultiShippingMode: boolean;
+  selectedShippingOptionId?: string;
+  shippingOptions?: ShippingOption[];
+  onSelectedOption(consignmentId: string, shippingOptionId: string): void;
 }
 
 const ShippingOptionsList: FunctionComponent<ShippingOptionListProps> = ({
-    consignmentId,
-    inputName,
-    isLoading,
-    isMultiShippingMode,
-    shippingOptions = EMPTY_ARRAY,
-    selectedShippingOptionId,
-    onSelectedOption,
+  consignmentId,
+  customerId,
+  customerGroupId,
+  postalCode,
+  stateOrProvince,
+  inputName,
+  isLoading,
+  isMultiShippingMode,
+  shippingOptions = EMPTY_ARRAY,
+  selectedShippingOptionId,
+  onSelectedOption,
 }) => {
-    const handleSelect = useCallback(
-        (value: string) => {
-            onSelectedOption(consignmentId, value);
-        },
-        [consignmentId, onSelectedOption],
-    );
+  const [filteredShippingOptions, setFilteredShippingOptions] = useState<ShippingOption[]>([]);
+  const handleSelect = useCallback(
+    (value: string) => {
+      onSelectedOption(consignmentId, value);
+    },
+    [consignmentId, onSelectedOption],
+  );
+  const setFilterCarriers = async () => {
+    if (!shippingOptions.length) return;
 
-    if (!shippingOptions.length) {
-        return null;
+    // Carriers from Bundle
+    const newCarriers = (await getCarriers(customerId)) || [];
+    const bundleCarriers = pushAndFilterCarriers(newCarriers);
+
+    // Default Carriers
+    const newDefaultCarriers = await GetDefaultCarriers();
+    const defaultCarriersFromDb = pushAndFilterCarriers(newDefaultCarriers);
+
+    const allCarriers = defaultCarriersFromDb.concat(bundleCarriers);
+
+    setFilteredShippingOptions(allCarriers);
+  };
+
+  useEffect(() => {
+    setFilterCarriers();
+  }, [postalCode, stateOrProvince]);
+
+  const pushAndFilterCarriers = (Carriers: string[]) => {
+    const newFilteredShipping = [];
+
+    for (const carrierName of Carriers) {
+      const filteredShipping = shippingOptions.find(
+        (element) => element.description === carrierName,
+      );
+
+      if (!filteredShipping) continue;
+
+      const isTheStateAndSelanusasGroup =
+        customerGroupId === 570 && stateOrProvince === 'Ciudad de México';
+
+      // has to be one of the selected pickup in store, has the correcto postalCode and be in the state México
+      if (
+        filteredShipping.description === 'Boutique Selanusa' ||
+        filteredShipping.description === 'Recoger CLS'
+      ) {
+        if (
+          !(
+            (postalCode === '06080' && filteredShipping.description === 'Boutique Selanusa') ||
+            (postalCode === '07040' && filteredShipping.description === 'Recoger CLS')
+          ) ||
+          !isTheStateAndSelanusasGroup
+        )
+          continue;
+      }
+
+      newFilteredShipping.push(filteredShipping);
     }
 
-    return (
-        <LoadingOverlay isLoading={isLoading}>
-            <Checklist
-                aria-live="polite"
-                defaultSelectedItemId={selectedShippingOptionId}
-                name={inputName}
-                onSelect={handleSelect}
-            >
-                {shippingOptions.map((shippingOption) => (
-                    <ShippingOptionListItem
-                        consignmentId={consignmentId}
-                        isMultiShippingMode={isMultiShippingMode}
-                        key={shippingOption.id}
-                        selectedShippingOptionId={selectedShippingOptionId}
-                        shippingOption={shippingOption}
-                    />
-                ))}
-            </Checklist>
-        </LoadingOverlay>
-    );
+    return newFilteredShipping;
+  };
+
+  if (!shippingOptions.length) {
+    return null;
+  }
+
+  return (
+    <LoadingOverlay isLoading={isLoading}>
+      {filteredShippingOptions ? (
+        <Checklist
+          aria-live="polite"
+          defaultSelectedItemId={selectedShippingOptionId}
+          name={inputName}
+          onSelect={handleSelect}
+        >
+          {filteredShippingOptions.map((shippingOption) => (
+            <ShippingOptionListItem
+              consignmentId={consignmentId}
+              isMultiShippingMode={isMultiShippingMode}
+              key={shippingOption.id}
+              selectedShippingOptionId={selectedShippingOptionId}
+              shippingOption={shippingOption}
+            />
+          ))}
+        </Checklist>
+      ) : (
+        <h4>No hay transportistas disponibles</h4>
+      )}
+    </LoadingOverlay>
+  );
 };
 
 export default memo(ShippingOptionsList);

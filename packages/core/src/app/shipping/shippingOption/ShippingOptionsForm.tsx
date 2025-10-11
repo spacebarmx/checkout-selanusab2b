@@ -28,6 +28,8 @@ export interface ShippingOptionsFormValues {
 const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<ShippingOptionsFormValues>): ReactElement => {
     const {
         consignments,
+        customerId,
+        customerGroupId,
         cart,
         isMultiShippingMode,
         selectShippingOption,
@@ -38,7 +40,7 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
         subscribeToConsignments,
         setFieldValue,
         shippingFormRenderTimestamp,
-        setValues
+        setValues,
     } = props;
     const { analyticsTracker } = useAnalytics();
 
@@ -115,15 +117,17 @@ const ShippingOptionsForm = (props: ShippingOptionsFormProps & FormikProps<Shipp
 
                     <ShippingOptionsList
                         consignmentId={consignment.id}
+                        customerGroupId={customerGroupId}
+                        customerId={customerId}
                         inputName={`shippingOptionIds.${consignment.id}`}
                         isLoading={isLoading(consignment.id)}
                         isMultiShippingMode={isMultiShippingMode}
                         onSelectedOption={selectShippingOption}
-                        selectedShippingOptionId={
-                            consignment.selectedShippingOption &&
-                            consignment.selectedShippingOption.id
-                        }
+                        postalCode= {consignment.shippingAddress.postalCode}
+                        selectedShippingOptionId={consignment.selectedShippingOption &&
+                            consignment.selectedShippingOption.id}
                         shippingOptions={consignment.availableShippingOptions}
+                        stateOrProvince={consignment.shippingAddress.stateOrProvince}
                     />
 
                     {(!consignment.availableShippingOptions ||

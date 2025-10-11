@@ -30,6 +30,8 @@ const getStripeLinkAndCheckoutPageIsReloaded = (
     return !isUsingWallet && providerWithCustomCheckout === PaymentMethodId.StripeUPE && hasEmail && isGuest && shouldUseStripeLinkByMinimumAmount;
 }
 
+const ids = [570,2048,1623,1481,1853,3031,3079]
+
 const getCustomerStepStatus = createSelector(
     ({ data }: CheckoutSelectors) => data.getCheckout(),
     ({ data }: CheckoutSelectors) => data.getCustomer(),
@@ -48,7 +50,11 @@ const getCustomerStepStatus = createSelector(
                     (payment: CheckoutPayment) => SUPPORTED_METHODS.includes(payment.providerId),
                   )
                 : false;
+
         const isGuest = !!(customer && customer.isGuest);
+        const cartAmount = !!checkout && checkout.cart.cartAmount;
+        const minmaxLimit = +(process.env.MINMAX_LIMIT || 3500);
+        const customerGroup = customer?.customerGroup?.id;
         const isComplete = hasEmail || isUsingWallet;
         const isEditable = isComplete && !isUsingWallet && isGuest;
         const isUsingStripeLinkAndCheckoutPageIsReloaded = getStripeLinkAndCheckoutPageIsReloaded(
@@ -58,6 +64,17 @@ const getCustomerStepStatus = createSelector(
             cart ? shouldUseStripeLinkByMinimumAmount(cart) : false,
             config?.checkoutSettings.providerWithCustomCheckout,
         );
+
+        if (
+            customerGroup &&
+            cartAmount &&
+            minmaxLimit > cartAmount &&
+            !ids.includes(customerGroup)
+        ) {
+            location.href = '/cart.php';
+
+            return;
+        }
 
         if (isUsingStripeLinkAndCheckoutPageIsReloaded) {
             return {

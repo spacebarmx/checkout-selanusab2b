@@ -20,9 +20,12 @@ export interface ShippingOptionsProps {
 
 export interface WithCheckoutShippingOptionsProps {
     invalidShippingMessage: string;
+    customerId?: number;
+    customerGroupId?: number;
     methodId?: string;
     consignments?: Consignment[];
     cart: Cart;
+    storeHash?: string;
     isSelectingShippingOption(consignmentId?: string): boolean;
     subscribeToConsignments(subscriber: (state: CheckoutSelectors) => void): () => void;
     selectShippingOption(consignmentId: string, optionId: string): Promise<CheckoutSelectors>;
@@ -85,6 +88,8 @@ export function mapToShippingOptions(
     const cart = getCart();
     const config = getConfig();
     const checkout = getCheckout();
+    const customerId: number | undefined = customer?.id
+    const customerGroupId: number | undefined = customer?.customerGroup?.id
 
     if (!config || !checkout || !customer || !cart) {
         return null;
@@ -96,6 +101,8 @@ export function mapToShippingOptions(
 
     return {
         cart,
+        customerId,
+        customerGroupId,
         consignments,
         invalidShippingMessage: shippingQuoteFailedMessage,
         isLoading: isLoadingSelector(checkoutState, props.isUpdatingAddress),
