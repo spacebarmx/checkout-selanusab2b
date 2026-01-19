@@ -715,6 +715,7 @@ export function mapToPaymentProps({
 
     return {
       ...method,
+      logoUrl: `https://cdn11.bigcommerce.com/s-${config.storeProfile.storeHash}/images/stencil/original/image-manager/kueski-pay.png`,
       method: PaymentMethodType.Kueski,
       type: PaymentMethodProviderType.Api,
     };

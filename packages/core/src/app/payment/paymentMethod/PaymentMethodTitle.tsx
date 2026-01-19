@@ -204,7 +204,7 @@ export function getPaymentMethodTitle(
         logoUrl:
           method.logoUrl ||
           'https://cococosmeticanatural.com.mx/wp-content/uploads/2021/08/Kueskipay.png',
-        titleText: methodDisplayName,
+        titleText: '',
       },
       [PaymentMethodType.Paypal]: {
         // TODO: method.id === PaymentMethodId.BraintreeVenmo should be removed after the PAYPAL-1380.checkout_button_strategies_update experiment removal
@@ -457,6 +457,7 @@ const PaymentMethodTitle: FunctionComponent<
               'paymentProviderHeader-img',
               { 'paymentProviderHeader-img-applePay': method.id === 'applepay' },
               { 'paymentProviderHeader-img-googlePay': method.id.includes('googlepay') },
+              { 'paymentProviderHeader-img-kueskiPay': method.method === PaymentMethodType.Kueski },
             )}
             data-test="payment-method-logo"
             src={logoUrl}

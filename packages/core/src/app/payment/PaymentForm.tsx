@@ -8,7 +8,7 @@ import { Extension } from '@bigcommerce/checkout/checkout-extension';
 import { useCheckout } from '@bigcommerce/checkout/contexts';
 import { TranslatedString, withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
 import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
-import { FormContext } from '@bigcommerce/checkout/ui';
+import { FormContext, Input, Label } from '@bigcommerce/checkout/ui';
 
 import { isExperimentEnabled } from '../common/utility';
 import { TermsConditions } from '../termsConditions';
@@ -127,12 +127,12 @@ const PaymentForm: FunctionComponent<
 
     return (
         <Form className="checkout-form" testId="payment-form">
-            <fieldset className='fieldSetFacturar'>
-                <legend className='legendFacturar'>¿Deseas facturar?</legend>
+            <Fieldset className='fieldSetFacturar'>
+                <Legend className='legendFacturar'>¿Deseas facturar?</Legend>
 
-                <div className='FacturarDiv'>
-                    <label className='facturarText'>Si</label>
-                    <input           
+                <div className='FacturarDiv' style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Label className='facturarText'>Si</Label>
+                    <Input           
                         checked={requireBill}
                         id="requireBill"
                         name="requireBill"
@@ -143,7 +143,8 @@ const PaymentForm: FunctionComponent<
                     />
                 </div>
 
-            </fieldset>
+            </Fieldset>
+            <br />
             {usableStoreCredit > 0 && (
                 <StoreCreditField
                     availableStoreCredit={availableStoreCredit}
