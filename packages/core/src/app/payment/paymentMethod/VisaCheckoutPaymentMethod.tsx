@@ -1,10 +1,10 @@
-import { PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback } from 'react';
+import { type Omit } from 'utility-types';
 
 import WalletButtonPaymentMethod, {
-    WalletButtonPaymentMethodProps,
+    type WalletButtonPaymentMethodProps,
 } from './WalletButtonPaymentMethod';
 
 export type VisaCheckoutPaymentMethodProps = Omit<

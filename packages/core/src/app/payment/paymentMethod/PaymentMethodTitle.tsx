@@ -10,7 +10,7 @@ import { compact } from 'lodash';
 import React, { type FunctionComponent, memo, type ReactNode } from 'react';
 
 import { BigCommercePaymentsPayLaterBanner } from '@bigcommerce/checkout/bigcommerce-payments-utils';
-import { type CheckoutContextProps, useThemeContext } from '@bigcommerce/checkout/contexts';
+import { type CheckoutContextProps } from '@bigcommerce/checkout/contexts';
 import { withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
 import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 import {
@@ -108,14 +108,20 @@ export function getPaymentMethodTitle(
         logoUrl: cdnPath('/img/payment-providers/paypal_commerce_logo.svg'),
         titleText: '',
         subtitle: (props: PaymentMethodSubtitleProps) => (
-          <BigCommercePaymentsPayLaterBanner {...props} />
+          <BigCommercePaymentsPayLaterBanner
+            containerId="bigcommerce-payments-banner-container"
+            {...props}
+          />
         ),
       },
       [PaymentMethodId.BigCommercePaymentsPayLater]: {
         logoUrl: cdnPath('/img/payment-providers/paypal_commerce_logo_letter.svg'),
         titleText: methodDisplayName,
         subtitle: (props: PaymentMethodSubtitleProps) => (
-          <BigCommercePaymentsPayLaterBanner {...props} />
+          <BigCommercePaymentsPayLaterBanner
+            containerId="bigcommerce-payments-paylater-banner-container"
+            {...props}
+          />
         ),
       },
       [PaymentMethodId.BigCommercePaymentsAlternativeMethod]: {
@@ -405,7 +411,6 @@ const PaymentMethodTitle: FunctionComponent<
     checkoutSettings,
     storeCountryCode,
   )(method);
-  const { themeV2 } = useThemeContext();
 
   const getSelectedCardType = () => {
     if (!isSelected) {
@@ -465,10 +470,7 @@ const PaymentMethodTitle: FunctionComponent<
         )}
 
         {titleText && (
-          <div
-            className={classNames('paymentProviderHeader-name', { 'sub-header': themeV2 })}
-            data-test="payment-method-name"
-          >
+          <div className="paymentProviderHeader-name sub-header" data-test="payment-method-name">
             {titleText}
           </div>
         )}

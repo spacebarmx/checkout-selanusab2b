@@ -1,7 +1,7 @@
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { mount, type ReactWrapper, shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
 
 import {
     getCustomItem,

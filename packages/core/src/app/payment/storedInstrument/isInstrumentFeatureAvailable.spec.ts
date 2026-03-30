@@ -8,7 +8,7 @@ import { getConsignment } from '../../shipping/consignment.mock';
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import isInstrumentFeatureAvailable, {
-    IsInstrumentFeatureAvailableState,
+    type IsInstrumentFeatureAvailableState,
 } from './isInstrumentFeatureAvailable';
 
 describe('isInstrumentFeatureAvailable()', () => {

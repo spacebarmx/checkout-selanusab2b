@@ -1,26 +1,26 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
-    PaymentMethod,
+    type PaymentMethod,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 
 import { CheckoutProvider } from '../../checkout';
 import { getStoreConfig } from '../../config/config.mock';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '../../locale';
-import { Modal, ModalProps } from '../../ui/modal';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '../../locale';
+import { Modal, type ModalProps } from '../../ui/modal';
 import { getPaymentMethod } from '../payment-methods.mock';
 
-import { AdyenPaymentMethodProps } from './AdyenV2PaymentMethod';
+import { type AdyenPaymentMethodProps } from './AdyenV2PaymentMethod';
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
-import { default as PaymentMethodComponent, PaymentMethodProps } from './PaymentMethod';
+import { default as PaymentMethodComponent, type PaymentMethodProps } from './PaymentMethod';
 
 describe('when using Adyen V2 payment', () => {
     let method: PaymentMethod;

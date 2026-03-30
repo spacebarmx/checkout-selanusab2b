@@ -1,12 +1,12 @@
+import { type AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import { createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
 
-import BoltCheckoutSuggestion, { BoltCheckoutSuggestionProps } from './BoltCheckoutSuggestion';
+import BoltCheckoutSuggestion, { type BoltCheckoutSuggestionProps } from './BoltCheckoutSuggestion';
 
 describe('BoltCheckoutSuggestion', () => {
     let defaultProps: BoltCheckoutSuggestionProps;

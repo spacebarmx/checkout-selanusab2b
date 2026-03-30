@@ -1,9 +1,9 @@
-import { CheckoutSelectors, CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { type CheckoutSelectors, type CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { render } from 'enzyme';
 import { merge } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getStoreConfig } from '../config/config.mock';

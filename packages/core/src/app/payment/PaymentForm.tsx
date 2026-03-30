@@ -1,6 +1,6 @@
 import { ExtensionRegion, type PaymentMethod } from '@bigcommerce/checkout-sdk/essential';
 import { type FormikProps, type FormikState, withFormik, type WithFormikConfig } from 'formik';
-import { isNil, noop, omitBy } from 'lodash';
+import { isEmpty, isNil, noop, omitBy } from 'lodash';
 import React, { type FunctionComponent, memo, useCallback, useContext, useMemo } from 'react';
 import { type ObjectSchema } from 'yup';
 
@@ -15,6 +15,7 @@ import { TermsConditions } from '../termsConditions';
 import { Fieldset, Form, Legend } from '../ui/form';
 
 import getPaymentValidationSchema from './getPaymentValidationSchema';
+import { NoPaymentMethods } from './NoPaymentMethods';
 import {
     getPaymentMethodName,
     getUniquePaymentMethodId,
@@ -115,7 +116,9 @@ const PaymentForm: FunctionComponent<
     const { checkoutState } = useCheckout();
     const { checkoutSettings } = checkoutState.data.getConfig() ?? {};
     const isMultiCouponEnabled = isExperimentEnabled(checkoutSettings, 'CHECKOUT-9674.multi_coupon_cart_checkout', false);
-
+    const shouldShowSubmitButtonWhenPaymentNotRequired = isExperimentEnabled(checkoutSettings, 'CHECKOUT-9729.show_submit_button_when_payment_not_required', false);
+    const hideSubmitPaymentButton = shouldHidePaymentSubmitButton || (shouldShowSubmitButtonWhenPaymentNotRequired && isPaymentDataRequired() && isEmpty(methods));
+    
     if (shouldExecuteSpamCheck) {
         return (
             <SpamProtectionField
@@ -155,17 +158,25 @@ const PaymentForm: FunctionComponent<
                 />
             )}
 
-            <PaymentMethodListFieldset
-                isEmbedded={isEmbedded}
-                isInitializingPayment={isInitializingPayment}
-                isPaymentDataRequired={isPaymentDataRequired}
-                isUsingMultiShipping={isUsingMultiShipping}
-                methods={methods}
-                onMethodSelect={onMethodSelect}
-                onUnhandledError={onUnhandledError}
-                resetForm={resetForm}
-                values={values}
-            />
+            {shouldShowSubmitButtonWhenPaymentNotRequired && isEmpty(methods) && (
+                isPaymentDataRequired()
+                    ? <NoPaymentMethods message={<TranslatedString id="payment.payment_methods_unavailable_error" />} />
+                    : <NoPaymentMethods message={<TranslatedString id="payment.payment_not_required_text" />} />
+            )}
+
+            {(!shouldShowSubmitButtonWhenPaymentNotRequired || !isEmpty(methods)) && 
+                <PaymentMethodListFieldset
+                    isEmbedded={isEmbedded}
+                    isInitializingPayment={isInitializingPayment}
+                    isPaymentDataRequired={isPaymentDataRequired}
+                    isUsingMultiShipping={isUsingMultiShipping}
+                    methods={methods}
+                    onMethodSelect={onMethodSelect}
+                    onUnhandledError={onUnhandledError}
+                    resetForm={resetForm}
+                    values={values}
+                />
+            }
 
             {!isMultiCouponEnabled && <PaymentRedeemables />}
 
@@ -177,7 +188,7 @@ const PaymentForm: FunctionComponent<
             )}
 
             <div className="form-actions">
-                {shouldHidePaymentSubmitButton ? (
+                {hideSubmitPaymentButton ? (
                     <PaymentMethodSubmitButtonContainer />
                 ) : (
                     <PaymentSubmitButton
@@ -257,7 +268,7 @@ const PaymentMethodListFieldset: FunctionComponent<PaymentMethodListFieldsetProp
     return (
         <Fieldset
             legend={
-                <Legend hidden>
+                <Legend>
                     <TranslatedString id="payment.payment_methods_text" />
                 </Legend>
             }
@@ -319,12 +330,14 @@ const paymentFormConfig: WithFormikConfig<PaymentFormProps & WithLanguageProps, 
         },
 
         validationSchema: ({
+            isPaymentDataRequired,
             language,
             isTermsConditionsRequired = false,
             validationSchema,
         }: PaymentFormProps & WithLanguageProps) =>
             getPaymentValidationSchema({
                 additionalValidation: validationSchema,
+                isPaymentDataRequired: isPaymentDataRequired(),
                 isTermsConditionsRequired,
                 language,
             }),

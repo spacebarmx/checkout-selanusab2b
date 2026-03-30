@@ -1,14 +1,14 @@
 import { mount, render } from 'enzyme';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../../config/config.mock';
 import { LoadingOverlay } from '../../ui/loading';
 
 import { getInstruments } from './instruments.mock';
 import ManageCardInstrumentsTable, {
-    ManageCardInstrumentsTableProps,
+    type ManageCardInstrumentsTableProps,
 } from './ManageCardInstrumentsTable';
 
 import { isCardInstrument } from '.';

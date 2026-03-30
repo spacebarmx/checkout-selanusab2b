@@ -1,19 +1,19 @@
-import { PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
 
 import { getAppliedStyles } from '@bigcommerce/checkout/dom-utils';
-import { CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
+import { type CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
 
 import { withCheckout } from '../../checkout';
 import {
     withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import PaymentContext from '../PaymentContext';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export type StripePaymentMethodProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'>;

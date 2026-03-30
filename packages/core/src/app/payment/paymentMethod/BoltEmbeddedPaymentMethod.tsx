@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, { type FunctionComponent, useCallback, useState } from 'react';
 
-import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 
-import { connectFormik, ConnectFormikProps } from '../../common/form';
+import { connectFormik, type ConnectFormikProps } from '../../common/form';
 
 import BoltCustomForm from './BoltCustomForm';
-import { HostedPaymentMethodProps } from './HostedPaymentMethod';
+import { type HostedPaymentMethodProps } from './HostedPaymentMethod';
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
 
 const BoltEmbeddedPaymentMethod: FunctionComponent<HostedPaymentMethodProps & ConnectFormikProps<PaymentFormValues>> = ({

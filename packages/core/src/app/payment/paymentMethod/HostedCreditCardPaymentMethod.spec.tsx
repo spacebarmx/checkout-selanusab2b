@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import { object } from 'yup';
 
 import {
-    withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type withHostedCreditCardFieldset,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import CreditCardPaymentMethod from './CreditCardPaymentMethod';
 import HostedCreditCardPaymentMethod, {
-    HostedCreditCardPaymentMethodProps,
+    type HostedCreditCardPaymentMethodProps,
 } from './HostedCreditCardPaymentMethod';
 
 const hostedFormOptions = {

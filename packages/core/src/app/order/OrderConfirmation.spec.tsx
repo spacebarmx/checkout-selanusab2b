@@ -1,29 +1,30 @@
+import { type AnalyticsContextProps, type AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
     createEmbeddedCheckoutMessenger,
-    EmbeddedCheckoutMessenger,
+    type EmbeddedCheckoutMessenger,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import { mount, type ReactWrapper } from 'enzyme';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { AnalyticsContextProps, AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
+import { LocaleProvider } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { createErrorLogger } from '../common/error';
 import { getStoreConfig } from '../config/config.mock';
 import { createEmbeddedCheckoutStylesheet } from '../embeddedCheckout';
-import { CreatedCustomer, GuestSignUpForm } from '../guestSignup';
+import { type CreatedCustomer, GuestSignUpForm } from '../guestSignup';
 import { LoadingSpinner } from '../ui/loading';
 
-import OrderConfirmation, { OrderConfirmationProps } from './OrderConfirmation';
+import OrderConfirmation, { type OrderConfirmationProps } from './OrderConfirmation';
 import { getOrder } from './orders.mock';
 import OrderStatus from './OrderStatus';
 import OrderSummary from './OrderSummary';
 import ThankYouHeader from './ThankYouHeader';
-import { LocaleProvider } from '@bigcommerce/checkout/locale';
+
 
 describe('OrderConfirmation', () => {
     let checkoutService: CheckoutService;

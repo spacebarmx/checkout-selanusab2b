@@ -3,13 +3,13 @@ import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../../config/config.mock';
 
 import AccountInstrumentFieldset, {
-    AccountInstrumentFieldsetProps,
-    AccountInstrumentFieldsetValues,
+    type AccountInstrumentFieldsetProps,
+    type AccountInstrumentFieldsetValues,
 } from './AccountInstrumentFieldset';
 import AccountInstrumentSelect from './AccountInstrumentSelect';
 import { getInstruments } from './instruments.mock';

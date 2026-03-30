@@ -1,13 +1,13 @@
-import { PaymentMethod } from '@bigcommerce/checkout-sdk';
+import { type PaymentMethod } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop, range } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { Checklist, ChecklistItem } from '../../ui/form';
 import { getMobilePaymentMethod, getPaymentMethod } from '../payment-methods.mock';
 
-import PaymentMethodList, { PaymentMethodListProps } from './PaymentMethodList';
+import PaymentMethodList, { type PaymentMethodListProps } from './PaymentMethodList';
 
 describe('PaymentMethodList', () => {
     let methods: PaymentMethod[];

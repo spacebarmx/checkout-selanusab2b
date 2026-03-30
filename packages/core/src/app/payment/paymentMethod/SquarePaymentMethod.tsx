@@ -1,12 +1,12 @@
-import { PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
+import { type Omit } from 'utility-types';
 
 import PaymentContext from '../PaymentContext';
 
 import HostedFieldPaymentMethod, {
-    HostedFieldPaymentMethodProps,
+    type HostedFieldPaymentMethodProps,
 } from './HostedFieldPaymentMethod';
 
 export type SquarePaymentMethodProps = Omit<

@@ -1,30 +1,25 @@
-import { type Cart, type Consignment } from '@bigcommerce/checkout-sdk';
+import { type Consignment } from '@bigcommerce/checkout-sdk';
 import React, { type FunctionComponent, memo } from 'react';
 
 import { isPayPalFastlaneAddress, PoweredByPayPalFastlaneLabel, usePayPalFastlaneAddress } from '@bigcommerce/checkout/paypal-fastlane-integration';
 
 import { AddressType, StaticAddress } from '../address';
 
-import getShippingCostAfterAutomaticDiscount from './getShippingCostAfterAutomaticDiscount';
 import { StaticShippingOption } from './shippingOption';
 import './StaticConsignment.scss';
-import StaticConsignmentItemList from './StaticConsignmentItemList';
 
 interface StaticConsignmentProps {
     consignment: Consignment;
-    cart: Cart;
-    compactView?: boolean;
     isShippingDiscountDisplayEnabled: boolean;
 }
 
 const StaticConsignment: FunctionComponent<StaticConsignmentProps> = ({
-    consignment,
-    cart,
-    compactView,
+    consignment, 
     isShippingDiscountDisplayEnabled,
 }) => {
     const { paypalFastlaneAddresses } = usePayPalFastlaneAddress();
-    const { shippingAddress: address, selectedShippingOption } = consignment;
+    
+    const { shippingAddress: address, selectedShippingOption, comparisonShippingCost } = consignment;
     const showPayPalFastlaneAddressLabel = isPayPalFastlaneAddress(address, paypalFastlaneAddresses);
 
     return (
@@ -33,15 +28,13 @@ const StaticConsignment: FunctionComponent<StaticConsignmentProps> = ({
 
             {showPayPalFastlaneAddressLabel && <PoweredByPayPalFastlaneLabel />}
 
-            {!compactView && <StaticConsignmentItemList cart={cart} consignment={consignment} />}
-
             {selectedShippingOption && (
                 <div>
                     <div className="shippingOption shippingOption--alt shippingOption--selected">
                         <StaticShippingOption
                             displayAdditionalInformation={false}
                             method={selectedShippingOption}
-                            shippingCostAfterDiscount={isShippingDiscountDisplayEnabled ? getShippingCostAfterAutomaticDiscount(selectedShippingOption.cost, [consignment]) : undefined}
+                            shippingCostAfterDiscount={isShippingDiscountDisplayEnabled ? comparisonShippingCost : undefined}
                         />
                     </div>
                 </div>

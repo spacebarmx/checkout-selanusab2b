@@ -1,4 +1,4 @@
-import { Checkout, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { type Checkout, createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import React from 'react';
 

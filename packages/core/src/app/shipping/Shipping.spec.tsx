@@ -1,15 +1,15 @@
 import {
-    BillingAddress,
-    Cart,
-    CheckoutSelectors,
-    CheckoutService,
+    type BillingAddress,
+    type Cart,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import { mount, type ReactWrapper } from 'enzyme';
+import React, { type FunctionComponent } from 'react';
 
 import { ExtensionProvider } from '@bigcommerce/checkout/checkout-extension';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getAddressFormFields } from '../address/formField.mock';
@@ -19,13 +19,13 @@ import { getCheckout } from '../checkout/checkouts.mock';
 import CheckoutStepType from '../checkout/CheckoutStepType';
 import { getStoreConfig } from '../config/config.mock';
 import { getCustomer } from '../customer/customers.mock';
+import { getCountries } from '../geography/countries.mock';
 import { PaymentMethodId } from '../payment/paymentMethod';
 
 import { getConsignment } from './consignment.mock';
-import Shipping, { ShippingProps, WithCheckoutShippingProps } from './Shipping';
+import Shipping, { type ShippingProps, type WithCheckoutShippingProps } from './Shipping';
 import { getShippingAddress } from './shipping-addresses.mock';
 import ShippingForm from './ShippingForm';
-import { getCountries } from '../geography/countries.mock';
 
 describe('Shipping Component', () => {
     let component: ReactWrapper;
@@ -139,7 +139,7 @@ describe('Shipping Component', () => {
             code: 'US',
             name: 'United States',
             hasPostalCodes: true,
-            subdivisions: [{code: 'bar', name: 'foo' }],
+            subdivisions: [{ code: 'bar', name: 'foo' }],
             requiresState: true,
         }])
         jest.spyOn(checkoutState.data, 'getBillingCountries').mockReturnValue(getCountries());

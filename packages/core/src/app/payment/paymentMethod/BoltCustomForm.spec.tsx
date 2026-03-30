@@ -2,11 +2,11 @@ import { createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
 
-import BoltCustomForm, { BoltCustomFormProps } from './BoltCustomForm';
+import BoltCustomForm, { type BoltCustomFormProps } from './BoltCustomForm';
 
 describe('BoltCustomForm', () => {
     let defaultProps: BoltCustomFormProps;

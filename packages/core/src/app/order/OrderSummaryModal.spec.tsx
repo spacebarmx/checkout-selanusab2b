@@ -1,5 +1,5 @@
-import { createCheckoutService, LineItemMap, Order } from '@bigcommerce/checkout-sdk';
-import { mount, shallow, ShallowWrapper } from 'enzyme';
+import { createCheckoutService, type LineItemMap, type Order } from '@bigcommerce/checkout-sdk';
+import { mount, shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';

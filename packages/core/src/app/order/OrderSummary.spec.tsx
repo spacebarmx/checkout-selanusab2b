@@ -1,5 +1,5 @@
-import { Order } from '@bigcommerce/checkout-sdk';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { type Order } from '@bigcommerce/checkout-sdk';
+import { shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
 import { getStoreConfig } from '../config/config.mock';

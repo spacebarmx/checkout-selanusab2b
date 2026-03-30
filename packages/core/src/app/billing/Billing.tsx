@@ -1,7 +1,7 @@
 import type { CheckoutSelectors } from '@bigcommerce/checkout-sdk';
 import React, { type ReactElement, useEffect } from 'react';
 
-import { useCheckout, useThemeContext } from '@bigcommerce/checkout/contexts';
+import { useCapabilities, useCheckout } from '@bigcommerce/checkout/contexts';
 import { TranslatedString } from '@bigcommerce/checkout/locale';
 import { AddressFormSkeleton } from '@bigcommerce/checkout/ui';
 
@@ -19,7 +19,7 @@ export interface BillingProps {
 
 const Billing = ({ navigateNextStep, onReady, onUnhandledError }:BillingProps): ReactElement => {
     const { checkoutService, checkoutState } = useCheckout();
-    const { themeV2 }  = useThemeContext();
+    const { userJourney: { hasExtraAddressFields } } = useCapabilities();
 
     const {
         data: {
@@ -29,6 +29,7 @@ const Billing = ({ navigateNextStep, onReady, onUnhandledError }:BillingProps): 
             getCustomer,
             getBillingAddress,
             getBillingAddressFields,
+            getAddressExtraFormFields,
         },
         statuses: { isLoadingBillingCountries },
     } = checkoutState;
@@ -48,6 +49,7 @@ const Billing = ({ navigateNextStep, onReady, onUnhandledError }:BillingProps): 
     const methodId  = getBillingMethodId(checkout);
     const billingAddress  = getBillingAddress();
     const getFields  = getBillingAddressFields;
+    const extraFields = hasExtraAddressFields ? getAddressExtraFormFields() : [];
     const handleSubmit = async ({
                                     orderComment,
                                     ...addressValues
@@ -92,17 +94,31 @@ const Billing = ({ navigateNextStep, onReady, onUnhandledError }:BillingProps): 
         void init();
     }, []);
 
+    // TODO: Show warning message when restrictManualAddressEntry is true and no addresses are available
+    // Yet to decide where we get the addresses from in b2b flow??
+    // const hasAddresses = customer?.addresses && customer.addresses.length > 0;
+    // const showWarningMessage = restrictManualAddressEntry && !hasAddresses;
+
+    // if (showWarningMessage) {
+    //     return (
+    //         <div className="no-addresses-warning body-regular">
+    //             <TranslatedString id="billing.no_billing_addresses_warning" />
+    //         </div>
+    //     );
+    // }
+
     return (
         <AddressFormSkeleton isLoading={isInitializing}>
             <div className="checkout-form">
                 <div className="form-legend-container">
-                    <Legend testId="billing-address-heading" themeV2={themeV2}>
+                    <Legend testId="billing-address-heading">
                         <TranslatedString id="billing.billing_address_heading" />
                     </Legend>
                 </div>
                 <BillingForm
                     billingAddress={billingAddress}
                     customerMessage={customerMessage}
+                    extraFields={extraFields}
                     getFields={getFields}
                     methodId={methodId}
                     navigateNextStep={navigateNextStep}

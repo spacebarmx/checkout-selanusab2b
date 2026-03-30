@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { IconCheck } from '../ui/icon';
 
-import CheckoutStepHeader, { CheckoutStepHeaderProps } from './CheckoutStepHeader';
+import CheckoutStepHeader, { type CheckoutStepHeaderProps } from './CheckoutStepHeader';
 import CheckoutStepType from './CheckoutStepType';
 
 describe('CheckoutStepHeader', () => {

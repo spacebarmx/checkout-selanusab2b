@@ -1,38 +1,38 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { EventEmitter } from 'events';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 import { object } from 'yup';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
-import { FormContext, FormContextType } from '@bigcommerce/checkout/ui';
+import { FormContext, type FormContextType } from '@bigcommerce/checkout/ui';
 
 import { getCart } from '../../cart/carts.mock';
 import { getStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
 import { getConsignment } from '../../shipping/consignment.mock';
 import { LoadingOverlay } from '../../ui/loading';
-import { Modal, ModalProps } from '../../ui/modal';
+import { Modal, type ModalProps } from '../../ui/modal';
 import {
-    withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type withHostedCreditCardFieldset,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
-import { CardInstrumentFieldset, isInstrumentFeatureAvailable } from '../storedInstrument';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
+import { CardInstrumentFieldset, type isInstrumentFeatureAvailable } from '../storedInstrument';
 import { getInstruments } from '../storedInstrument/instruments.mock';
 
-import { CreditCardPaymentMethodValues } from './CreditCardPaymentMethod';
+import { type CreditCardPaymentMethodValues } from './CreditCardPaymentMethod';
 import WorldpayCreditCardPaymentMethod, {
-    WorldpayCreditCardPaymentMethodProps,
+    type WorldpayCreditCardPaymentMethodProps,
 } from './WorldpayCreditCardPaymentMethod';
 
 jest.mock('../storedInstrument', () => ({

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { type FunctionComponent, useEffect } from 'react';
 
-import CheckoutButton, { CheckoutButtonProps } from '../CheckoutButton';
+import CheckoutButton, { type CheckoutButtonProps } from '../CheckoutButton';
 
 const AmazonPayV2Button: FunctionComponent<CheckoutButtonProps> = (props) => {
     useEffect(() => {
@@ -26,6 +26,7 @@ const beautifyAmazonButton = (): void => {
 
     if (container && amazonButton) {
         amazonButton.style.height = '36px';
+
         return;
     }
 

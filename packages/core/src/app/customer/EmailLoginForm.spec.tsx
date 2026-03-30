@@ -1,10 +1,10 @@
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import {
     createLocaleContext,
     LocaleContext,
-    LocaleContextType,
+    type LocaleContextType,
     TranslatedHtml,
     TranslatedString,
 } from '@bigcommerce/checkout/locale';
@@ -16,7 +16,7 @@ import { LoadingSpinner } from '../ui/loading';
 import { ModalHeader } from '../ui/modal';
 
 import EmailField from './EmailField';
-import EmailLoginForm, { EmailLoginFormProps } from './EmailLoginForm';
+import EmailLoginForm, { type EmailLoginFormProps } from './EmailLoginForm';
 
 describe('EmailLoginForm', () => {
     let localeContext: LocaleContextType;

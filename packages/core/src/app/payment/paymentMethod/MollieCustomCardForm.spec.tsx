@@ -1,13 +1,13 @@
-import { createCheckoutService, PaymentMethod } from '@bigcommerce/checkout-sdk';
+import { createCheckoutService, type PaymentMethod } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
 
 import MollieAPMCustomForm from './MollieAPMCustomForm';
-import MollieCustomCardForm, { MollieCustomCardFormProps } from './MollieCustomCardForm';
+import MollieCustomCardForm, { type MollieCustomCardFormProps } from './MollieCustomCardForm';
 
 describe('MollieCustomForm', () => {
     const method: PaymentMethod = {

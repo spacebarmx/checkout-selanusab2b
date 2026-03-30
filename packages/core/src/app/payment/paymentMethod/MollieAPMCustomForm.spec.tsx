@@ -1,18 +1,18 @@
-import { PaymentMethod } from '@bigcommerce/checkout-sdk';
+import { type PaymentMethod } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../../config/config.mock';
 import { DropdownTrigger } from '../../ui/dropdown';
 
 import MollieAPMCustomForm, {
-    Issuer,
+    type Issuer,
     IssuerSelectButton,
-    MollieCustomCardFormProps,
+    type MollieCustomCardFormProps,
     OptionButton,
 } from './MollieAPMCustomForm';
 

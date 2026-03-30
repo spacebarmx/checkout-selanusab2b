@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useMemo } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useMemo } from 'react';
+import { type Omit } from 'utility-types';
 
 import { TranslatedString } from '@bigcommerce/checkout/locale';
 
-import HostedPaymentMethod, { HostedPaymentMethodProps } from './HostedPaymentMethod';
+import HostedPaymentMethod, { type HostedPaymentMethodProps } from './HostedPaymentMethod';
 
 export type AffirmPaymentMethodProps = Omit<HostedPaymentMethodProps, 'description'>;
 

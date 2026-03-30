@@ -143,7 +143,9 @@
         {
             "files": [
                 "*.test.ts",
-                "*.test.tsx"
+                "*.test.tsx",
+                "*.spec.ts",
+                "*.spec.tsx"
             ],
             "extends": [
                 "plugin:testing-library/react",

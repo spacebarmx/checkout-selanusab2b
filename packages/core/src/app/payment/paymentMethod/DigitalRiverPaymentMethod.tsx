@@ -1,16 +1,16 @@
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
+import { type Omit } from 'utility-types';
 
-import { withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
-import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 import { FormContext } from '@bigcommerce/checkout/ui';
 
 import { CustomError } from '../../common/error';
-import { connectFormik, ConnectFormikProps } from '../../common/form';
+import { connectFormik, type ConnectFormikProps } from '../../common/form';
 
 import HostedDropInPaymentMethod from './HostedDropInPaymentMethod';
-import { HostedWidgetPaymentMethodProps } from './HostedWidgetPaymentMethod';
+import { type HostedWidgetPaymentMethodProps } from './HostedWidgetPaymentMethod';
 
 export type DigitalRiverPaymentMethodProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'> &
     ConnectFormikProps<PaymentFormValues>;

@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useCallback } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback } from 'react';
+import { type Omit } from 'utility-types';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export type KlarnaPaymentMethodProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'>;

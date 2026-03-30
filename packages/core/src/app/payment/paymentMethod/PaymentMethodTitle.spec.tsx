@@ -1,20 +1,20 @@
-import { CheckoutService, createCheckoutService, StoreConfig } from '@bigcommerce/checkout-sdk';
+import { type CheckoutService, createCheckoutService, type StoreConfig } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 
 import { CheckoutProvider } from '../../checkout';
 import { getStoreConfig } from '../../config/config.mock';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '../../locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '../../locale';
 import { CreditCardIconList } from '../creditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import getPaymentMethodName from './getPaymentMethodName';
 import PaymentMethodId from './PaymentMethodId';
-import PaymentMethodTitle, { PaymentMethodTitleProps } from './PaymentMethodTitle';
+import PaymentMethodTitle, { type PaymentMethodTitleProps } from './PaymentMethodTitle';
 import PaymentMethodType from './PaymentMethodType';
 
 describe('PaymentMethodTitle', () => {
@@ -119,7 +119,7 @@ describe('PaymentMethodTitle', () => {
                 />,
             );
 
-            const expectedPath = /^http/.test(LOGO_PATHS[method])
+            const expectedPath = LOGO_PATHS[method].startsWith("http")
                 ? LOGO_PATHS[method]
                 : `${config.cdnPath}${LOGO_PATHS[method]}`;
 

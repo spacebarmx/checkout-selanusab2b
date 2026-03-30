@@ -1,45 +1,45 @@
+import { type AnalyticsContextProps, type AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
     createEmbeddedCheckoutMessenger,
-    EmbeddedCheckoutMessenger,
+    type EmbeddedCheckoutMessenger,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { EventEmitter } from 'events';
 import { noop, omit } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { AnalyticsContextProps, AnalyticsEvents, AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import { ExtensionProvider, ExtensionService } from '@bigcommerce/checkout/checkout-extension';
 import { getLanguageService, LocaleProvider } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
-import { BillingProps } from '../billing';
+import { type BillingProps } from '../billing';
 import Billing from '../billing/Billing';
 import { getCart } from '../cart/carts.mock';
 import { getPhysicalItem } from '../cart/lineItem.mock';
 import { createErrorLogger, CustomError, ErrorModal } from '../common/error';
 import { getStoreConfig } from '../config/config.mock';
-import { CustomerInfo, CustomerInfoProps, CustomerProps, CustomerViewType } from '../customer';
+import { CustomerInfo, type CustomerInfoProps, type CustomerProps, CustomerViewType } from '../customer';
 import Customer from '../customer/Customer';
 import { getCustomer } from '../customer/customers.mock';
 import {
     createEmbeddedCheckoutStylesheet,
     createEmbeddedCheckoutSupport,
 } from '../embeddedCheckout';
-import { PaymentProps } from '../payment';
+import { type PaymentProps } from '../payment';
 import Payment from '../payment/Payment';
 import { PromotionBannerList } from '../promotion';
-import { ShippingProps, StaticConsignment } from '../shipping';
+import { type ShippingProps, StaticConsignment } from '../shipping';
 import { getConsignment } from '../shipping/consignment.mock';
 import Shipping from '../shipping/Shipping';
 import { getShippingAddress } from '../shipping/shipping-addresses.mock';
 
-import Checkout, { CheckoutProps, WithCheckoutProps } from './Checkout';
+import Checkout, { type CheckoutProps, type WithCheckoutProps } from './Checkout';
 import { getCheckout, getCheckoutWithPromotions } from './checkouts.mock';
-import CheckoutStep, { CheckoutStepProps } from './CheckoutStep';
+import CheckoutStep, { type CheckoutStepProps } from './CheckoutStep';
 import CheckoutStepType from './CheckoutStepType';
 import getCheckoutStepStatuses from './getCheckoutStepStatuses';
 
@@ -261,7 +261,7 @@ describe('Checkout', () => {
         const steps = container.find(CheckoutStep);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const activeStepType = getCheckoutStepStatuses(checkoutState).find(
-            ({ isActive }) => isActive === true,
+            ({ isActive }) => isActive,
         )!.type;
 
         expect(
@@ -660,7 +660,7 @@ describe('Checkout', () => {
 
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const activeStepType = getCheckoutStepStatuses(checkoutState).find(
-                ({ isActive }) => isActive === true,
+                ({ isActive }) => isActive,
             )!.type;
             const steps: ReactWrapper<CheckoutStepProps> = container.find(CheckoutStep);
             const nextStep: ReactWrapper<CheckoutStepProps> = steps

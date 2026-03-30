@@ -2,12 +2,12 @@ import { createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
-import { DocumentOnlyCustomFormFieldsetValues } from '@bigcommerce/checkout/payment-integration-api';
+import { type DocumentOnlyCustomFormFieldsetValues } from '@bigcommerce/checkout/payment-integration-api';
 
-import TextFieldForm, { TextFieldFormProps } from './TextFieldForm';
+import TextFieldForm, { type TextFieldFormProps } from './TextFieldForm';
 
 describe('TextFieldForm', () => {
     let defaultProps: TextFieldFormProps;

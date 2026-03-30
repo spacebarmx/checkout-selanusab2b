@@ -1,9 +1,9 @@
-import { Address, CustomerAddress } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent, memo, useCallback } from 'react';
+import { type Address, type CustomerAddress } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent, memo, useCallback } from 'react';
 
 import { AddressSelect, AddressType } from '../address';
 
-import ShippableItem from './ShippableItem';
+import type ShippableItem from './ShippableItem';
 
 export interface ItemAddressSelectProps {
     item: ShippableItem;

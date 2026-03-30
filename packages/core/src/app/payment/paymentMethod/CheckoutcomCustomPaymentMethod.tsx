@@ -1,18 +1,18 @@
-import { BillingAddress } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent } from 'react';
+import { type BillingAddress } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent } from 'react';
 
-import { withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
-import { CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
+import { withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { type CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
 
 import { withCheckout } from '../../checkout';
 import {
-    checkoutcomCustomPaymentMethods,
-    checkoutcomPaymentMethods,
+    type checkoutcomCustomPaymentMethods,
+    type checkoutcomPaymentMethods,
     getCheckoutcomValidationSchemas,
 } from '../checkoutcomFieldsets';
 
 import checkoutcomCustomFormFields, { ccDocumentField } from './CheckoutcomCustomFormFields';
-import CreditCardPaymentMethod, { CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
+import CreditCardPaymentMethod, { type CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
 
 export interface CheckoutcomCustomPaymentMethodProps
     extends Omit<CreditCardPaymentMethodProps, 'cardFieldset' | 'cardValidationSchema'> {

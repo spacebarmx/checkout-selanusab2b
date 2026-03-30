@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export type BarclaycardPaymentMethodProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'>;

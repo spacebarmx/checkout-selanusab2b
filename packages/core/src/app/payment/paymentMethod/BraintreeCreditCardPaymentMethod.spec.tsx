@@ -1,31 +1,31 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { type FunctionComponent, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { object } from 'yup';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCart } from '../../cart/carts.mock';
 import { getStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
-import { Modal, ModalProps } from '../../ui/modal';
+import { Modal, type ModalProps } from '../../ui/modal';
 import {
-    withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type withHostedCreditCardFieldset,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
 import BraintreeCreditCardPaymentMethod, {
-    BraintreeCreditCardPaymentMethodProps,
+    type BraintreeCreditCardPaymentMethodProps,
 } from './BraintreeCreditCardPaymentMethod';
 import CreditCardPaymentMethod from './CreditCardPaymentMethod';
 import PaymentMethodId from './PaymentMethodId';

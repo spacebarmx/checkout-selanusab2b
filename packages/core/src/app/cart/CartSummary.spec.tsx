@@ -1,8 +1,8 @@
-import { CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { type CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCheckout } from '../checkout/checkouts.mock';

@@ -1,8 +1,9 @@
-import { mount, ReactWrapper } from 'enzyme';
+import { createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import React from 'react';
 
 import { ExtensionProvider } from '@bigcommerce/checkout/checkout-extension';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getAddressFormFields } from '../address/formField.mock';
 import { getStoreConfig } from '../config/config.mock';
@@ -11,9 +12,8 @@ import BillingSameAsShippingField from './BillingSameAsShippingField';
 import { getShippingAddress } from './shipping-addresses.mock';
 import SingleShippingForm, {
     SHIPPING_AUTOSAVE_DELAY,
-    SingleShippingFormProps,
+    type SingleShippingFormProps,
 } from './SingleShippingForm';
-import { createCheckoutService } from '@bigcommerce/checkout-sdk';
 
 describe('SingleShippingForm', () => {
     const checkoutService = createCheckoutService();

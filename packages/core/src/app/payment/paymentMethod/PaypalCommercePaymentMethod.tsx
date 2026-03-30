@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
 
-import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 
-import { connectFormik, ConnectFormikProps } from '../../common/form';
+import { connectFormik, type ConnectFormikProps } from '../../common/form';
 import { FormContext } from '../../ui/form';
 import PaymentContext from '../PaymentContext';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 interface AdditionalProps {

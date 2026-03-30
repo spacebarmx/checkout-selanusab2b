@@ -1,9 +1,9 @@
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { getPaymentMethod } from '../payment-methods.mock';
 
-import OfflinePaymentMethod, { OfflinePaymentMethodProps } from './OfflinePaymentMethod';
+import OfflinePaymentMethod, { type OfflinePaymentMethodProps } from './OfflinePaymentMethod';
 
 describe('OfflinePaymentMethod', () => {
     let defaultProps: OfflinePaymentMethodProps;

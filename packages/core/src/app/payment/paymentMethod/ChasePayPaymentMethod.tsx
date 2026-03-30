@@ -1,9 +1,9 @@
-import { PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent, useCallback } from 'react';
-import { Omit } from 'utility-types';
+import { type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent, useCallback } from 'react';
+import { type Omit } from 'utility-types';
 
 import WalletButtonPaymentMethod, {
-    WalletButtonPaymentMethodProps,
+    type WalletButtonPaymentMethodProps,
 } from './WalletButtonPaymentMethod';
 
 export type CCAvenueMarsPaymentMethodProps = Omit<

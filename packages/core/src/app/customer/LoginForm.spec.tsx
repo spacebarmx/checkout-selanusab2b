@@ -1,10 +1,10 @@
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import {
     createLocaleContext,
     LocaleContext,
-    LocaleContextType,
+    type LocaleContextType,
     TranslatedHtml,
     TranslatedLink,
 } from '@bigcommerce/checkout/locale';
@@ -13,7 +13,7 @@ import { getStoreConfig } from '../config/config.mock';
 import { Alert } from '../ui/alert';
 
 import CustomerViewType from './CustomerViewType';
-import LoginForm, { LoginFormProps } from './LoginForm';
+import LoginForm, { type LoginFormProps } from './LoginForm';
 
 describe('LoginForm', () => {
     let defaultProps: LoginFormProps;

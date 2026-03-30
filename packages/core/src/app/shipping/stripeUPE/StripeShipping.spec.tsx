@@ -1,6 +1,6 @@
 import { createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { ExtensionProvider } from '@bigcommerce/checkout/checkout-extension';
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
@@ -9,7 +9,7 @@ import { getAddressFormFields } from '../../address/formField.mock';
 import CheckoutStepType from '../../checkout/CheckoutStepType';
 import { getConsignment } from '../consignment.mock';
 
-import StripeShipping, { StripeShippingProps } from './StripeShipping';
+import StripeShipping, { type StripeShippingProps } from './StripeShipping';
 import StripeShippingForm from './StripeShippingForm';
 
 describe('Stripe Shipping Component', () => {

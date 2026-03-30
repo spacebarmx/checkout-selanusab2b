@@ -1,23 +1,23 @@
 import {
-    CardInstrument,
-    CustomError,
-    PaymentInitializeOptions,
-    StripeElementOptions,
+    type CardInstrument,
+    type CustomError,
+    type PaymentInitializeOptions,
+    type StripeElementOptions,
 } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { type FunctionComponent, useCallback } from 'react';
 
-import { TranslatedString, withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
-import { CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
+import { TranslatedString, withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { type CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
 
 import { withCheckout } from '../../checkout';
 import {
     withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 import StripeV3CustomCardForm from './StripeV3CustomCardForm';
 

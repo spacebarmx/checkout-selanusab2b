@@ -1,25 +1,25 @@
 import {
-    CheckoutSelectors,
-    CustomerRequestOptions,
-    PaymentInitializeOptions,
-    PaymentMethod,
-    PaymentRequestOptions,
+    type CheckoutSelectors,
+    type CustomerRequestOptions,
+    type PaymentInitializeOptions,
+    type PaymentMethod,
+    type PaymentRequestOptions,
 } from '@bigcommerce/checkout-sdk';
 import { number } from 'card-validator';
 import { noop, some } from 'lodash';
-import React, { Component, ReactNode } from 'react';
+import React, { Component, type ReactNode } from 'react';
 
 import { preventDefault } from '@bigcommerce/checkout/dom-utils';
-import { TranslatedString, withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
-import { CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
+import { TranslatedString, withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { type CheckoutContextProps } from '@bigcommerce/checkout/payment-integration-api';
 
 
 import { withCheckout } from '../../checkout';
 import { LoadingOverlay } from '../../ui/loading';
-import withPayment, { WithPaymentProps } from '../withPayment';
+import withPayment, { type WithPaymentProps } from '../withPayment';
 
 import getPaymentMethodName from './getPaymentMethodName';
-import { PaymentMethodProps } from './PaymentMethod';
+import { type PaymentMethodProps } from './PaymentMethod';
 import SignOutLink from './SignOutLink';
 
 export interface WalletButtonPaymentMethodProps {
@@ -257,7 +257,7 @@ function normalizeWalletPaymentData(data: any): WalletPaymentData | undefined {
 }
 
 function formatAccountMask(accountMask = '', padding = '****'): string {
-    return accountMask.indexOf('*') > -1 ? accountMask : `${padding} ${accountMask}`;
+    return accountMask.includes('*') ? accountMask : `${padding} ${accountMask}`;
 }
 
 function mapFromCheckoutProps(

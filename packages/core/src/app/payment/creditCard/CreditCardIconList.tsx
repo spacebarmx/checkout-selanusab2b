@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FunctionComponent, memo } from 'react';
+import React, { type FunctionComponent, memo } from 'react';
 
 import CreditCardIcon from './CreditCardIcon';
 import { filterInstrumentTypes } from './mapFromPaymentMethodCardType';

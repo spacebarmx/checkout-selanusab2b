@@ -4,7 +4,7 @@ import React from 'react';
 import { CHECKOUT_ROOT_NODE_ID, CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import Checkout from './Checkout';
-import CheckoutApp, { CheckoutAppProps } from './CheckoutApp';
+import CheckoutApp, { type CheckoutAppProps } from './CheckoutApp';
 import { getCheckout } from './checkouts.mock';
 
 describe('CheckoutApp', () => {

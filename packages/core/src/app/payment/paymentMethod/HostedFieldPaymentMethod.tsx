@@ -1,11 +1,11 @@
 import {
-    CheckoutSelectors,
-    PaymentInitializeOptions,
-    PaymentMethod,
-    PaymentRequestOptions,
+    type CheckoutSelectors,
+    type PaymentInitializeOptions,
+    type PaymentMethod,
+    type PaymentRequestOptions,
 } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { Component, ReactNode } from 'react';
+import React, { Component, type ReactNode } from 'react';
 
 import { TranslatedString } from '@bigcommerce/checkout/locale';
 

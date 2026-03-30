@@ -1,15 +1,15 @@
-import { CheckoutService, createCheckoutService, PaymentMethod } from '@bigcommerce/checkout-sdk';
+import { type CheckoutService, createCheckoutService, type PaymentMethod } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { type FunctionComponent, type ReactNode } from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
-import { CheckoutProvider , PaymentMethodProps } from '@bigcommerce/checkout/payment-integration-api';
+import { CheckoutProvider , type PaymentMethodProps } from '@bigcommerce/checkout/payment-integration-api';
 import { FormProvider } from '@bigcommerce/checkout/ui';
 
 import { getStoreConfig } from '../../config/config.mock';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
 import { default as PaymentMethodComponent } from './PaymentMethodV2';
 

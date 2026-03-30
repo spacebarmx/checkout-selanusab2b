@@ -2,7 +2,7 @@ import { mount, render } from 'enzyme';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../config/config.mock';
 

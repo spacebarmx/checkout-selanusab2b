@@ -779,6 +779,7 @@ describe('MultiShippingForm Component', () => {
 
             // Find and click a shipping option radio button
             const shippingOptions = screen.getAllByRole('radio');
+
             if (shippingOptions.length > 0) {
                 await userEvent.click(shippingOptions[0]);
             }
@@ -826,6 +827,7 @@ describe('MultiShippingForm Component', () => {
             const addDestinationButton = screen.getByRole('button', {
                 name: localeContext.language.translate('shipping.multishipping_add_new_destination'),
             });
+
             await userEvent.click(addDestinationButton);
 
             await waitFor(() => {

@@ -1,5 +1,5 @@
-import { CheckoutService, createCheckoutService, PaymentMethod } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent } from 'react';
+import { type CheckoutService, createCheckoutService, type PaymentMethod } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent } from 'react';
 
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 import { render } from '@bigcommerce/checkout/test-utils';

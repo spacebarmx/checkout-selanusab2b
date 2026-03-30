@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from "@bigcommerce/checkout/locale";
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from "@bigcommerce/checkout/locale";
 
 import { getDigitalItem, getPhysicalItem } from "../cart/lineItem.mock";
 import { getStoreConfig } from "../config/config.mock";

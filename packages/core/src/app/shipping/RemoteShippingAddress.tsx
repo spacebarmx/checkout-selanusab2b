@@ -1,11 +1,11 @@
 import {
-    CheckoutSelectors,
-    FormField,
-    ShippingInitializeOptions,
-    ShippingRequestOptions,
+    type CheckoutSelectors,
+    type FormField,
+    type ShippingInitializeOptions,
+    type ShippingRequestOptions,
 } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { PureComponent, ReactNode } from 'react';
+import React, { PureComponent, type ReactNode } from 'react';
 
 import { DynamicFormField, Fieldset } from '../ui/form';
 

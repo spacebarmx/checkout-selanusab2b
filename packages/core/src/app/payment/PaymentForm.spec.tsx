@@ -1,14 +1,14 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
-    PaymentMethod,
+    type PaymentMethod,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import { mount, type ReactWrapper } from 'enzyme';
+import React, { type FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCart } from '../cart/carts.mock';
@@ -16,18 +16,18 @@ import { getStoreConfig } from '../config/config.mock';
 import { getCustomer } from '../customer/customers.mock';
 import {
     TermsConditionsField,
-    TermsConditionsFieldProps,
+    type TermsConditionsFieldProps,
     TermsConditionsType,
 } from '../termsConditions';
 
 import { getCreditCardValidationSchema } from './creditCard';
 import { getPaymentMethod } from './payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from './PaymentContext';
-import PaymentForm, { PaymentFormProps } from './PaymentForm';
-import { PaymentMethodList, PaymentMethodListProps } from './paymentMethod';
+import PaymentContext, { type PaymentContextProps } from './PaymentContext';
+import PaymentForm, { type PaymentFormProps } from './PaymentForm';
+import { PaymentMethodList, type PaymentMethodListProps } from './paymentMethod';
 import PaymentSubmitButton from './PaymentSubmitButton';
-import SpamProtectionField, { SpamProtectionProps } from './SpamProtectionField';
-import { StoreCreditField, StoreCreditFieldProps, StoreCreditOverlay } from './storeCredit';
+import SpamProtectionField, { type SpamProtectionProps } from './SpamProtectionField';
+import { StoreCreditField, type StoreCreditFieldProps, StoreCreditOverlay } from './storeCredit';
 
 jest.useFakeTimers();
 

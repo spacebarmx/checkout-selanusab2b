@@ -1,15 +1,15 @@
 import {
-    CheckoutService,
-    CheckoutStoreSelector,
+    type CheckoutService,
+    type CheckoutStoreSelector,
     createCheckoutService,
-    PaymentMethod,
+    type PaymentMethod,
 } from '@bigcommerce/checkout-sdk';
 import { mount, render } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCheckout } from '../../checkout/checkouts.mock';
@@ -17,10 +17,10 @@ import { getStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
 import { LoadingOverlay } from '../../ui/loading';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
-import OpyPaymentMethod, { OpyPaymentMethodProps } from './OpyPaymentMethod';
+import OpyPaymentMethod, { type OpyPaymentMethodProps } from './OpyPaymentMethod';
 
 describe('when using Opy payment', () => {
     let checkoutService: CheckoutService;

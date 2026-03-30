@@ -1,12 +1,12 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { type FunctionComponent, useEffect } from 'react';
 import { object } from 'yup';
 
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
@@ -15,15 +15,15 @@ import { getCart } from '../../cart/carts.mock';
 import { getStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
 import {
-    withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type withHostedCreditCardFieldset,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import CreditCardPaymentMethod from './CreditCardPaymentMethod';
 import PaymentMethodId from './PaymentMethodId';
 import PaypalCommerceCreditCardPaymentMethod, {
-    PaypalCommerceCreditCardPaymentMethodProps,
+    type PaypalCommerceCreditCardPaymentMethodProps,
 } from './PaypalCommerceCreditCardPaymentMethod';
 
 const hostedFormOptions = {

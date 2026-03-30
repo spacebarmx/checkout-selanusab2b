@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { CheckoutAppProps } from './CheckoutApp';
-import renderCheckout, { RenderCheckoutOptions } from './renderCheckout';
+import { type CheckoutAppProps } from './CheckoutApp';
+import renderCheckout, { type RenderCheckoutOptions } from './renderCheckout';
 
 let CheckoutApp: FunctionComponent<CheckoutAppProps>;
 let configurePublicPath: (path: string) => void;

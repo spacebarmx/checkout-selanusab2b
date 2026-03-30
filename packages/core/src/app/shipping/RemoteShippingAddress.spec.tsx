@@ -8,7 +8,7 @@ import { getStoreConfig } from '../config/config.mock';
 import { createLocaleContext, LocaleContext } from '../locale';
 import { DynamicFormField } from '../ui/form';
 
-import RemoteShippingAddress, { RemoteShippingAddressProps } from './RemoteShippingAddress';
+import RemoteShippingAddress, { type RemoteShippingAddressProps } from './RemoteShippingAddress';
 
 describe('RemoteShippingAddress Component', () => {
     const defaultProps: RemoteShippingAddressProps = {

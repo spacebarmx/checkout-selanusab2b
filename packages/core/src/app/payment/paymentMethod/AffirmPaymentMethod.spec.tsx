@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 
-import AffirmPaymentMethod, { AffirmPaymentMethodProps } from './AffirmPaymentMethod';
+import AffirmPaymentMethod, { type AffirmPaymentMethodProps } from './AffirmPaymentMethod';
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
 
 describe('When using Affirm Payment Method', () => {

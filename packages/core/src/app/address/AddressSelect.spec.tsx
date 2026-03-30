@@ -1,11 +1,11 @@
-import { CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
+import { type CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
-import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 
 import { getCheckout } from '../checkout/checkouts.mock';
 import { getStoreConfig } from '../config/config.mock';
@@ -141,7 +141,7 @@ describe('AddressSelect Component', () => {
     });
 
     it('shows Powered By PP Connect label', () => {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+         
         (usePayPalConnectAddress as jest.Mock).mockReturnValue({
             shouldShowPayPalConnectLabel: true,
         });
