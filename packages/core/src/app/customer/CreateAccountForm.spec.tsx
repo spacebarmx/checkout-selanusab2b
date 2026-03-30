@@ -1,10 +1,10 @@
-import { FormField, RequestError } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { type FormField, type RequestError } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../config/config.mock';
 import { Alert } from '../ui/alert';
@@ -221,9 +221,9 @@ describe('CreateAccountForm Component', () => {
             <LocaleContext.Provider value={localeContext}>
                 <CreateAccountForm
                     formFields={formFields}
+                    isCreatingAccount={true}
                     onSubmit={onSubmit}
                     requiresMarketingConsent={true}
-                    isCreatingAccount={true}
                 />
             </LocaleContext.Provider>,
         );
@@ -240,9 +240,9 @@ describe('CreateAccountForm Component', () => {
             <LocaleContext.Provider value={localeContext}>
                 <CreateAccountForm
                     formFields={formFields}
+                    isExecutingPaymentMethodCheckout={true}
                     onSubmit={onSubmit}
                     requiresMarketingConsent={true}
-                    isExecutingPaymentMethodCheckout={true}
                 />
             </LocaleContext.Provider>,
         );

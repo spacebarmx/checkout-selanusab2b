@@ -1,22 +1,22 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { merge, noop } from 'lodash';
-import React, { ComponentType } from 'react';
+import React, { type ComponentType } from 'react';
 
 import {
-    CheckoutButtonProps,
-    CheckoutButtonResolveId,
+    type CheckoutButtonProps,
+    type CheckoutButtonResolveId,
 } from '@bigcommerce/checkout/payment-integration-api';
 
 import { CheckoutProvider } from '../checkout';
 import { getStoreConfig } from '../config/config.mock';
 import { LocaleProvider } from '../locale';
 
-import CheckoutButtonList, { CheckoutButtonListProps } from './CheckoutButtonListV2';
+import CheckoutButtonList, { type CheckoutButtonListProps } from './CheckoutButtonListV2';
 
 const FooButton: ComponentType<CheckoutButtonProps> = () => <button>Foo</button>;
 

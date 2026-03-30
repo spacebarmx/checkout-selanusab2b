@@ -1,8 +1,8 @@
-import { PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import React, {
     createRef,
-    FunctionComponent,
-    RefObject,
+    type FunctionComponent,
+    type RefObject,
     useCallback,
     useRef,
     useState,
@@ -11,10 +11,10 @@ import React, {
 import { Modal } from '../../ui/modal';
 import {
     withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 
-import CreditCardPaymentMethod, { CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
+import CreditCardPaymentMethod, { type CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
 
 export type WorldpayCreditCardPaymentMethodProps = CreditCardPaymentMethodProps;
 

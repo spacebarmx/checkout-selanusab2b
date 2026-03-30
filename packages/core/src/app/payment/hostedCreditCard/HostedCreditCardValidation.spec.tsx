@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { createLocaleContext, LocaleContext } from '@bigcommerce/checkout/locale';
 
@@ -10,7 +10,7 @@ import { getStoreConfig } from '../../config/config.mock';
 import HostedCreditCardCodeField from './HostedCreditCardCodeField';
 import HostedCreditCardNumberField from './HostedCreditCardNumberField';
 import HostedCreditCardValidation, {
-    HostedCreditCardValidationProps,
+    type HostedCreditCardValidationProps,
 } from './HostedCreditCardValidation';
 
 describe('HostedCreditCardValidation', () => {

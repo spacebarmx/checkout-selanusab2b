@@ -1,12 +1,12 @@
-import { AdyenV2ValidationState, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { type AdyenV2ValidationState, createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
 
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
-import AdyenV2CardValidation, { AdyenV2CardValidationProps } from './AdyenV2CardValidation';
+import AdyenV2CardValidation, { type AdyenV2CardValidationProps } from './AdyenV2CardValidation';
 
 describe('AdyenV2CardValidation', () => {
     let defaultProps: AdyenV2CardValidationProps;

@@ -1,4 +1,4 @@
-import { Cart, Consignment } from '@bigcommerce/checkout-sdk';
+import { type Cart, type Consignment } from '@bigcommerce/checkout-sdk';
 
 import { getAddress } from '../address/address.mock';
 import { getCart } from '../cart/carts.mock';

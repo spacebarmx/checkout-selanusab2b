@@ -4,7 +4,7 @@ import React from 'react';
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import CCAvenueMarsPaymentMethod, {
-    CCAvenueMarsPaymentMethodProps,
+    type CCAvenueMarsPaymentMethodProps,
 } from './CCAvenueMarsPaymentMethod';
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
 import PaymentMethodId from './PaymentMethodId';

@@ -1,17 +1,17 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { EventEmitter } from 'events';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
-import { FormContext, FormContextType } from '@bigcommerce/checkout/ui';
+import { FormContext, type FormContextType } from '@bigcommerce/checkout/ui';
 
 import { getBillingAddress } from '../../billing/billingAddresses.mock';
 import { getCart } from '../../cart/carts.mock';
@@ -19,7 +19,7 @@ import { getStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
 import { getConsignment } from '../../shipping/consignment.mock';
 import { DropdownTrigger } from '../../ui/dropdown';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
 import checkoutcomCustomFormFields, {
     ccDocumentField,
@@ -27,8 +27,8 @@ import checkoutcomCustomFormFields, {
     OptionButton,
 } from './CheckoutcomCustomFormFields';
 import CreditCardPaymentMethod, {
-    CreditCardPaymentMethodProps,
-    CreditCardPaymentMethodValues,
+    type CreditCardPaymentMethodProps,
+    type CreditCardPaymentMethodValues,
 } from './CreditCardPaymentMethod';
 
 const getAPMProps = {

@@ -1,19 +1,19 @@
 import {
-    AdyenCreditCardComponentOptions,
-    AdyenIdealComponentOptions,
-    AdyenV2ValidationState,
-    CardInstrument,
+    type AdyenCreditCardComponentOptions,
+    type AdyenIdealComponentOptions,
+    type AdyenV2ValidationState,
+    type CardInstrument,
 } from '@bigcommerce/checkout-sdk';
 import _ from 'lodash';
-import React, { FunctionComponent, useCallback, useRef, useState } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback, useRef, useState } from 'react';
+import { type Omit } from 'utility-types';
 
 import { TranslatedString } from '../../locale';
 import { Modal } from '../../ui/modal';
 
 import AdyenV2CardValidation from './AdyenV2CardValidation';
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export type AdyenPaymentMethodProps = Omit<

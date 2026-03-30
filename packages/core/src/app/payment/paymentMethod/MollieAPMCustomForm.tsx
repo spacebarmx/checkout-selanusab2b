@@ -1,9 +1,9 @@
-import { PaymentMethod } from '@bigcommerce/checkout-sdk';
-import { FieldProps } from 'formik';
-import React, { FunctionComponent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { type PaymentMethod } from '@bigcommerce/checkout-sdk';
+import { type FieldProps } from 'formik';
+import React, { type FunctionComponent, type SyntheticEvent, useCallback, useEffect, useState } from 'react';
 
 import { preventDefault } from '@bigcommerce/checkout/dom-utils';
-import { withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
 
 import { DropdownTrigger } from '../../ui/dropdown';
 import { FormField } from '../../ui/form';

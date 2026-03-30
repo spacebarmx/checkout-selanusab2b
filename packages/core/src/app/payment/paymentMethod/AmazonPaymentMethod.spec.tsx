@@ -1,12 +1,12 @@
-import { createCheckoutService, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { createCheckoutService, type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
-import AmazonPaymentMethod, { AmazonPaymentMethodProps } from './AmazonPaymentMethod';
+import AmazonPaymentMethod, { type AmazonPaymentMethodProps } from './AmazonPaymentMethod';
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
 import PaymentMethodId from './PaymentMethodId';
 

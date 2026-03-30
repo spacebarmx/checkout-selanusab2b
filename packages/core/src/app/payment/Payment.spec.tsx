@@ -1,19 +1,19 @@
+import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import {
-    CartConsistencyError,
-    CheckoutSelectors,
-    CheckoutService,
+    type CartConsistencyError,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
-    CustomError,
-    PaymentMethod,
-    RequestError,
+    type CustomError,
+    type PaymentMethod,
+    type RequestError,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { EventEmitter } from 'events';
 import { find, merge, noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCart } from '../cart/carts.mock';
@@ -25,9 +25,9 @@ import { getOrder } from '../order/orders.mock';
 import { getConsignment } from '../shipping/consignment.mock';
 import { Button } from '../ui/button';
 
-import Payment, { PaymentProps } from './Payment';
+import Payment, { type PaymentProps } from './Payment';
 import { getPaymentMethod } from './payment-methods.mock';
-import PaymentForm, { PaymentFormProps } from './PaymentForm';
+import PaymentForm, { type PaymentFormProps } from './PaymentForm';
 import { PaymentMethodId } from './paymentMethod';
 
 describe('Payment', () => {

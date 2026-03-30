@@ -3,7 +3,7 @@
   "sourceRoot": "packages/hosted-field-integration/src",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/hosted-field-integration/**/*.{ts,tsx}"]

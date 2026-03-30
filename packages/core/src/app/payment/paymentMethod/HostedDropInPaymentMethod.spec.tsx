@@ -1,13 +1,13 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { EventEmitter } from 'events';
 import { Formik } from 'formik';
 import { merge, noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { createLocaleContext, LocaleContext } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
@@ -19,12 +19,12 @@ import { getCustomer } from '../../customer/customers.mock';
 import { getConsignment } from '../../shipping/consignment.mock';
 import { LoadingOverlay } from '../../ui/loading';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 import { CardInstrumentFieldset } from '../storedInstrument';
 import { getInstruments } from '../storedInstrument/instruments.mock';
 
 import HostedDropInPaymentMethod, {
-    HostedDropInPaymentMethodProps,
+    type HostedDropInPaymentMethodProps,
 } from './HostedDropInPaymentMethod';
 
 describe('HostedDropInPaymentMethod', () => {

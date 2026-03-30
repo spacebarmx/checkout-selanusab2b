@@ -1,12 +1,12 @@
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { getPaymentMethod } from '../payment-methods.mock';
 
 import BoltClientPaymentMethod from './BoltClientPaymentMethod';
 import BoltEmbeddedPaymentMethod from './BoltEmbeddedPaymentMethod';
 import BoltPaymentMethod from './BoltPaymentMethod';
-import HostedPaymentMethod, { HostedPaymentMethodProps } from './HostedPaymentMethod';
+import HostedPaymentMethod, { type HostedPaymentMethodProps } from './HostedPaymentMethod';
 import HostedWidgetPaymentMethod from './HostedWidgetPaymentMethod';
 import PaymentMethodId from './PaymentMethodId';
 

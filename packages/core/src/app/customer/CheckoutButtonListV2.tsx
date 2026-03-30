@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { withCheckout, WithCheckoutProps } from '../checkout';
-import { TranslatedString, withLanguage, WithLanguageProps } from '../locale';
+import { withCheckout, type WithCheckoutProps } from '../checkout';
+import { TranslatedString, withLanguage, type WithLanguageProps } from '../locale';
 
 import resolveCheckoutButton from './resolveCheckoutButton';
 

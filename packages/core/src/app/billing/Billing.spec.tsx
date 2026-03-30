@@ -1,13 +1,13 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
-    LineItemMap,
+    type LineItemMap,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import { mount, type ReactWrapper } from 'enzyme';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getFormFields } from '../address/formField.mock';
@@ -18,7 +18,7 @@ import { getCustomer } from '../customer/customers.mock';
 import { getCountries } from '../geography/countries.mock';
 import { OrderComments } from '../orderComments';
 
-import Billing, { BillingProps } from './Billing';
+import Billing, { type BillingProps } from './Billing';
 import { getBillingAddress } from './billingAddresses.mock';
 import BillingForm from './BillingForm';
 

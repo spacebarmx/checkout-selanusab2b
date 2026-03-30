@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { OrderConfirmationAppProps } from './OrderConfirmationApp';
-import renderOrderConfirmation, { RenderOrderConfirmationOptions } from './renderOrderConfirmation';
+import { type OrderConfirmationAppProps } from './OrderConfirmationApp';
+import renderOrderConfirmation, { type RenderOrderConfirmationOptions } from './renderOrderConfirmation';
 
 let OrderConfirmationApp: FunctionComponent<OrderConfirmationAppProps>;
 let configurePublicPath: (path: string) => void;

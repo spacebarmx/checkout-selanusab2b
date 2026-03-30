@@ -1,14 +1,14 @@
-import { CheckoutSelectors, CheckoutService, createCheckoutService, RequestError } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { type CheckoutSelectors, type CheckoutService, createCheckoutService, type RequestError } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
 import { CheckoutContext } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getStoreConfig } from '../config/config.mock';
 import { Alert } from '../ui/alert';
 
-import Redeemable, { RedeemableProps } from './Redeemable';
+import Redeemable, { type RedeemableProps } from './Redeemable';
 
 describe('CartSummary Component', () => {
     let localeContext: LocaleContextType;

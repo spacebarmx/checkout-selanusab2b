@@ -1,6 +1,6 @@
-import { CheckoutSelectors, CheckoutService } from '@bigcommerce/checkout-sdk';
+import { type CheckoutSelectors, type CheckoutService } from '@bigcommerce/checkout-sdk';
 import { memoizeOne } from '@bigcommerce/memoize';
-import React, { Component, ReactNode } from 'react';
+import React, { Component, type ReactNode } from 'react';
 
 import CheckoutContext from './CheckoutContext';
 

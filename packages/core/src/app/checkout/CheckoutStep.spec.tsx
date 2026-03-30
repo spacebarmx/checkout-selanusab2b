@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { isMobileView, MOBILE_MAX_WIDTH } from '../ui/responsive';
 
-import CheckoutStep, { CheckoutStepProps } from './CheckoutStep';
+import CheckoutStep, { type CheckoutStepProps } from './CheckoutStep';
 import CheckoutStepHeader from './CheckoutStepHeader';
 import CheckoutStepType from './CheckoutStepType';
 
@@ -117,7 +117,7 @@ describe('CheckoutStep', () => {
 
         jest.runAllTimers();
 
-        expect(component.getDOMNode().querySelector('input')).not.toEqual(document.activeElement);
+        expect(component.getDOMNode().querySelector('input')).not.toHaveFocus();
 
         expect(window.scrollTo).not.toHaveBeenCalled();
     });

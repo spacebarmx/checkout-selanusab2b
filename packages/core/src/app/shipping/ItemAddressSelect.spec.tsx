@@ -6,7 +6,7 @@ import { getPhysicalItem } from '../cart/lineItem.mock';
 import { getCustomer } from '../customer/customers.mock';
 
 import { getConsignment } from './consignment.mock';
-import ItemAddressSelect, { ItemAddressSelectProps } from './ItemAddressSelect';
+import ItemAddressSelect, { type ItemAddressSelectProps } from './ItemAddressSelect';
 
 describe('ItemAddressSelect Component', () => {
     const defaultProps: ItemAddressSelectProps = {

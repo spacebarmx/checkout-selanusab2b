@@ -1,11 +1,11 @@
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import React from 'react';
 
 import BarclaycardPaymentMethod, {
-    BarclaycardPaymentMethodProps,
+    type BarclaycardPaymentMethodProps,
 } from './BarclaycardPaymentMethod';
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 describe('when using Barclaycard payment', () => {

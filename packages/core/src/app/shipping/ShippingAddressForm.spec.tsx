@@ -1,10 +1,10 @@
-import { CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { type CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { AddressForm, AddressSelect } from '../address';
@@ -15,7 +15,7 @@ import { getCustomer } from '../customer/customers.mock';
 
 import { getConsignment } from './consignment.mock';
 import { getShippingAddress } from './shipping-addresses.mock';
-import ShippingAddressForm, { ShippingAddressFormProps } from './ShippingAddressForm';
+import ShippingAddressForm, { type ShippingAddressFormProps } from './ShippingAddressForm';
 
 describe('ShippingAddressForm Component', () => {
     let component: ReactWrapper;

@@ -76,6 +76,7 @@ describe('useShipping', () => {
         expect(result.current.customer).toEqual(getCustomer());
         expect(result.current.shouldShowOrderComments).toBe(true);
         expect(result.current.shouldShowMultiShipping).toBe(false);
+        expect(result.current.validateMaxLength).toBe(false);
     });
 
     it('throws if required checkout data is missing', () => {
@@ -90,6 +91,7 @@ describe('useShipping', () => {
                 {
                     ...getCart(),
                     lineItems: {
+                        ...getCart().lineItems,
                         physicalItems: [
                             {
                                 ...getCart().lineItems.physicalItems[0],
@@ -99,6 +101,16 @@ describe('useShipping', () => {
                     },
                 }
             );
+            jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+                ...getStoreConfig(),
+                checkoutSettings: {
+                    ...getStoreConfig().checkoutSettings,
+                    features: {
+                        ...getStoreConfig().checkoutSettings?.features,
+                        'CHECKOUT-9768.form_fields_max_length_validation': true,
+                    },
+                },
+            });
         });
 
         afterEach(() => {
@@ -107,7 +119,9 @@ describe('useShipping', () => {
 
         it('is false if hasMultiShippingEnabled is false', () => {
             jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+                ...getStoreConfig(),
                 checkoutSettings: {
+                    ...getStoreConfig().checkoutSettings,
                     enableOrderComments: true,
                     hasMultiShippingEnabled: false,
                     providerWithCustomCheckout: undefined,
@@ -121,7 +135,9 @@ describe('useShipping', () => {
 
         it('is true if hasMultiShippingEnabled is true and providerWithCustomCheckout is undefined', () => {
             jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+                ...getStoreConfig(),
                 checkoutSettings: {
+                    ...getStoreConfig().checkoutSettings,
                     enableOrderComments: true,
                     hasMultiShippingEnabled: true,
                     providerWithCustomCheckout: undefined,
@@ -135,7 +151,9 @@ describe('useShipping', () => {
 
         it('is false when remote shipping is enabled', () => {
             jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+                ...getStoreConfig(),
                 checkoutSettings: {
+                    ...getStoreConfig().checkoutSettings,
                     enableOrderComments: true,
                     hasMultiShippingEnabled: true,
                     providerWithCustomCheckout: undefined,
@@ -153,6 +171,33 @@ describe('useShipping', () => {
         });
     });
 
+    describe('validateMaxLength', () => {
+        it('is false when experiment is not enabled', () => {
+            const { result } = renderHook(() => useShipping());
+
+            expect(result.current.validateMaxLength).toBe(false);
+        });
+
+        it('is true when CHECKOUT-9768.form_fields_max_length_validation experiment is enabled', () => {
+            const config = getStoreConfig();
+
+            jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+                ...config,
+                checkoutSettings: {
+                    ...config.checkoutSettings,
+                    features: {
+                        ...config.checkoutSettings.features,
+                        'CHECKOUT-9768.form_fields_max_length_validation': true,
+                    },
+                },
+            });
+
+            const { result } = renderHook(() => useShipping());
+
+            expect(result.current.validateMaxLength).toBe(true);
+        });
+    });
+
     it('shouldRenderStripeForm is true if providerWithCustomCheckout is StripeUPE and shouldUseStripeLinkByMinimumAmount returns true', () => {
 
         jest.mock(
@@ -163,7 +208,9 @@ describe('useShipping', () => {
             }),
         );
         jest.spyOn(checkoutState.data, 'getConfig').mockReturnValue({
+            ...getStoreConfig(),
             checkoutSettings: {
+                ...getStoreConfig().checkoutSettings,
                 enableOrderComments: true,
                 hasMultiShippingEnabled: true,
                 providerWithCustomCheckout: PaymentMethodId.StripeUPE,

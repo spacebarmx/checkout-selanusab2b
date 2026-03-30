@@ -1,11 +1,11 @@
 import {
-    CheckoutSelectors,
-    PaymentInitializeOptions,
-    PaymentMethod,
-    PaymentRequestOptions,
+    type CheckoutSelectors,
+    type PaymentInitializeOptions,
+    type PaymentMethod,
+    type PaymentRequestOptions,
 } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import { Component, ReactNode } from 'react';
+import { Component, type ReactNode } from 'react';
 
 export interface OfflinePaymentMethodProps {
     method: PaymentMethod;

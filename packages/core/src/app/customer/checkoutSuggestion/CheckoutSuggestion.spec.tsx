@@ -1,12 +1,12 @@
+import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import { LocaleProvider } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
@@ -15,8 +15,8 @@ import { getStoreConfig } from '../../config/config.mock';
 
 import BoltCheckoutSuggestion from './BoltCheckoutSuggestion';
 import CheckoutSuggestion, {
-    CheckoutSuggestionProps,
-    WithCheckoutSuggestionsProps,
+    type CheckoutSuggestionProps,
+    type WithCheckoutSuggestionsProps,
 } from './CheckoutSuggestion';
 
 describe('CheckoutSuggestion', () => {

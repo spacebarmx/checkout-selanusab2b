@@ -1,16 +1,16 @@
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../../config/config.mock';
 import { IconHelp } from '../../ui/icon';
 import { TooltipTrigger } from '../../ui/tooltip';
 
 import HostedCreditCardCodeField, {
-    HostedCreditCardCodeFieldProps,
+    type HostedCreditCardCodeFieldProps,
 } from './HostedCreditCardCodeField';
 
 describe('HostedCreditCardCodeField', () => {

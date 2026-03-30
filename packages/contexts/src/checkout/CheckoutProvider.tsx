@@ -8,6 +8,8 @@ import React, {
     useState,
 } from 'react';
 
+import { CapabilitiesProvider } from '../capabilities';
+
 import CheckoutContext from './CheckoutContext';
 import type ErrorLogger from './ErrorLogger';
 
@@ -49,7 +51,11 @@ const CheckoutProvider = ({
         };
     }, [checkoutService]);
 
-    return <CheckoutContext.Provider value={contextValue}>{children}</CheckoutContext.Provider>;
+    return (
+        <CheckoutContext.Provider value={contextValue}>
+            <CapabilitiesProvider checkoutState={checkoutState}>{children}</CapabilitiesProvider>
+        </CheckoutContext.Provider>
+    );
 };
 
 export default CheckoutProvider;

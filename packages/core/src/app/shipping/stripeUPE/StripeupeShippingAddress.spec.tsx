@@ -3,7 +3,7 @@ import React from 'react';
 
 import { getFormFields } from '../../address/formField.mock';
 
-import StripeShippingAddressDisplay, { StripeupeShippingAddressProps } from './StripeShippingAddressDisplay';
+import StripeShippingAddressDisplay, { type StripeupeShippingAddressProps } from './StripeShippingAddressDisplay';
 
 describe('StripeUpe Shipping Component', () => {
     const defaultProps: StripeupeShippingAddressProps = {

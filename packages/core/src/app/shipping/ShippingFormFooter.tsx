@@ -2,7 +2,6 @@ import { ExtensionRegion } from '@bigcommerce/checkout-sdk/essential';
 import React, { type FunctionComponent } from 'react';
 
 import { Extension } from '@bigcommerce/checkout/checkout-extension';
-import { useThemeContext } from '@bigcommerce/checkout/contexts';
 import { TranslatedString } from '@bigcommerce/checkout/locale';
 
 import { OrderComments } from '../orderComments';
@@ -14,6 +13,7 @@ import { ShippingOptions } from './shippingOption';
 
 export interface ShippingFormFooterProps {
     cartHasChanged: boolean;
+    defaultShippingExpectationMessage?: string;
     isMultiShippingMode: boolean;
     shouldShowOrderComments: boolean;
     shouldShowShippingOptions?: boolean;
@@ -25,6 +25,7 @@ export interface ShippingFormFooterProps {
 
 const ShippingFormFooter: FunctionComponent<ShippingFormFooterProps> = ({
     cartHasChanged,
+    defaultShippingExpectationMessage,
     isMultiShippingMode,
     shouldShowOrderComments,
     shouldShowShippingOptions = true,
@@ -33,8 +34,6 @@ const ShippingFormFooter: FunctionComponent<ShippingFormFooterProps> = ({
     isLoading,
     shippingFormRenderTimestamp,
 }) => {
-    const { themeV2 } = useThemeContext();
-
     return (
         <>
             <Extension region={ExtensionRegion.ShippingShippingAddressFormAfter} />
@@ -42,7 +41,7 @@ const ShippingFormFooter: FunctionComponent<ShippingFormFooterProps> = ({
                 id="checkout-shipping-options"
                 legend={
                     <>
-                        <Legend themeV2={themeV2}>
+                        <Legend>
                             <TranslatedString id="shipping.shipping_method_label" />
                         </Legend>
 
@@ -65,11 +64,13 @@ const ShippingFormFooter: FunctionComponent<ShippingFormFooterProps> = ({
                 />
             </Fieldset>
 
+            {defaultShippingExpectationMessage && <p>{defaultShippingExpectationMessage}</p>}
+
             {shouldShowOrderComments && <OrderComments />}
 
             <div className="form-actions">
                 <Button
-                    className={themeV2 ? 'body-bold' : ''}
+                    className="body-bold"
                     disabled={shouldDisableSubmit}
                     id="checkout-shipping-continue"
                     isLoading={isLoading}

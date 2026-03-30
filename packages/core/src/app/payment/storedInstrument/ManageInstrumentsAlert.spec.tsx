@@ -1,7 +1,7 @@
-import { shallow, ShallowWrapper } from 'enzyme';
+import { shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import { TranslatedString, TranslatedStringProps } from '@bigcommerce/checkout/locale';
+import { TranslatedString, type TranslatedStringProps } from '@bigcommerce/checkout/locale';
 
 import ManageInstrumentsAlert from './ManageInstrumentsAlert';
 

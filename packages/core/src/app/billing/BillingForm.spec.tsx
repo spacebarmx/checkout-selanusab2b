@@ -1,9 +1,9 @@
 import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 import { createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 import { getAddress } from '@bigcommerce/checkout/test-mocks';
 
@@ -15,7 +15,7 @@ import { getCountries } from '../geography/countries.mock';
 import { DynamicFormField } from '../ui/form';
 
 import { getBillingAddress } from './billingAddresses.mock';
-import BillingForm, { BillingFormProps } from './BillingForm';
+import BillingForm, { type BillingFormProps } from './BillingForm';
 import StaticBillingAddress from './StaticBillingAddress';
 
 jest.mock('@bigcommerce/checkout/paypal-connect-integration', () => ({
@@ -177,7 +177,7 @@ describe('BillingForm Component', () => {
             address1: 'PP AXO address'
         }];
 
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+         
         (usePayPalConnectAddress as jest.Mock).mockReturnValue({
             isPayPalAxoEnabled: true,
             mergedBcAndPayPalConnectAddresses,

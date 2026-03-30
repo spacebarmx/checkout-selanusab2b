@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+export { CollapseCSSTransition } from './animation';
 export { Alert, AlertType } from './alert';
 export {
     Accordion,
@@ -69,6 +70,7 @@ export {
     IconCardTroy,
     IconCardUnionPay,
     IconCardVisa,
+    IconClose,
     IconCloseWithBorder,
     IconBitCoin,
     IconBitCoinCash,
@@ -86,6 +88,9 @@ export {
     IconRemoveCoupon,
     IconDownArrow,
     IconUpArrow,
+    IconChevronDown,
+    IconChevronUp,
+    IconArrowLeft,
 } from './icon';
 export { LazyContainer, LoadingNotification, LoadingOverlay, LoadingSpinner } from './loading';
 export {

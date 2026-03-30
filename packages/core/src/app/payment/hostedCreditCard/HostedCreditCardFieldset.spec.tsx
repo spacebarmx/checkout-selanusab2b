@@ -1,14 +1,15 @@
 import { createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { LocaleProvider } from '@bigcommerce/checkout/locale';
 import { mount } from 'enzyme';
 import { Field, Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
+
+import { LocaleProvider } from '@bigcommerce/checkout/locale';
 
 import HostedCreditCardCodeField from './HostedCreditCardCodeField';
 import HostedCreditCardExpiryField from './HostedCreditCardExpiryField';
 import HostedCreditCardFieldset, {
-    HostedCreditCardFieldsetProps,
+    type HostedCreditCardFieldsetProps,
 } from './HostedCreditCardFieldset';
 import HostedCreditCardNameField from './HostedCreditCardNameField';
 import HostedCreditCardNumberField from './HostedCreditCardNumberField';
@@ -79,4 +80,4 @@ describe('HostedCreditCardFieldset', () => {
         ).toBeTruthy();
     });
 });
-/* eslint-enable react/jsx-no-bind */
+ 

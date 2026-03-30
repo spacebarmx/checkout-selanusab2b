@@ -1,15 +1,15 @@
 import {
-    CheckoutSelectors,
-    CustomerInitializeOptions,
-    PaymentInitializeOptions,
+    type CheckoutSelectors,
+    type CustomerInitializeOptions,
+    type PaymentInitializeOptions,
 } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
+import { type Omit } from 'utility-types';
 
 import PaymentContext from '../PaymentContext';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export interface AmazonPaymentMethodProps

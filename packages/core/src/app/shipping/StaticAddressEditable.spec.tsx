@@ -1,4 +1,4 @@
-import { mount, shallow, ShallowWrapper } from 'enzyme';
+import { mount, shallow, type ShallowWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
@@ -13,7 +13,7 @@ import { Button } from '../ui/button';
 import { DynamicFormField } from '../ui/form';
 import { LoadingOverlay } from '../ui/loading';
 
-import StaticAddressEditable, { StaticAddressEditableProps } from './StaticAddressEditable';
+import StaticAddressEditable, { type StaticAddressEditableProps } from './StaticAddressEditable';
 
 describe('StaticAddressEditable Component', () => {
     const defaultProps: StaticAddressEditableProps = {

@@ -1,11 +1,11 @@
-import { CheckoutService, createCheckoutService, StandardError } from '@bigcommerce/checkout-sdk';
+import { type CheckoutService, createCheckoutService, StandardError } from '@bigcommerce/checkout-sdk';
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
+import { LocaleProvider } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
-import SpamProtectionField, { SpamProtectionProps } from './SpamProtectionField';
-import { LocaleProvider } from '@bigcommerce/checkout/locale';
+import SpamProtectionField, { type SpamProtectionProps } from './SpamProtectionField';
 
 describe('SpamProtectionField', () => {
     let checkoutService: CheckoutService;

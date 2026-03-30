@@ -3,12 +3,12 @@ import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
-import { CardInstrumentFieldsetValues } from '@bigcommerce/checkout/payment-integration-api';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
+import { type CardInstrumentFieldsetValues } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getStoreConfig } from '../../config/config.mock';
 
-import CardInstrumentFieldset, { CardInstrumentFieldsetProps } from './CardInstrumentFieldset';
+import CardInstrumentFieldset, { type CardInstrumentFieldsetProps } from './CardInstrumentFieldset';
 import { getInstruments } from './instruments.mock';
 import InstrumentSelect from './InstrumentSelect';
 import isCardInstrument from './isCardInstrument';

@@ -1,16 +1,16 @@
-import { CardInstrument, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import { type CardInstrument, type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
 
 import { LocaleContext } from '@bigcommerce/checkout/locale';
 
 import {
     withHostedCreditCardFieldset,
-    WithInjectedHostedCreditCardFieldsetProps,
+    type WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import PaymentContext from '../PaymentContext';
 
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 import MollieCustomCardForm from './MollieCustomCardForm';
 

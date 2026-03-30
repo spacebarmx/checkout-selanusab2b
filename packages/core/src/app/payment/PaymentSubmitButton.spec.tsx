@@ -1,15 +1,15 @@
-import { CheckoutService, createCheckoutService, LanguageService } from '@bigcommerce/checkout-sdk';
+import { type CheckoutService, createCheckoutService, type LanguageService } from '@bigcommerce/checkout-sdk';
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { CheckoutProvider } from '../checkout';
 import { getStoreConfig } from '../config/config.mock';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '../locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '../locale';
 import { Button } from '../ui/button';
 import { IconBolt } from '../ui/icon';
 
 import { PaymentMethodId, PaymentMethodType } from './paymentMethod';
-import PaymentSubmitButton, { PaymentSubmitButtonProps } from './PaymentSubmitButton';
+import PaymentSubmitButton, { type PaymentSubmitButtonProps } from './PaymentSubmitButton';
 
 describe('PaymentSubmitButton', () => {
     let PaymentSubmitButtonTest: FunctionComponent<PaymentSubmitButtonProps>;

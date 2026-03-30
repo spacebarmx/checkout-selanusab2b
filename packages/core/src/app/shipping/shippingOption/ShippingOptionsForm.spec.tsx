@@ -1,16 +1,16 @@
-import { CheckoutSelectors, Consignment, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
+import { type CheckoutSelectors, type Consignment, createCheckoutService } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
-import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
 import { LocaleProvider, TranslatedString } from '@bigcommerce/checkout/locale';
 
 import { getCart } from '../../cart/carts.mock';
 import { getConsignment } from '../consignment.mock';
 
-import ShippingOptionsForm, { ShippingOptionsFormProps } from './ShippingOptionsForm';
+import ShippingOptionsForm, { type ShippingOptionsFormProps } from './ShippingOptionsForm';
 import ShippingOptionsList from './ShippingOptionsList';
 
 describe('ShippingOptions Component', () => {

@@ -1,7 +1,7 @@
-import { shallow, ShallowWrapper } from 'enzyme';
+import { shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import OrderConfirmationApp, { OrderConfirmationAppProps } from './OrderConfirmationApp';
+import OrderConfirmationApp, { type OrderConfirmationAppProps } from './OrderConfirmationApp';
 
 describe('OrderConfirmationApp', () => {
     let defaultProps: OrderConfirmationAppProps;

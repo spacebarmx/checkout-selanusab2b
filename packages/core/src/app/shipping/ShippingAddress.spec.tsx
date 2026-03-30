@@ -1,10 +1,10 @@
-import { CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper, shallow } from 'enzyme';
+import { type CheckoutService, createCheckoutService } from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper, shallow } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { StaticAddress } from '../address/';
@@ -14,7 +14,7 @@ import { getCustomer } from '../customer/customers.mock';
 
 import { getConsignment } from './consignment.mock';
 import { getShippingAddress } from './shipping-addresses.mock';
-import ShippingAddress, { ShippingAddressProps } from './ShippingAddress';
+import ShippingAddress, { type ShippingAddressProps } from './ShippingAddress';
 import ShippingAddressForm from './ShippingAddressForm';
 import StaticAddressEditable from './StaticAddressEditable';
 

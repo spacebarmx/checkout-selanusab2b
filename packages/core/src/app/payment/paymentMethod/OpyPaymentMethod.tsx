@@ -1,15 +1,15 @@
-import { CustomError, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import { type CustomError, type PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import { noop } from 'lodash';
-import React, { FunctionComponent, useCallback } from 'react';
-import { Omit } from 'utility-types';
+import React, { type FunctionComponent, useCallback } from 'react';
+import { type Omit } from 'utility-types';
 
-import { TranslatedString, withLanguage, WithLanguageProps } from '@bigcommerce/checkout/locale';
+import { TranslatedString, withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
 
 import { LoadingOverlay } from '../../ui/loading';
 
 import getPaymentMethodName from './getPaymentMethodName';
 import HostedWidgetPaymentMethod, {
-    HostedWidgetPaymentMethodProps,
+    type HostedWidgetPaymentMethodProps,
 } from './HostedWidgetPaymentMethod';
 
 export type OpyPaymentMethodProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'>;

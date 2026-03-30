@@ -1,32 +1,32 @@
-import {
-    BillingAddress,
-    Checkout,
-    CheckoutService,
-    createCheckoutService,
-    Customer as CustomerData,
-    StoreConfig,
-} from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
-
 import { AnalyticsProviderMock } from '@bigcommerce/checkout/analytics';
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import {
+    type BillingAddress,
+    type Checkout,
+    type CheckoutService,
+    createCheckoutService,
+    type Customer as CustomerData,
+    type StoreConfig,
+} from '@bigcommerce/checkout-sdk';
+import { mount, type ReactWrapper } from 'enzyme';
+import React, { type FunctionComponent } from 'react';
+
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getBillingAddress } from '../billing/billingAddresses.mock';
 import { getCheckout } from '../checkout/checkouts.mock';
-import CheckoutStepStatus from '../checkout/CheckoutStepStatus';
+import type CheckoutStepStatus from '../checkout/CheckoutStepStatus';
 import CheckoutStepType from '../checkout/CheckoutStepType';
 import { getStoreConfig } from '../config/config.mock';
 import { PaymentMethodId } from '../payment/paymentMethod';
 
-import CreateAccountForm, { CreateAccountFormProps } from './CreateAccountForm';
-import Customer, { CustomerProps, WithCheckoutCustomerProps } from './Customer';
+import CreateAccountForm, { type CreateAccountFormProps } from './CreateAccountForm';
+import Customer, { type CustomerProps, type WithCheckoutCustomerProps } from './Customer';
 import { getCustomer, getGuestCustomer } from './customers.mock';
 import CustomerViewType from './CustomerViewType';
 import EmailLoginForm from './EmailLoginForm';
-import GuestForm, { GuestFormProps } from './GuestForm';
-import LoginForm, { LoginFormProps } from './LoginForm';
+import GuestForm, { type GuestFormProps } from './GuestForm';
+import LoginForm, { type LoginFormProps } from './LoginForm';
 import StripeGuestForm from './StripeGuestForm';
 
 describe('Customer', () => {

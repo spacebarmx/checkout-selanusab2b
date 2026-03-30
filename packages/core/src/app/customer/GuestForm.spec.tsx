@@ -1,12 +1,12 @@
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 
 import { getStoreConfig } from '../config/config.mock';
 import { PrivacyPolicyField } from '../privacyPolicy';
 
-import GuestForm, { GuestFormProps } from './GuestForm';
+import GuestForm, { type GuestFormProps } from './GuestForm';
 
 describe('GuestForm', () => {
     let defaultProps: GuestFormProps;

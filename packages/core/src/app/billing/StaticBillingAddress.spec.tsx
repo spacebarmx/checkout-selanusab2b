@@ -1,21 +1,21 @@
+import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
 import { mount } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { getLanguageService, LocaleProvider } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
-import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 
 import { StaticAddress } from '../address';
 import { getAddress } from '../address/address.mock';
 import { getAddressFormFields } from '../address/formField.mock';
 import { getCheckout, getCheckoutPayment } from '../checkout/checkouts.mock';
 
-import StaticBillingAddress, { StaticBillingAddressProps } from './StaticBillingAddress';
+import StaticBillingAddress, { type StaticBillingAddressProps } from './StaticBillingAddress';
 
 jest.mock('@bigcommerce/checkout/paypal-connect-integration', () => ({
     ...jest.requireActual('@bigcommerce/checkout/paypal-connect-integration'),
@@ -90,7 +90,7 @@ describe('StaticBillingAddress', () => {
         });
 
         it('should not show label if PayPal Axo is enabled but no PP addresses available', () => {
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+             
             (usePayPalConnectAddress as jest.Mock).mockReturnValue({
                 isPayPalAxoEnabled: true,
                 paypalConnectAddresses: [],
@@ -102,7 +102,7 @@ describe('StaticBillingAddress', () => {
         });
 
         it('should show label if PayPal Axo is enabled and address match to PP address', () => {
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+             
             (usePayPalConnectAddress as jest.Mock).mockReturnValue({
                 isPayPalAxoEnabled: true,
                 paypalConnectAddresses: [getAddress()],

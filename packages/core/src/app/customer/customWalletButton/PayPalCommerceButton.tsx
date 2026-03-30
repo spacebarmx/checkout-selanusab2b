@@ -1,10 +1,10 @@
-import { CustomerInitializeOptions } from '@bigcommerce/checkout-sdk';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import { type CustomerInitializeOptions } from '@bigcommerce/checkout-sdk';
+import React, { type FunctionComponent, useCallback, useContext } from 'react';
 
 import { LocaleContext } from '@bigcommerce/checkout/locale';
 
 import { navigateToOrderConfirmation } from '../../checkout';
-import CheckoutButton, { CheckoutButtonProps } from '../CheckoutButton';
+import CheckoutButton, { type CheckoutButtonProps } from '../CheckoutButton';
 
 const PayPalCommerceButton: FunctionComponent<CheckoutButtonProps> = ({
     methodId,

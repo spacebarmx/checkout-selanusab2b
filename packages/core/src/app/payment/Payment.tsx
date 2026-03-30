@@ -1,13 +1,20 @@
 import {
+  type Cart,
+  type CartStockPositionsChangedError,
   type Checkout,
   type CheckoutRequestBody,
   type CheckoutSelectors,
   type CheckoutService,
   type CheckoutSettings,
+  type Consignment,
   type OrderFinalizeOptions,
   type OrderRequestBody,
   type PaymentMethod,
+  type PaymentProviderCustomer,
+  type StoreConfig,
 } from '@bigcommerce/checkout-sdk';
+import { createAfterpayPaymentStrategy } from '@bigcommerce/checkout-sdk/integrations/afterpay';
+import { createBlueSnapV2PaymentStrategy } from '@bigcommerce/checkout-sdk/integrations/bluesnap-direct';
 import { createCBAMPGSPaymentStrategy } from '@bigcommerce/checkout-sdk/integrations/cba-mpgs';
 import {
   createCheckoutComAPMPaymentStrategy,
@@ -47,11 +54,13 @@ import {
   ErrorModal,
   type ErrorModalOnCloseProps,
   isCartChangedError,
+  isCartStockPositionChangedError,
   isErrorWithType,
 } from '../common/error';
-import { EMPTY_ARRAY } from '../common/utility';
+import { EMPTY_ARRAY, isExperimentEnabled } from '../common/utility';
 import { TermsConditionsType } from '../termsConditions';
 
+import CartStockPositionsChangedModal from './CartStockPositionsChangedModal';
 import { KueskiMethod } from './kueski';
 import mapSubmitOrderErrorMessage, { mapSubmitOrderErrorTitle } from './mapSubmitOrderErrorMessage';
 import mapToOrderRequestBody from './mapToOrderRequestBody';
@@ -63,6 +72,86 @@ import {
   PaymentMethodProviderType,
   PaymentMethodType,
 } from './paymentMethod';
+
+interface PaymentMethodSelectionParams {
+  checkout: Checkout;
+  config: StoreConfig;
+  methods: PaymentMethod[];
+  consignments?: Consignment[];
+  getPaymentMethod: (methodId: string, gatewayId?: string) => PaymentMethod | undefined;
+  paymentProviderCustomer?: PaymentProviderCustomer;
+}
+
+const getDefaultPaymentMethod = ({
+  checkout,
+  config,
+  consignments,
+  getPaymentMethod,
+  methods,
+  paymentProviderCustomer,
+}: PaymentMethodSelectionParams): {
+  filteredMethods: PaymentMethod[];
+  defaultMethod?: PaymentMethod;
+} => {
+  let filteredMethods = methods;
+
+  // TODO: In accordance with the checkout team, this functionality is temporary and will be implemented in the backend instead.
+  if (paymentProviderCustomer?.stripeLinkAuthenticationState) {
+    const stripeUpePaymentMethod = filteredMethods.filter(
+      (method) => method.id === 'card' && method.gateway === PaymentMethodId.StripeUPE,
+    );
+
+    filteredMethods = stripeUpePaymentMethod.length ? stripeUpePaymentMethod : filteredMethods;
+  }
+
+  filteredMethods = filteredMethods.filter((method: PaymentMethod) => {
+    if (method.id === PaymentMethodId.Bolt && method.initializationData) {
+      return Boolean(method.initializationData.showInCheckout);
+    }
+
+    return method.id !== PaymentMethodId.BraintreeLocalPaymentMethod;
+  });
+
+  if (consignments && consignments.length > 1) {
+    const multiShippingIncompatibleMethodIds: string[] = [PaymentMethodId.AmazonPay];
+
+    filteredMethods = filteredMethods.filter(
+      (method: PaymentMethod) => !multiShippingIncompatibleMethodIds.includes(method.id),
+    );
+  }
+
+  const selectedPayment = checkout.payments
+    ? find(checkout.payments, { providerType: PaymentMethodProviderType.Hosted })
+    : undefined;
+  let selectedPaymentMethod;
+
+  if (selectedPayment) {
+    selectedPaymentMethod = getPaymentMethod(selectedPayment.providerId, selectedPayment.gatewayId);
+    filteredMethods = selectedPaymentMethod ? compact([selectedPaymentMethod]) : filteredMethods;
+  } else {
+    selectedPaymentMethod = find(filteredMethods, {
+      config: { hasDefaultStoredInstrument: true },
+    });
+  }
+
+  filteredMethods = filteredMethods.map((method) => {
+    const { id } = method;
+
+    if (id !== 'cheque' && id !== 'check') return method;
+
+    return {
+      ...method,
+      logoUrl: `https://cdn11.bigcommerce.com/s-${config.storeProfile.storeHash}/images/stencil/original/image-manager/kueski-pay.png`,
+      method: PaymentMethodType.Kueski,
+      type: PaymentMethodProviderType.Api,
+    };
+  });
+
+  return {
+    defaultMethod: selectedPaymentMethod || filteredMethods[0],
+    filteredMethods,
+  };
+};
 
 export interface PaymentProps {
   errorLogger: ErrorLogger;
@@ -80,6 +169,8 @@ export interface PaymentProps {
 
 interface WithCheckoutPaymentProps {
   availableStoreCredit: number;
+  cart?: Cart;
+  consignments?: Consignment[];
   cartUrl: string;
   defaultMethod?: PaymentMethod;
   finalizeOrderError?: Error;
@@ -90,6 +181,7 @@ interface WithCheckoutPaymentProps {
   methods: PaymentMethod[];
   shouldExecuteSpamCheck: boolean;
   shouldLocaliseErrorMessages: boolean;
+  shouldShowSubmitPaymentButton: boolean;
   submitOrderError?: Error;
   termsConditionsText?: string;
   termsConditionsUrl?: string;
@@ -132,9 +224,51 @@ const Payment = (
     submitFunctions: {},
   });
 
+  const [isCartStockRefreshComplete, setIsCartStockRefreshComplete] = useState(false);
+
   const isReadyRef = useRef(state.isReady);
   const grandTotalChangeUnsubscribe = useRef<() => void>();
   const validationSchemasRef = useRef<validationSchemas>({});
+  const lastFormValuesRef = useRef<PaymentFormValues | null>(null);
+
+  const renderCartStockPositionsChangedModal = (
+    error: CartStockPositionsChangedError,
+  ): ReactNode => {
+    const { cart, clearError, consignments } = props;
+    const changedLineItemIds = error.changedItemIds;
+    const hasItemsToShow = !!changedLineItemIds?.length;
+
+    if (!hasItemsToShow) {
+      return null;
+    }
+
+    const onCartStockModalPlaceOrder = (): void => {
+      clearError(error);
+
+      const values = lastFormValuesRef.current;
+
+      if (values) {
+        handleSubmit(values);
+      }
+    };
+
+    const onCartStockModalRequestClose = (): void => {
+      clearError(error);
+      lastFormValuesRef.current = null;
+      setIsCartStockRefreshComplete(false);
+    };
+
+    return (
+      <CartStockPositionsChangedModal
+        cart={cart}
+        changedLineItemIds={changedLineItemIds}
+        consignments={consignments}
+        isOpen={true}
+        onPlaceOrder={onCartStockModalPlaceOrder}
+        onRequestClose={onCartStockModalRequestClose}
+      />
+    );
+  };
 
   const renderOrderErrorModal = (): ReactNode => {
     const { finalizeOrderError, language, shouldLocaliseErrorMessages, submitOrderError } = props;
@@ -151,6 +285,14 @@ const Payment = (
       error.type === 'invalid_hosted_form_value'
     ) {
       return null;
+    }
+
+    if (isCartStockPositionChangedError(error)) {
+      if (!isCartStockRefreshComplete) {
+        return null;
+      }
+
+      return renderCartStockPositionsChangedModal(error);
     }
 
     return (
@@ -309,6 +451,20 @@ const Payment = (
     return onUnhandledError(error);
   }, []);
 
+  const onCartStockPositionChangedError = (values: PaymentFormValues): void => {
+    lastFormValuesRef.current = values;
+    setIsCartStockRefreshComplete(false);
+    props
+      .loadCheckout()
+      .then(() => setIsCartStockRefreshComplete(true))
+      .catch(() => {
+        const { onUnhandledError = noop } = props;
+
+        onUnhandledError(new Error('Cart refresh failed after stock position change'));
+        setIsCartStockRefreshComplete(true);
+      });
+  };
+
   const handleSubmit = useCallback(
     async (values: PaymentFormValues) => {
       const {
@@ -383,6 +539,10 @@ const Payment = (
           return onCartChangedError();
         }
 
+        if (isCartStockPositionChangedError(error)) {
+          return onCartStockPositionChangedError(values);
+        }
+
         onSubmitError(error);
       }
     },
@@ -453,9 +613,21 @@ const Payment = (
     const { loadPaymentMethods, onUnhandledError = noop } = props;
 
     try {
-      await loadPaymentMethods();
+      const updatedState = await loadPaymentMethods();
+      const checkout = updatedState.data.getCheckout();
+      const methods = updatedState.data.getPaymentMethods() || EMPTY_ARRAY;
 
-      const selectedMethod = state.selectedMethod || props.defaultMethod;
+      const defaultMethod = checkout
+        ? getDefaultPaymentMethod({
+            checkout,
+            config: updatedState.data.getConfig()!,
+            consignments: updatedState.data.getConsignments(),
+            getPaymentMethod: updatedState.data.getPaymentMethod,
+            methods,
+            paymentProviderCustomer: updatedState.data.getPaymentProviderCustomer(),
+          }).defaultMethod
+        : undefined;
+      const selectedMethod = state.selectedMethod || defaultMethod;
 
       if (selectedMethod) {
         trackSelectedPaymentMethod(selectedMethod);
@@ -512,6 +684,8 @@ const Payment = (
       try {
         const state = await finalizeOrderIfNeeded({
           integrations: [
+            createAfterpayPaymentStrategy,
+            createBlueSnapV2PaymentStrategy,
             createCBAMPGSPaymentStrategy,
             createCheckoutComAPMPaymentStrategy,
             createCheckoutComCreditCardPaymentStrategy,
@@ -569,15 +743,17 @@ const Payment = (
   const { selectedMethod = props.defaultMethod, requireBill } = state;
   const uniqueSelectedMethodId =
     selectedMethod && getUniquePaymentMethodId(selectedMethod.id, selectedMethod.gateway);
+  const shouldShowPaymentForm =
+    props.shouldShowSubmitPaymentButton || (!isEmpty(props.methods) && props.defaultMethod);
 
   return (
     <PaymentContext.Provider value={getContextValue()}>
       <ChecklistSkeleton isLoading={!state.isReady}>
-        {!isEmpty(props.methods) && props.defaultMethod && (
+        {shouldShowPaymentForm && (
           <PaymentForm
             availableStoreCredit={props.availableStoreCredit}
-            defaultGatewayId={props.defaultMethod.gateway}
-            defaultMethodId={props.defaultMethod.id}
+            defaultGatewayId={props.defaultMethod?.gateway}
+            defaultMethodId={props.defaultMethod?.id || ''}
             didExceedSpamLimit={state.didExceedSpamLimit}
             isEmbedded={props.isEmbedded}
             isInitializingPayment={props.isInitializingPayment}
@@ -627,6 +803,7 @@ export function mapToPaymentProps({
 }: CheckoutContextProps): WithCheckoutPaymentProps | null {
   const {
     data: {
+      getCart,
       getCheckout,
       getConfig,
       getCustomer,
@@ -648,16 +825,7 @@ export function mapToPaymentProps({
   const paymentProviderCustomer = getPaymentProviderCustomer();
 
   const { isComplete = false } = getOrder() || {};
-  let methods = getPaymentMethods() || EMPTY_ARRAY;
-
-  // TODO: In accordance with the checkout team, this functionality is temporary and will be implemented in the backend instead.
-  if (paymentProviderCustomer?.stripeLinkAuthenticationState) {
-    const stripeUpePaymentMethod = methods.filter(
-      (method) => method.id === 'card' && method.gateway === PaymentMethodId.StripeUPE,
-    );
-
-    methods = stripeUpePaymentMethod.length ? stripeUpePaymentMethod : methods;
-  }
+  const methods = getPaymentMethods() || EMPTY_ARRAY;
 
   if (!checkout || !config || !customer || isComplete) {
     return null;
@@ -672,61 +840,24 @@ export function mapToPaymentProps({
   } = config.checkoutSettings as CheckoutSettings & { orderTermsAndConditionsLocation: string };
 
   const isTermsConditionsRequired = isTermsConditionsEnabled;
-  const selectedPayment = find(checkout.payments, {
-    providerType: PaymentMethodProviderType.Hosted,
-  });
-
   const { isStoreCreditApplied } = checkout;
-
-  let selectedPaymentMethod;
-  let filteredMethods;
-
-  filteredMethods = methods.filter((method: PaymentMethod) => {
-    if (method.id === PaymentMethodId.Bolt && method.initializationData) {
-      return Boolean(method.initializationData.showInCheckout);
-    }
-
-    return method.id !== PaymentMethodId.BraintreeLocalPaymentMethod;
-  });
-
-  if (consignments && consignments.length > 1) {
-    const multiShippingIncompatibleMethodIds: string[] = [PaymentMethodId.AmazonPay];
-
-    filteredMethods = methods.filter((method: PaymentMethod) => {
-      return !multiShippingIncompatibleMethodIds.includes(method.id);
-    });
-  }
-
-  if (selectedPayment) {
-    selectedPaymentMethod = getPaymentMethod(selectedPayment.providerId, selectedPayment.gatewayId);
-    filteredMethods = selectedPaymentMethod ? compact([selectedPaymentMethod]) : filteredMethods;
-  } else {
-    selectedPaymentMethod = find(filteredMethods, {
-      config: { hasDefaultStoredInstrument: true },
-    });
-    // eslint-disable-next-line no-self-assign
-    filteredMethods = filteredMethods;
-  }
-
-  filteredMethods = filteredMethods.map((method) => {
-    const { id } = method;
-
-    if (id !== 'cheque' && id !== 'check') return method;
-
-    return {
-      ...method,
-      logoUrl: `https://cdn11.bigcommerce.com/s-${config.storeProfile.storeHash}/images/stencil/original/image-manager/kueski-pay.png`,
-      method: PaymentMethodType.Kueski,
-      type: PaymentMethodProviderType.Api,
-    };
+  const { defaultMethod, filteredMethods } = getDefaultPaymentMethod({
+    checkout,
+    config,
+    consignments,
+    getPaymentMethod,
+    methods,
+    paymentProviderCustomer,
   });
 
   return {
     applyStoreCredit: checkoutService.applyStoreCredit,
     availableStoreCredit: customer.storeCredit,
+    cart: getCart(),
+    consignments,
     cartUrl: config.links.cartLink,
     clearError: checkoutService.clearError,
-    defaultMethod: selectedPaymentMethod || filteredMethods[0],
+    defaultMethod,
     finalizeOrderError: getFinalizeOrderError(),
     finalizeOrderIfNeeded: checkoutService.finalizeOrderIfNeeded,
     loadCheckout: checkoutService.loadCheckout,
@@ -739,6 +870,11 @@ export function mapToPaymentProps({
     methods: filteredMethods,
     shouldExecuteSpamCheck: checkout.shouldExecuteSpamCheck,
     shouldLocaliseErrorMessages: features['PAYMENTS-6799.localise_checkout_payment_error_messages'],
+    shouldShowSubmitPaymentButton: isExperimentEnabled(
+      config.checkoutSettings,
+      'CHECKOUT-9729.show_submit_button_when_payment_not_required',
+      false,
+    ),
     submitOrder: checkoutService.submitOrder,
     updateCheckout: checkoutService.updateCheckout,
     getCheckout: checkoutState.data.getCheckout,

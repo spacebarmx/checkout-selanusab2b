@@ -1,11 +1,11 @@
-import { CheckoutService, createCheckoutService, StoreConfig } from '@bigcommerce/checkout-sdk';
+import { type CheckoutService, createCheckoutService, type StoreConfig } from '@bigcommerce/checkout-sdk';
 import { render, screen } from '@testing-library/react'
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
-import { CheckoutProvider , PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
+import { CheckoutProvider , type PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getStoreConfig } from '../../config/config.mock';
 import { getPaymentMethod, getPaypalCreditPaymentMethod } from '../payment-methods.mock';
@@ -13,7 +13,7 @@ import { getInstruments } from '../storedInstrument/instruments.mock';
 
 import getPaymentMethodName from './getPaymentMethodName';
 import PaymentMethodId from './PaymentMethodId';
-import PaymentMethodTitle, { PaymentMethodTitleProps } from './PaymentMethodTitle';
+import PaymentMethodTitle, { type PaymentMethodTitleProps } from './PaymentMethodTitle';
 import PaymentMethodType from './PaymentMethodType';
 
 describe('PaymentMethodTitle', () => {

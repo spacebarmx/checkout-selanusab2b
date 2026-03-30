@@ -1,20 +1,20 @@
+import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
-import { usePayPalConnectAddress } from '@bigcommerce/checkout/paypal-connect-integration';
 
 import { getCountries } from '../geography/countries.mock';
 
 import { getAddress } from './address.mock';
 import AddressType from './AddressType';
 import { getAddressFormFields } from './formField.mock';
-import StaticAddress, { StaticAddressProps } from './StaticAddress';
+import StaticAddress, { type StaticAddressProps } from './StaticAddress';
 
 jest.mock('@bigcommerce/checkout/ui', () => ({
     ...jest.requireActual('@bigcommerce/checkout/ui'),
@@ -175,7 +175,7 @@ describe('StaticAddress Component', () => {
         });
 
         it('should show icon for PP Connect address', () => {
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+             
             (usePayPalConnectAddress as jest.Mock).mockReturnValue({
                 isPayPalAxoEnabled: true,
                 paypalConnectAddresses: [defaultProps.address],

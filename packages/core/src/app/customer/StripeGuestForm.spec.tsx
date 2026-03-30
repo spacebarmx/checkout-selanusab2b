@@ -1,10 +1,10 @@
 import { mount, render } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
 import CheckoutStepType from '../checkout/CheckoutStepType';
 import { PrivacyPolicyField } from '../privacyPolicy';
 
-import StripeGuestForm, { StripeGuestFormProps } from './StripeGuestForm';
+import StripeGuestForm, { type StripeGuestFormProps } from './StripeGuestForm';
 
 describe('StripeGuestForm', () => {
     let defaultProps: StripeGuestFormProps;

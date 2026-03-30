@@ -6,7 +6,7 @@ import { type FormikProps, withFormik } from 'formik';
 import React, { type RefObject, useRef, useState } from 'react';
 import { lazy } from 'yup';
 
-import { useCheckout, useThemeContext } from '@bigcommerce/checkout/contexts';
+import { useCapabilities, useCheckout } from '@bigcommerce/checkout/contexts';
 import { TranslatedString, withLanguage, type WithLanguageProps } from '@bigcommerce/checkout/locale';
 import { usePayPalFastlaneAddress } from '@bigcommerce/checkout/paypal-fastlane-integration';
 import { AddressFormSkeleton, LoadingOverlay } from '@bigcommerce/checkout/ui';
@@ -35,6 +35,7 @@ export interface BillingFormProps {
     methodId?: string;
     billingAddress?: Address;
     customerMessage: string;
+    extraFields: FormField[];
     navigateNextStep(): void;
     onSubmit(values: BillingFormValues): void;
     onUnhandledError(error: Error): void;
@@ -44,6 +45,7 @@ export interface BillingFormProps {
 const BillingForm = ({
     methodId,
     getFields,
+    extraFields,
     billingAddress,
     setFieldValue,
     values,
@@ -53,8 +55,8 @@ const BillingForm = ({
     const addressFormRef: RefObject<HTMLFieldSetElement> = useRef(null);
     const { isPayPalFastlaneEnabled, paypalFastlaneAddresses } = usePayPalFastlaneAddress();
 
-    const { themeV2 } = useThemeContext();
     const { checkoutService, checkoutState } = useCheckout();
+    const { billing: { hideSaveToAddressBookCheck, restrictManualAddressEntry } } = useCapabilities();
 
     const {
         data: { getCustomer, getConfig, getCart },
@@ -71,7 +73,7 @@ const BillingForm = ({
     const isGuest = customer.isGuest;
     const addresses = customer.addresses;
     const shouldRenderStaticAddress = methodId === 'amazonpay';
-    const allFormFields = getFields(values.countryCode);
+    const allFormFields = [...getFields(values.countryCode), ...extraFields];
     const customFormFields = allFormFields.filter(({ custom }) => custom);
     const hasCustomFormFields = customFormFields.length > 0;
     const editableFormFields =
@@ -88,6 +90,7 @@ const BillingForm = ({
     const isUpdating  = isUpdatingBillingAddress() || isUpdatingCheckout();
     const { enableOrderComments } = config.checkoutSettings;
     const shouldShowOrderComments  = enableOrderComments && getShippableItemsCount(cart) < 1;
+    const shouldShowSaveAddress = !hideSaveToAddressBookCheck && !isGuest;
 
     const handleSelectAddress = async (address: Partial<Address>) => {
         setIsResettingAddress(true);
@@ -132,13 +135,13 @@ const BillingForm = ({
                     </Fieldset>
                 )}
 
-                {!hasValidCustomerAddress && (
+                {!restrictManualAddressEntry && !hasValidCustomerAddress && (
                     <AddressFormSkeleton isLoading={isResettingAddress}>
                         <AddressForm
                             countryCode={values.countryCode}
                             formFields={editableFormFields}
                             setFieldValue={setFieldValue}
-                            shouldShowSaveAddress={!isGuest}
+                            shouldShowSaveAddress={shouldShowSaveAddress}
                             type={AddressType.Billing}
                         />
                     </AddressFormSkeleton>
@@ -149,7 +152,7 @@ const BillingForm = ({
 
             <div className="form-actions">
                 <Button
-                    className={themeV2 ? 'body-bold' : ''}
+                    className="body-bold"
                     disabled={isUpdating || isResettingAddress}
                     id="checkout-billing-continue"
                     isLoading={isUpdating || isResettingAddress}
@@ -168,9 +171,9 @@ export default withLanguage(
         handleSubmit: (values, { props: { onSubmit } }) => {
             onSubmit(values);
         },
-        mapPropsToValues: ({ getFields, customerMessage, billingAddress }) => ({
+        mapPropsToValues: ({ getFields, extraFields, customerMessage, billingAddress }) => ({
             ...mapAddressToFormValues(
-                getFields(billingAddress && billingAddress.countryCode),
+                [...getFields(billingAddress && billingAddress.countryCode), ...extraFields],
                 billingAddress,
             ),
             orderComment: customerMessage,
@@ -189,7 +192,7 @@ export default withLanguage(
             methodId === 'amazonpay'
                 ? lazy<Partial<AddressFormValues>>((values) =>
                       getCustomFormFieldsValidationSchema({
-                          translate: getTranslateAddressError(language),
+                          translate: getTranslateAddressError(getFields(values && values.countryCode), language),
                           formFields: getFields(values && values.countryCode),
                       }),
                   )

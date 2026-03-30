@@ -1,15 +1,15 @@
 import {
-    CheckoutSelectors,
-    CheckoutService,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
-    PaymentMethod,
+    type PaymentMethod,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { createLocaleContext, LocaleContext, LocaleContextType } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getBillingAddress } from '../../billing/billingAddresses.mock';
@@ -17,17 +17,17 @@ import { getCart } from '../../cart/carts.mock';
 import { getStoreConfig as getDefaultStoreConfig } from '../../config/config.mock';
 import { getCustomer } from '../../customer/customers.mock';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 
 import BarclaycardPaymentMethod from './BarclaycardPaymentMethod';
 import CheckoutcomCustomPaymentMethod, {
-    CheckoutcomCustomPaymentMethodProps,
+    type CheckoutcomCustomPaymentMethodProps,
 } from './CheckoutcomCustomPaymentMethod';
-import CreditCardPaymentMethod, { CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
-import HostedPaymentMethod, { HostedPaymentMethodProps } from './HostedPaymentMethod';
+import CreditCardPaymentMethod, { type CreditCardPaymentMethodProps } from './CreditCardPaymentMethod';
+import HostedPaymentMethod, { type HostedPaymentMethodProps } from './HostedPaymentMethod';
 import MolliePaymentMethod from './MolliePaymentMethod';
 import OpyPaymentMethod from './OpyPaymentMethod';
-import { default as PaymentMethodComponent, PaymentMethodProps } from './PaymentMethod';
+import { default as PaymentMethodComponent, type PaymentMethodProps } from './PaymentMethod';
 import PaymentMethodId from './PaymentMethodId';
 import PaymentMethodProviderType from './PaymentMethodProviderType';
 import PPSDKPaymentMethod from './PPSDKPaymentMethod';

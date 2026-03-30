@@ -1,6 +1,6 @@
-import { ObjectSchema, ValidationError } from 'yup';
+import { type ObjectSchema, type ValidationError } from 'yup';
 
-import { TranslateValidationErrorFunction } from '../../formFields';
+import { type TranslateValidationErrorFunction } from '../../formFields';
 
 import getCheckoutcomFieldsetValidationSchemas from './getCheckoutcomFieldsetValidationSchemas';
 

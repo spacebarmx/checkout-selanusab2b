@@ -1,9 +1,9 @@
-import { Address, Cart, Consignment } from '@bigcommerce/checkout-sdk';
+import { type Address, type Cart, type Consignment } from '@bigcommerce/checkout-sdk';
 
 import { isEqualAddress } from '../address';
 
 import findConsignment from './findConsignment';
-import ShippableItem from './ShippableItem';
+import type ShippableItem from './ShippableItem';
 
 export interface UpdateItemParams {
     updatedItemIndex: number;

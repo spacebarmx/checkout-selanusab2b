@@ -1,4 +1,4 @@
-import { shallow, ShallowWrapper } from 'enzyme';
+import { shallow, type ShallowWrapper } from 'enzyme';
 import React from 'react';
 
 import AppliedCoupon from './AppliedCoupon';

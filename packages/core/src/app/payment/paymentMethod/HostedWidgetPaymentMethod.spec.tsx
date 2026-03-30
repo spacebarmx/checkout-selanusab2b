@@ -1,17 +1,17 @@
 import {
-    BankInstrument,
-    CardInstrument,
-    CheckoutSelectors,
-    CheckoutService,
+    type BankInstrument,
+    type CardInstrument,
+    type CheckoutSelectors,
+    type CheckoutService,
     createCheckoutService,
 } from '@bigcommerce/checkout-sdk';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, type ReactWrapper } from 'enzyme';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import React, { FunctionComponent, ReactElement } from 'react';
-import { Schema } from 'yup';
+import React, { type FunctionComponent, type ReactElement } from 'react';
+import { type Schema } from 'yup';
 
-import { createLocaleContext, LocaleContext, LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
+import { createLocaleContext, LocaleContext, type LocaleContextType, TranslatedString } from '@bigcommerce/checkout/locale';
 import { CheckoutProvider } from '@bigcommerce/checkout/payment-integration-api';
 
 import { getCart } from '../../cart/carts.mock';
@@ -22,12 +22,12 @@ import { getConsignment } from '../../shipping/consignment.mock';
 import { LoadingOverlay } from '../../ui/loading';
 import { getCreditCardValidationSchema } from '../creditCard';
 import { getPaymentMethod } from '../payment-methods.mock';
-import PaymentContext, { PaymentContextProps } from '../PaymentContext';
+import PaymentContext, { type PaymentContextProps } from '../PaymentContext';
 import { AccountInstrumentFieldset, CardInstrumentFieldset, UntrustedShippingCardVerificationType } from '../storedInstrument';
 import { getInstruments } from '../storedInstrument/instruments.mock';
 
-import HostedWidgetPaymentMethod, { HostedWidgetPaymentMethodProps } from './HostedWidgetPaymentMethod';
-import SignOutLink, { SignOutLinkProps } from './SignOutLink';
+import HostedWidgetPaymentMethod, { type HostedWidgetPaymentMethodProps } from './HostedWidgetPaymentMethod';
+import SignOutLink, { type SignOutLinkProps } from './SignOutLink';
 
 describe('HostedWidgetPaymentMethod', () => {
     let HostedWidgetPaymentMethodTest: FunctionComponent<HostedWidgetPaymentMethodProps>;
@@ -114,7 +114,7 @@ describe('HostedWidgetPaymentMethod', () => {
 
         expect(defaultProps.initializePayment).not.toHaveBeenCalled();
 
-        container.setProps({isPaymentDataRequired: true});
+        container.setProps({ isPaymentDataRequired: true });
 
         await new Promise((resolve) => process.nextTick(resolve));
 

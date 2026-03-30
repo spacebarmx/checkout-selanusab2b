@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { type ComponentType } from 'react';
 
 import {
     IconBitCoin,
@@ -23,7 +23,7 @@ import {
     IconDogeCoin,
     IconEthereum,
     IconLiteCoin,
-    IconProps,
+    type IconProps,
     IconShibaInu,
     IconUsdCoin,
 } from '../../ui/icon';
@@ -155,5 +155,5 @@ function getSupportedInstrumentTypes() {
 export function filterInstrumentTypes(instrumentTypes: string[]) {
     const supportedInstrumentTypes = getSupportedInstrumentTypes();
 
-    return instrumentTypes.filter((type) => supportedInstrumentTypes.indexOf(type) !== -1);
+    return instrumentTypes.filter((type) => supportedInstrumentTypes.includes(type));
 }
